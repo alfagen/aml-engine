@@ -1,4 +1,4 @@
-class AmlChangeAmlClient < ActiveRecord::Migration[5.2]
+class ChangeClient < ActiveRecord::Migration[5.2]
   def up
     remove_column :aml_clients, :inn
     change_column :aml_clients, :name, :string, null: true
@@ -18,8 +18,5 @@ class AmlChangeAmlClient < ActiveRecord::Migration[5.2]
     add_column :aml_document_kinds, :archived_at, :timestamp
     add_column :aml_orders, :archived_at, :timestamp
     change_column_null :aml_client_documents, :image, true
-  end
-
-  def down
   end
 end

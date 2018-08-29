@@ -1,4 +1,4 @@
-class AmlSetup < ActiveRecord::Migration[5.2]
+class Setup < ActiveRecord::Migration[5.2]
   def change
     create_table "aml_client_document_fields", force: :cascade do |t|
       t.string "value"

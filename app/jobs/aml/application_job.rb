@@ -1,4 +1,4 @@
-module Aml
+module AML
   class ApplicationJob < ActiveJob::Base
   end
 end

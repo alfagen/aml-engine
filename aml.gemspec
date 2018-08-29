@@ -10,8 +10,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Authors"]
   s.email       = ["email"]
   s.homepage    = "http://page.com"
-  s.summary     = "Summary of Aml."
-  s.description = "Description of Aml."
+  s.summary     = "Summary of AML."
+  s.description = "Description of AML."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]

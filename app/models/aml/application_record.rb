@@ -1,4 +1,4 @@
-module Aml
+module AML
   class ApplicationRecord < ActiveRecord::Base
     self.abstract_class = true
   end

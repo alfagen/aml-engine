@@ -1,7 +1,7 @@
 require 'test_helper'
 
-class Aml::Test < ActiveSupport::TestCase
+class AML::Test < ActiveSupport::TestCase
   test "truth" do
-    assert_kind_of Module, Aml
+    assert_kind_of Module, AML
   end
 end

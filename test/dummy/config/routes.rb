@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  mount Aml::Engine => "/aml"
+  mount AML::Engine => "/aml"
 end

@@ -3,21 +3,26 @@ module AML
     extend Enumerize
     include Workflow
     include Authority::Abilities
+    include Archivable
 
     self.table_name = 'aml_orders'
 
-    enumerize :workflow_state, in: %w[none pending processing accepted rejected], scope: true
+    belongs_to :client, class_name: 'AML::Client', foreign_key: 'client_id', inverse_of: :orders
+    belongs_to :user, class_name: 'AML::User', foreign_key: 'user_id', optional: true, inverse_of: :orders
+
+    has_many :order_documents, class_name: 'AML::ClientDocument', dependent: :destroy
 
     scope :ordered, -> { order 'id desc' }
 
-    belongs_to :client, class_name: 'AML::Client', foreign_key: 'client_id', inverse_of: :orders
-    belongs_to :user, class_name: 'AML::User', foreign_key: 'user_id', optional: true, inverse_of: :orders
-    has_many :client_documents, class_name: 'AML::ClientDocument', dependent: :destroy
+    enumerize :workflow_state, in: %w[none pending processing accepted rejected], scope: true
 
-    validates :first_name, presence: true
-    validates :surname, presence: true
-    validates :patronymic, presence: true
-    validates :birth_date, presence: true
+    # TODO: в noe статус может быть без этих полей
+    # validates :first_name, presence: true
+    # validates :surname, presence: true
+    # validates :patronymic, presence: true
+    #
+    ## TODO validate date
+    # validates :birth_date, presence: true
 
     workflow do
       state :none do
@@ -43,12 +48,30 @@ module AML
       end
     end
 
+    after_create :create_documents!
+
     def complete?
-      client_documents.count == AML::DocumentKind.count
+      order_documents.select(:complete?).count == order_documents.count
     end
 
-    def missing_documents
-      AML::DocumentKind.where.not(id: client_documents.pluck(:document_kind_id))
+    def get_order_document_by_kind(document_kind)
+      with_lock do
+        order_documents
+          .create_with(order: order)
+          .find_or_create_by!(document_kind: document_kind)
+      end
+    end
+
+    def missing_document_kinds
+      AML::DocumentKind.where.not(id: order_documents.pluck(:document_kind_id))
+    end
+
+    private
+
+    def create_documents!
+      AML::DocumentKind.alive.each do  |document_kind|
+        order_documents.create! order: self, document_kind: document_kind
+      end
     end
   end
 end

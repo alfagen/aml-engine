@@ -5,8 +5,6 @@ module AML
     include Authority::Abilities
     include Archivable
 
-    self.table_name = 'aml_document_kinds'
-
     scope :ordered, -> { order 'id desc' }
 
     has_many :order_documents, class_name: 'AML::ClientDocument', dependent: :destroy

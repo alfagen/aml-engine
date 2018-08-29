@@ -1,5 +1,7 @@
 require "aml/engine"
 
 module AML
-  # Your code goes here...
+  def self.table_name_prefix
+    'aml_'
+  end
 end

@@ -7,8 +7,6 @@ module AML
     include Workflow
     include Authority::Abilities
 
-    self.table_name = 'aml_client_documents'
-
     mount_uploader :image, FileUploader
 
     belongs_to :order, class_name: 'AML::Order', foreign_key: 'order_id', inverse_of: :order_documents

@@ -1,8 +1,9 @@
 GIT
   remote: https://github.com/BrandyMint/archivable.git
-  revision: a19465cb6a3bb9d4441bca4494fa53a067cdb83f
+  revision: 4668c25bd9f2933bf7e8b13077252d60b6797de9
   specs:
-    archivable (0.1.0)
+    archivable (0.1.1)
+      activesupport
 
 PATH
   remote: .

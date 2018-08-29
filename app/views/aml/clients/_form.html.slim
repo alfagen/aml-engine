@@ -1,0 +1,4 @@
+= simple_form_for client, method: :post, url: clients_path do |f|
+  = f.input :name, as: :string, label: false, hint: 'Имя клиента'
+  = f.input :inn, as: :integer, label: false, hint: 'ИНН'
+  = f.button :submit, 'Создать', class: 'btn btn-success'

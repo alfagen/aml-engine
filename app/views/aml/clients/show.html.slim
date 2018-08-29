@@ -1,0 +1,11 @@
+.pull-right
+  = link_to 'Добавить заявку', new_order_path(aml_order: { client_id: client.id }), class: 'btn btn-success' if current_user.can_create?(AML::Order)
+h2 Имя: #{client.name} ИНН: #{client.inn}
+hr
+table.table.table-striped
+  thead
+    tr
+      th Заявка:
+      th Состояние:
+  tbody
+    = render partial: 'order', collection: orders

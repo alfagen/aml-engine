@@ -1,0 +1,7 @@
+= simple_form_for client_document, method: :post, url: client_documents_path do |f|
+  = f.input :document_kind_id, label: false, hint: 'Выберите тип документа',collection: document_kinds, include_blank: false
+  = f.hidden_field :order_id, value: order.id
+  = f.hidden_field :client_id, value: order.client.id
+  = f.file_field :image
+  br
+  = f.button :submit, 'Создать', class: 'btn btn-success'

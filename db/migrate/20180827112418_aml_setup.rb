@@ -1,4 +1,4 @@
-class RenameTables < ActiveRecord::Migration[5.2]
+class AmlSetup < ActiveRecord::Migration[5.2]
   def change
     create_table "aml_client_document_fields", force: :cascade do |t|
       t.string "value"
@@ -10,7 +10,7 @@ class RenameTables < ActiveRecord::Migration[5.2]
     end
 
     create_table "aml_client_documents", force: :cascade do |t|
-      t.integer "document_kind_id", null: false
+      t.bigint "document_kind_id", null: false
       t.datetime "created_at", null: false
       t.datetime "updated_at", null: false
       t.string "image", null: false
@@ -34,8 +34,7 @@ class RenameTables < ActiveRecord::Migration[5.2]
       t.datetime "created_at", null: false
       t.datetime "updated_at", null: false
       t.bigint "document_kind_id"
-      t.index ["document_kind_id"], name: "index_aml_document_kind_field_definitions_on_document_kind_id"
-      t.index ["key"], name: "index_aml_document_kind_field_definitions_on_key", unique: true
+      t.index ["document_kind_id", "key"], name: "index_aml_document_kind_field_definitions_on_key", unique: true
     end
 
     create_table "aml_document_kinds", force: :cascade do |t|

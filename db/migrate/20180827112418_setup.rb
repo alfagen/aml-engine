@@ -81,5 +81,6 @@ class Setup < ActiveRecord::Migration[5.2]
     add_foreign_key "aml_document_kind_field_definitions", "aml_document_kinds", column: "document_kind_id"
     add_foreign_key "aml_orders", "aml_clients", column: "client_id"
     add_foreign_key "aml_orders", "aml_users", column: "user_id"
+    add_reference :aml_clients, :aml_current_order, foreign_key: { to_table: :aml_orders }
   end
 end

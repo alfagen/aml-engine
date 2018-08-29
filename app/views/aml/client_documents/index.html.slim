@@ -1,0 +1,11 @@
+h2 Документы клиентoв
+- if current_user.can_read?(AML::ClientDocument)
+  ul.nav.nav-tabs
+    = active_link_to 'Ожидающие', client_documents_path(workflow_state: :pending), active: document_active_type(workflow_state), wrap_tag: :li
+    = active_link_to 'Принятые', client_documents_path(workflow_state: :accepted), active: :exact, wrap_tag: :li
+    = active_link_to 'Отклоненные', client_documents_path(workflow_state: :rejected), active: :exact, wrap_tag: :li
+- if current_user.can_process?(AML::ClientDocument) 
+  - if documents.any?
+    = render partial: 'documents_list', locals: { documents: documents }
+  - else
+    p.alert Документы отсутвуют

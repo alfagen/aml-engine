@@ -1,0 +1,11 @@
+head
+  title AML
+  = csrf_meta_tags
+  = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+  = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+body
+  .container
+    h1= link_to 'AML', root_url
+    hr
+    = yield
+    = render 'aml/application/flashes'

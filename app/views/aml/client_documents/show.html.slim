@@ -1,0 +1,27 @@
+- if current_user.can_process?(AML::ClientDocument)
+  h4 Имя в заявке: #{client_document.order.first_name}, #{client_document.order.surname}, #{client_document.order.patronymic}
+  h4 Тип документа: #{client_document.document_kind.title}
+  h4 Состояние: #{client_document.workflow_state}
+  - if client_document.order.taken_by?(current_user)
+    - if client_document.pending? || client_document.rejected?
+      =< link_to 'Принять', accept_client_document_path(client_document), method: :put, class: 'btn btn-success'
+    - if client_document.pending? || client_document.accepted?
+      =< link_to 'Отказать', reject_client_document_path(client_document), method: :put, class: 'btn btn-success'
+- if fields.any?
+  h4 Дополнительные поля документа:
+  table.table.table-condensed
+    thead
+      tr
+        th Название:
+        th Значение:
+        th Статус:
+        th Действия:
+    tbody
+    - fields.each do |field|
+      tr
+        td = field.title
+        td = field.value || 'не задано'
+        td = field.definition.alive?
+        td = link_to 'Изменить значение', edit_client_document_field_path(field), class: 'btn btn-default' if client_document.order.taken_by?(current_user)
+h4 Файл:
+= image_tag(client_document.image.url, style: 'height:auto;width:100%;')

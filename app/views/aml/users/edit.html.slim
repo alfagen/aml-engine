@@ -1,0 +1,5 @@
+h3 Редактировать пользователя
+= simple_form_for user, method: :put, url: user_path do |f|
+  = f.input :email, as: :string, label: false, hint: 'Email/логин'
+  = f.input :role, as: :select, collection: [['оператор', 'operator'], ['администратор', 'administrator']], label: false, hint: 'Роль', include_blank: false if user.role_updatable_by?(current_user)
+  = f.button :submit, 'Создать/изменить', class: 'btn btn-success'

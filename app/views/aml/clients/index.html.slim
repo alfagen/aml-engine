@@ -1,0 +1,19 @@
+.pull-right= link_to 'Новый клиент', new_client_path, class: 'btn btn-success' if current_user.can_create?(AML::Client)
+- if current_user.can_process?(AML::Client)
+  h2 Список клиентoв
+  - if clients.any?
+    h5 Поиск по имени клиента и ИНН
+    = search_form_for @q, url: { controller: 'clients', action: 'index' }, builder: SimpleForm::FormBuilder do |f|
+      = f.search_field :name_or_inn_cont
+      = f.submit 'Искать', class: 'btn btn-success'
+    table.table.table-condensed
+      thead
+        tr
+          th
+          th Имя:
+          th ИНН:
+      tbody
+        = render clients 
+    = paginate clients
+  - else
+    p.alert Клиенты отсутствуют

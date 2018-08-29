@@ -1,0 +1,3 @@
+= simple_form_for document_kind, method: :post, url: document_kinds_path do |f|
+  = f.input :title, as: :string, label: false, hint: 'Название типа документа'
+  = f.button :submit, 'Создать', class: 'btn btn-success'

@@ -3,7 +3,7 @@ module AML
     extend Enumerize
     include Workflow
     include Authority::Abilities
-    include Archivable
+    include Archivable::Model
 
     belongs_to :client, class_name: 'AML::Client', foreign_key: 'client_id', inverse_of: :orders
     belongs_to :user, class_name: 'AML::User', foreign_key: 'user_id', optional: true, inverse_of: :orders

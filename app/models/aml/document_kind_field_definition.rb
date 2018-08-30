@@ -1,7 +1,7 @@
 module AML
   class DocumentKindFieldDefinition < ApplicationRecord
     include Authority::Abilities
-    include Archivable
+    include Archivable::Model
 
     belongs_to :document_kind, class_name: 'AML::DocumentKind',
                                foreign_key: 'document_kind_id',

@@ -3,7 +3,7 @@
 module AML
   class DocumentKind < ApplicationRecord
     include Authority::Abilities
-    include Archivable
+    include Archivable::Model
 
     scope :ordered, -> { order 'id desc' }
 

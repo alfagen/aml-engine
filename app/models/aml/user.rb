@@ -1,6 +1,8 @@
 require 'valid_email'
 
 module AML
+  # TODO rename to Operator
+  #
   class User < ApplicationRecord
     extend Enumerize
     include Workflow
@@ -8,8 +10,6 @@ module AML
     include Authority::Abilities
 
     authenticates_with_sorcery!
-
-    self.table_name = 'aml_users'
 
     enumerize :workflow_state, in: %w[blocked unblocked], scope: true
     enum role: [:operator, :administrator]

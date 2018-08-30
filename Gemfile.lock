@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/BrandyMint/archivable.git
+  revision: 4668c25bd9f2933bf7e8b13077252d60b6797de9
+  specs:
+    archivable (0.1.1)
+      activesupport
 PATH
   remote: .
   specs:
@@ -121,6 +127,7 @@ PLATFORMS
 
 DEPENDENCIES
   aml!
+  archivable!
   sqlite3
 
 BUNDLED WITH

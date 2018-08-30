@@ -1,7 +1,8 @@
 tr
-  td= client.id
-  td= client.name
-  td= client.inn
+  td= client.first_name
+  td= client.surname
+  td= client.patronymic
+  td= client.birth_date
   td.text-right
     .btn-group
       = link_to 'Подробнее', client_path(client), class: 'btn btn-default' if current_user.can_read?(AML::Client)

@@ -4,7 +4,6 @@ GIT
   specs:
     archivable (0.1.1)
       activesupport
-
 PATH
   remote: .
   specs:

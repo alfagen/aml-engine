@@ -2,16 +2,18 @@
 - if current_user.can_process?(AML::Client)
   h2 Список клиентoв
   - if clients.any?
-    h5 Поиск по имени клиента и ИНН
-    = search_form_for @q, url: { controller: 'clients', action: 'index' }, builder: SimpleForm::FormBuilder do |f|
-      = f.search_field :name_or_inn_cont
+    h5 Поиск по полям клиента:
+    = search_form_for @q, clients_path, builder: SimpleForm::FormBuilder do |f|
+      = f.search_field :first_name_or_surname_or_patronymic_cont
       = f.submit 'Искать', class: 'btn btn-success'
     table.table.table-condensed
       thead
         tr
-          th
           th Имя:
-          th ИНН:
+          th Фамилия:
+          th Отчество:
+          th Дата рождения:
+          th Действия
       tbody
         = render clients 
     = paginate clients

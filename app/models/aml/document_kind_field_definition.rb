@@ -12,6 +12,15 @@ module AML
     scope :ordered, -> { order 'id desc' }
 
     validates :title, presence: true
-    validates :key, presence: true, format: { with: /[a-z_]+/ }, uniqueness: { scope: :document_kind }
+
+    validates :key, presence: true, format: { with: /[a-z_]+/ }, uniqueness: { scope: :document_kind_id }
+
+    # Ключ уникальный для всех живых дефиниций
+    validates :key, uniqueness: { scope: :archived_at }
+
+    # TODO в отдельную колонку
+    def position
+      id
+    end
   end
 end

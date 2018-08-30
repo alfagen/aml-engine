@@ -11,5 +11,10 @@ module AML
     has_many :definitions, class_name: 'AML::DocumentKindFieldDefinition', dependent: :destroy
 
     validates :title, presence: true, uniqueness: true
+
+    # TODO в отдельную колонку
+    def position
+      id
+    end
   end
 end

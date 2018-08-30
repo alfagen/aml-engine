@@ -7,9 +7,11 @@ module AML
     scope :ordered, -> { order 'id desc' }
 
     has_many :orders, class_name: 'AML::Order', dependent: :destroy
-    has_one :current_order, class_name: 'AML::Order', dependent: :nullify
+    belongs_to :current_order, class_name: 'AML::Order', dependent: :destroy, foreign_key: :aml_order_id, optional: true
 
     after_create :create_current_order!
+
+    alias_attribute :current_order_id, :aml_order_id
 
     # TODO: Не может быть без имени если находится в статусе оформляется или принят/отклонен
     #
@@ -21,16 +23,9 @@ module AML
     # 2) workflow клиента сбрабсывается в none
     #
 
-    def current_order!
-      with_lock do
-        current_order || create_current_order!
-      end
-    end
-
-    private
-
-    def create_current_order!
-      super client_id: id
+    def create_current_order! attrs = {}
+      order = super attrs.merge client_id: id
+      update_column :aml_order_id, order.id
     end
   end
 end

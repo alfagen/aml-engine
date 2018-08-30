@@ -2,7 +2,7 @@
 
 AML::Engine.routes.draw do
   scope module: :aml do
-    default_url_options Settings.default_url_options.symbolize_keys
+    # default_url_options Settings.default_url_options.symbolize_keys
 
     root to: redirect('/orders')
 

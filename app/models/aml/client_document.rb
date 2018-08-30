@@ -20,7 +20,7 @@ module AML
     # validates :image, presence: true
     validates :document_kind_id, uniqueness: { scope: :order_id }
 
-    enumerize :workflow_state, in: %w[pending accepted rejected], scope: true
+    enumerize :workflow_state, in: %w[none pending processing accepted rejected], scope: true
 
     accepts_nested_attributes_for :client_document_fields, update_only: true
 

@@ -6,13 +6,8 @@ module AML
       workflow_state == :none ? :inclusive : :exact
     end
 
-    DEFAULT_TYPE = :warning
-    TYPES = { alert: :error, notice: :info }.freeze
-
-    def aml_noty_flash_javascript(key, message)
-      noty_type = TYPES[key.to_sym] || DEFAULT_TYPE
-
-      "window.Flash.show(#{noty_type.to_json}, #{message.to_json})"
+    def aml_document_active_type(workflow_state)
+      workflow_state == :pending ? :inclusive : :exact
     end
   end
 end

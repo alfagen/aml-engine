@@ -2,7 +2,7 @@ tr
   td = order.id
   td = render partial: 'documents', locals: { documents: order.client_documents }
   td #{order.first_name}, #{order.surname}, #{order.patronymic}
-  td = order.birth_date&.strftime('%F')
+  td = I18n.l order.birth_date
   td = order.workflow_state
   td = order.user&.email || 'Не назначен'
   td

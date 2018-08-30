@@ -1,5 +1,5 @@
 ul.nav.nav-tabs
-  = active_link_to orders_path(workflow_state: :none), active: order_active_type(workflow_state), wrap_tag: :li do
+  = active_link_to orders_path(workflow_state: :none), active: aml_order_active_type(workflow_state), wrap_tag: :li do
     = title_with_counter 'Незаполненные', AML::Order.with_none_state.count
   = active_link_to orders_path(workflow_state: :pending), active: :exact, wrap_tag: :li do
     = title_with_counter 'Загруженные', AML::Order.with_pending_state.count

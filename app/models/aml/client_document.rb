@@ -39,7 +39,7 @@ module AML
       end
     end
 
-    # after_create :create_fields!
+    after_create :create_fields!
 
     def client_document_fields_attributes
       client_document_fields.map do |document_field|

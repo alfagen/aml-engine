@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_30_130152) do
+ActiveRecord::Schema.define(version: 2018_08_31_101429) do
 
   create_table "aml_client_document_fields", force: :cascade do |t|
     t.string "value"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2018_08_30_130152) do
     t.string "workflow_state", default: "pending", null: false
     t.integer "order_id"
     t.index ["document_kind_id"], name: "index_aml_client_documents_on_document_kind_id"
+    t.index ["order_id", "document_kind_id"], name: "index_aml_client_documents_on_order_id_and_document_kind_id", unique: true
     t.index ["order_id"], name: "index_aml_client_documents_on_order_id"
   end
 

@@ -6,6 +6,7 @@ capybara-*.html
 tags
 gems.tags
 *.sqlite3
+test/dummy/public/*
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /public/system

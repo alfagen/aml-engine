@@ -1,0 +1,5 @@
+language: ruby
+rvm:
+  - 2.4.4
+env:
+	- RAILS_ENV=test

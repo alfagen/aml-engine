@@ -1,15 +1,15 @@
 module AML
   class ClientAuthorizer < ApplicationAuthorizer
-    def self.creatable_by?(user)
-      user.administrator? || user.operator?
+    def self.creatable_by?(operator)
+      operator.administrator? || operator.operator?
     end
 
-    def self.processable_by?(user)
-      user.administrator? || user.operator?
+    def self.processable_by?(operator)
+      operator.administrator? || operator.operator?
     end
 
-    def self.readable_by?(user)
-      user.administrator? || user.operator?
+    def self.readable_by?(operator)
+      operator.administrator? || operator.operator?
     end
   end
 end

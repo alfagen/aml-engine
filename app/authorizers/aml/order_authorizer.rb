@@ -1,19 +1,19 @@
 module AML
   class OrderAuthorizer < ApplicationAuthorizer
-    def self.creatable_by?(user)
-      user.administrator? || user.operator?
+    def self.creatable_by?(operator)
+      operator.administrator? || operator.operator?
     end
 
-    def self.processable_by?(user)
-      user.administrator? || user.operator?
+    def self.processable_by?(operator)
+      operator.administrator? || operator.operator?
     end
 
-    def taken_by?(user)
-      resource.current_state >= :processing && resource.user_id == user.id
+    def taken_by?(operator)
+      resource.current_state >= :processing && resource.operator_id == operator.id
     end
 
-    def self.readable_by?(user)
-      user.administrator? || user.operator?
+    def self.readable_by?(operator)
+      operator.administrator? || operator.operator?
     end
   end
 end

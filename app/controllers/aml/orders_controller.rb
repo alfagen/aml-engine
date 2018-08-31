@@ -25,7 +25,7 @@ module AML
 
     def in_process
       order.process!
-      order.update(user_id: current_user.id)
+      order.update(operator_id: current_user.id)
       redirect_to order_path(order)
     end
 
@@ -41,7 +41,7 @@ module AML
 
     def stop
       order.stop!
-      order.update(user_id: nil)
+      order.update(operator_id: nil)
       redirect_to order_path(order)
     end
 

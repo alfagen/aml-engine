@@ -6,7 +6,7 @@ module AML
     include Archivable::Model
 
     belongs_to :client, class_name: 'AML::Client', foreign_key: 'client_id', inverse_of: :orders, dependent: :destroy
-    belongs_to :user, class_name: 'AML::User', foreign_key: 'user_id', optional: true, inverse_of: :orders
+    belongs_to :operator, class_name: 'AML::Operator', foreign_key: 'operator_id', optional: true, inverse_of: :orders
 
     has_many :order_documents, class_name: 'AML::ClientDocument', dependent: :destroy
 

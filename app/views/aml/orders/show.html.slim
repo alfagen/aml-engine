@@ -13,7 +13,7 @@ h4 Состояние: #{order.workflow_state}
   - if documents.count.positive?
     h4 Документы заявки
     = paginate documents
-    = render partial: 'aml/client_documents/documents_list', locals: { documents: documents }
+    = render partial: 'aml/order_documents/documents_list', locals: { documents: documents }
   - if order.none?
     h4 Добавить документ
-    = render partial: 'aml/client_documents/form', locals: { client_document: AML::ClientDocument.new, order: order, document_kinds: order.missing_documents }
+    = render partial: 'aml/order_documents/form', locals: { order_document: AML::OrderDocument.new, order: order, document_kinds: order.missing_documents }

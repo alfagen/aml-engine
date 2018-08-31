@@ -20,7 +20,7 @@ module AML
 
     def show
       render :show, locals: { order: order, client: order.client, document_kinds: document_kinds,
-                              documents: paginate(order.client_documents.ordered) }
+                              documents: paginate(order.order_documents.ordered) }
     end
 
     def in_process

@@ -10,27 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_31_065637) do
+ActiveRecord::Schema.define(version: 2018_08_31_122808) do
 
   create_table "aml_client_document_fields", force: :cascade do |t|
     t.string "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "client_document_id"
-    t.bigint "document_kind_field_definition_id"
-    t.index ["client_document_id", "document_kind_field_definition_id"], name: "client_document_fields_index", unique: true
-  end
-
-  create_table "aml_client_documents", force: :cascade do |t|
-    t.integer "document_kind_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "image"
-    t.string "workflow_state", default: "pending", null: false
-    t.integer "order_id"
-    t.index ["document_kind_id"], name: "index_aml_client_documents_on_document_kind_id"
-    t.index ["order_id", "document_kind_id"], name: "index_aml_client_documents_on_order_id_and_document_kind_id", unique: true
-    t.index ["order_id"], name: "index_aml_client_documents_on_order_id"
+    t.integer "order_document_id"
+    t.integer "document_kind_field_definition_id"
+    t.index ["order_document_id", "document_kind_field_definition_id"], name: "client_document_fields_index", unique: true
   end
 
   create_table "aml_clients", force: :cascade do |t|
@@ -79,6 +67,18 @@ ActiveRecord::Schema.define(version: 2018_08_31_065637) do
     t.integer "role", default: 0, null: false
     t.index ["email"], name: "index_aml_operators_on_email", unique: true
     t.index ["reset_password_token"], name: "index_aml_operators_on_reset_password_token"
+  end
+
+  create_table "aml_order_documents", force: :cascade do |t|
+    t.integer "document_kind_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "image"
+    t.string "workflow_state", default: "pending", null: false
+    t.integer "order_id"
+    t.index ["document_kind_id"], name: "index_aml_order_documents_on_document_kind_id"
+    t.index ["order_id", "document_kind_id"], name: "index_aml_order_documents_on_order_id_and_document_kind_id", unique: true
+    t.index ["order_id"], name: "index_aml_order_documents_on_order_id"
   end
 
   create_table "aml_orders", force: :cascade do |t|

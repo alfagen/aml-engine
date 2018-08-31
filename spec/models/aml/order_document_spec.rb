@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe AML::ClientDocument, type: :model do
+RSpec.describe AML::OrderDocument, type: :model do
   let(:order) { create :order }
 
   subject { create :order_document, order: order, document_kind: document_kind }

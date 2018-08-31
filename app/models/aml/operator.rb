@@ -1,12 +1,10 @@
 require 'valid_email'
 
 module AML
-  # TODO rename to Operator
-  #
-  class User < ApplicationRecord
+  class Operator < ApplicationRecord
     extend Enumerize
     include Workflow
-    include Authority::UserAbilities
+    include Authority::OperatorAbilities
     include Authority::Abilities
 
     authenticates_with_sorcery!

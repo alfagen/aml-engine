@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_30_130152) do
+ActiveRecord::Schema.define(version: 2018_08_31_065637) do
 
   create_table "aml_client_document_fields", force: :cascade do |t|
     t.string "value"
@@ -64,22 +64,7 @@ ActiveRecord::Schema.define(version: 2018_08_30_130152) do
     t.index ["title"], name: "index_aml_document_kinds_on_title", unique: true
   end
 
-  create_table "aml_orders", force: :cascade do |t|
-    t.string "first_name"
-    t.string "surname"
-    t.string "patronymic"
-    t.datetime "birth_date"
-    t.string "workflow_state", default: "none", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "client_id"
-    t.integer "user_id"
-    t.datetime "archived_at"
-    t.index ["client_id"], name: "index_aml_orders_on_client_id"
-    t.index ["user_id"], name: "index_aml_orders_on_user_id"
-  end
-
-  create_table "aml_users", force: :cascade do |t|
+  create_table "aml_operators", force: :cascade do |t|
     t.string "email", null: false
     t.string "crypted_password"
     t.string "salt"
@@ -91,8 +76,23 @@ ActiveRecord::Schema.define(version: 2018_08_30_130152) do
     t.datetime "reset_password_email_sent_at"
     t.integer "access_count_to_reset_password_page", default: 0
     t.integer "role", default: 0, null: false
-    t.index ["email"], name: "index_aml_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_aml_users_on_reset_password_token"
+    t.index ["email"], name: "index_aml_operators_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_aml_operators_on_reset_password_token"
+  end
+
+  create_table "aml_orders", force: :cascade do |t|
+    t.string "first_name"
+    t.string "surname"
+    t.string "patronymic"
+    t.datetime "birth_date"
+    t.string "workflow_state", default: "none", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "client_id"
+    t.integer "operator_id"
+    t.datetime "archived_at"
+    t.index ["client_id"], name: "index_aml_orders_on_client_id"
+    t.index ["operator_id"], name: "index_aml_orders_on_operator_id"
   end
 
 end

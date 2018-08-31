@@ -3,7 +3,7 @@ h4 Клиент: #{order.first_name} #{order.surname} #{order.patronymic}
 h4 Дата рождения: #{order.birth_date.strftime('%F')}
 h4 Состояние: #{order.workflow_state}
 - if order.current_state >= :processing
-  h4 Оператор: #{order.user.email}
+  h4 Оператор: #{order.operator.email}
 - if current_user.can_process?(AML::Order)
   = link_to 'Принять в обработку', in_process_order_path(order), method: :put, class: 'btn btn-success' if order.pending?
   - if order.taken_by?(current_user)

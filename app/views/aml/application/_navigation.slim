@@ -19,7 +19,7 @@ nav.navbar.navbar-default.navbar-fixed-top
           ul.dropdown-menu
             = active_link_to 'Документы клиентов', client_documents_path, wrap_tag: :li
             = active_link_to 'Типы документов', document_kinds_path, wrap_tag: :li
-            = active_link_to 'Пользователи', users_path, wrap_tag: :li
+            = active_link_to 'Операторы', operators_path, wrap_tag: :li
         li.dropdown
           = link_to '#', class: 'dropdown-toggle', data: { toggle: :dropdown }, role: :button, 'aria-haspopup' => true, 'aria-expanded' => false do
             = current_user.email

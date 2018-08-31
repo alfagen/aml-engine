@@ -18,7 +18,7 @@ AML::Engine.routes.draw do
     resources :password_resets, only: %i[new create edit update]
     resource :password, only: %i[edit update]
     resources :user_sessions, only: %i[new create destroy]
-    resources :users, except: %i[show destroy] do
+    resources :operators, except: %i[show destroy] do
       member do
         put :block
         put :unblock

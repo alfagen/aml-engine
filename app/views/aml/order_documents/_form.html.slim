@@ -1,4 +1,4 @@
-= simple_form_for client_document, method: :post, url: client_documents_path do |f|
+= simple_form_for order_document, method: :post, url: order_documents_path do |f|
   = f.input :document_kind_id, label: false, hint: 'Выберите тип документа',collection: document_kinds, include_blank: false
   = f.hidden_field :order_id, value: order.id
   = f.hidden_field :client_id, value: order.client.id

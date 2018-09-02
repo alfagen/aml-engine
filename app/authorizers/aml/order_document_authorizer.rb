@@ -1,5 +1,5 @@
 module AML
-  class ClientDocumentAuthorizer < ApplicationAuthorizer
+  class OrderDocumentAuthorizer < ApplicationAuthorizer
     def self.creatable_by?(operator)
       operator.administrator? || operator.operator?
     end

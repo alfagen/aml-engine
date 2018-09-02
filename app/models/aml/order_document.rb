@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 module AML
-  # TODO: rename в OrderDocument
-  class ClientDocument < ApplicationRecord
+  class OrderDocument < ApplicationRecord
     extend Enumerize
     include Workflow
     include Authority::Abilities
@@ -58,7 +57,7 @@ module AML
       self.client_document_fields_attributes = fields.map do |_k, v|
         {
           definition: document_kind_field_definitions.find_by(key: key),
-          client_document_id: id,
+          order_document_id: id,
           value: v
         }
       end
@@ -73,7 +72,7 @@ module AML
 
     def create_fields!
       document_kind_field_definitions.alive.pluck(:id).each do |definition_id|
-        client_document_fields.create! definition_id: definition_id, client_document: self
+        client_document_fields.create! definition_id: definition_id, order_document: self
       end
     end
   end

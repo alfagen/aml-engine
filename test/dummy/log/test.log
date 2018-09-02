@@ -3703,3 +3703,261 @@ Migrating to AddDocumentKindUniqueIndex (20180831101429)
   [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
   [1m[35mSQL (3.5ms)[0m  [1m[31mDELETE FROM "aml_clients";DELETE FROM "aml_orders"[0m
   [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "aml_client_document_fields"[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "aml_client_document_fields" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "order_document_id" integer, "document_kind_field_definition_id" integer)[0m
+  [1m[35m (3.5ms)[0m  [1m[35mCREATE UNIQUE INDEX "client_document_fields_index" ON "aml_client_document_fields" ("order_document_id", "document_kind_field_definition_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "aml_clients"[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "aml_clients" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "aml_current_order_id" integer, "surname" varchar, "patronymic" varchar, "workflow_state" varchar DEFAULT 'none' NOT NULL, "birth_date" date, "aml_order_id" integer)[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE  INDEX "index_aml_clients_on_aml_current_order_id" ON "aml_clients" ("aml_current_order_id")[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE  INDEX "index_aml_clients_on_aml_order_id" ON "aml_clients" ("aml_order_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "aml_document_kind_field_definitions"[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "aml_document_kind_field_definitions" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "key" varchar NOT NULL, "title" varchar NOT NULL, "archived_at" datetime, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "document_kind_id" bigint)[0m
+  [1m[35m (4.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_aml_document_kind_field_definitions_on_key" ON "aml_document_kind_field_definitions" ("document_kind_id", "key")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "aml_document_kinds"[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE TABLE "aml_document_kinds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "archived_at" datetime)[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_aml_document_kinds_on_title" ON "aml_document_kinds" ("title")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "aml_operators"[0m
+  [1m[35m (3.2ms)[0m  [1m[35mCREATE TABLE "aml_operators" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar NOT NULL, "crypted_password" varchar, "salt" varchar, "workflow_state" varchar DEFAULT 'unblocked' NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "reset_password_token" varchar, "reset_password_token_expires_at" datetime, "reset_password_email_sent_at" datetime, "access_count_to_reset_password_page" integer DEFAULT 0, "role" integer DEFAULT 0 NOT NULL)[0m
+  [1m[35m (3.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_aml_operators_on_email" ON "aml_operators" ("email")[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE  INDEX "index_aml_operators_on_reset_password_token" ON "aml_operators" ("reset_password_token")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "aml_order_documents"[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE TABLE "aml_order_documents" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "document_kind_id" integer NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "image" varchar, "workflow_state" varchar DEFAULT 'pending' NOT NULL, "order_id" integer)[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE  INDEX "index_aml_order_documents_on_document_kind_id" ON "aml_order_documents" ("document_kind_id")[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_aml_order_documents_on_order_id_and_document_kind_id" ON "aml_order_documents" ("order_id", "document_kind_id")[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE  INDEX "index_aml_order_documents_on_order_id" ON "aml_order_documents" ("order_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "aml_orders"[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE TABLE "aml_orders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar, "surname" varchar, "patronymic" varchar, "birth_date" datetime, "workflow_state" varchar DEFAULT 'none' NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "client_id" integer, "operator_id" integer, "archived_at" datetime)[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE  INDEX "index_aml_orders_on_client_id" ON "aml_orders" ("client_id")[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE  INDEX "index_aml_orders_on_operator_id" ON "aml_orders" ("operator_id")[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20180831122808)[0m
+  [1m[35m (2.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20180830130152),
+(20180831101429),
+(20180831065637),
+(20180829110321),
+(20180827112418);
+
+[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2018-08-31 13:12:42.069924"], ["updated_at", "2018-08-31 13:12:42.069924"]]
+  [1m[35m (2.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35mSQL (13.0ms)[0m  [1m[31mDELETE FROM "aml_client_document_fields";DELETE FROM "aml_clients";DELETE FROM "aml_document_kind_field_definitions";DELETE FROM "aml_document_kinds";DELETE FROM "aml_operators";DELETE FROM "aml_order_documents";DELETE FROM "aml_orders"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::Client Create (0.7ms)[0m  [1m[32mINSERT INTO "aml_clients" ("first_name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["first_name", "Name"], ["created_at", "2018-08-31 13:12:44.797018"], ["updated_at", "2018-08-31 13:12:44.797018"]]
+  [1m[36mAML::Client Load (0.3ms)[0m  [1m[34mSELECT  "aml_clients".* FROM "aml_clients" WHERE "aml_clients"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAML::Order Create (0.4ms)[0m  [1m[32mINSERT INTO "aml_orders" ("created_at", "updated_at", "client_id") VALUES (?, ?, ?)[0m  [["created_at", "2018-08-31 13:12:44.832162"], ["updated_at", "2018-08-31 13:12:44.832162"], ["client_id", 1]]
+  [1m[36mAML::DocumentKind Load (0.1ms)[0m  [1m[34mSELECT "aml_document_kinds".* FROM "aml_document_kinds" WHERE "aml_document_kinds"."archived_at" IS NULL[0m
+  [1m[36mAML::Client Update (0.1ms)[0m  [1m[33mUPDATE "aml_clients" SET "aml_order_id" = ? WHERE "aml_clients"."id" = ?[0m  [["aml_order_id", 1], ["id", 1]]
+  [1m[35m (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35mSQL (3.6ms)[0m  [1m[31mDELETE FROM "aml_clients";DELETE FROM "aml_orders"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::Client Create (0.7ms)[0m  [1m[32mINSERT INTO "aml_clients" ("first_name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["first_name", "Name"], ["created_at", "2018-08-31 13:12:44.850672"], ["updated_at", "2018-08-31 13:12:44.850672"]]
+  [1m[36mAML::Client Load (0.1ms)[0m  [1m[34mSELECT  "aml_clients".* FROM "aml_clients" WHERE "aml_clients"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mAML::Order Create (0.4ms)[0m  [1m[32mINSERT INTO "aml_orders" ("created_at", "updated_at", "client_id") VALUES (?, ?, ?)[0m  [["created_at", "2018-08-31 13:12:44.853780"], ["updated_at", "2018-08-31 13:12:44.853780"], ["client_id", 2]]
+  [1m[36mAML::DocumentKind Load (0.1ms)[0m  [1m[34mSELECT "aml_document_kinds".* FROM "aml_document_kinds" WHERE "aml_document_kinds"."archived_at" IS NULL[0m
+  [1m[36mAML::Client Update (0.1ms)[0m  [1m[33mUPDATE "aml_clients" SET "aml_order_id" = ? WHERE "aml_clients"."id" = ?[0m  [["aml_order_id", 2], ["id", 2]]
+  [1m[35m (2.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35mSQL (3.7ms)[0m  [1m[31mDELETE FROM "aml_clients";DELETE FROM "aml_orders"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::Client Create (0.6ms)[0m  [1m[32mINSERT INTO "aml_clients" ("first_name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["first_name", "Name"], ["created_at", "2018-08-31 13:12:44.865805"], ["updated_at", "2018-08-31 13:12:44.865805"]]
+  [1m[36mAML::Client Load (0.1ms)[0m  [1m[34mSELECT  "aml_clients".* FROM "aml_clients" WHERE "aml_clients"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mAML::Order Create (2.3ms)[0m  [1m[32mINSERT INTO "aml_orders" ("created_at", "updated_at", "client_id") VALUES (?, ?, ?)[0m  [["created_at", "2018-08-31 13:12:44.868566"], ["updated_at", "2018-08-31 13:12:44.868566"], ["client_id", 3]]
+  [1m[36mAML::DocumentKind Load (0.2ms)[0m  [1m[34mSELECT "aml_document_kinds".* FROM "aml_document_kinds" WHERE "aml_document_kinds"."archived_at" IS NULL[0m
+  [1m[36mAML::Client Update (0.1ms)[0m  [1m[33mUPDATE "aml_clients" SET "aml_order_id" = ? WHERE "aml_clients"."id" = ?[0m  [["aml_order_id", 3], ["id", 3]]
+  [1m[35m (2.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::Order Create (0.3ms)[0m  [1m[32mINSERT INTO "aml_orders" ("first_name", "surname", "patronymic", "birth_date", "created_at", "updated_at", "client_id") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "First name"], ["surname", "Surname"], ["patronymic", "patronymic"], ["birth_date", "1988-08-31 00:00:00"], ["created_at", "2018-08-31 13:12:44.877819"], ["updated_at", "2018-08-31 13:12:44.877819"], ["client_id", 3]]
+  [1m[36mAML::DocumentKind Load (0.0ms)[0m  [1m[34mSELECT "aml_document_kinds".* FROM "aml_document_kinds" WHERE "aml_document_kinds"."archived_at" IS NULL[0m
+  [1m[35m (1.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::DocumentKind Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "aml_document_kinds" WHERE "aml_document_kinds"."title" = ? LIMIT ?[0m  [["title", "title1"], ["LIMIT", 1]]
+  [1m[36mAML::DocumentKind Create (0.2ms)[0m  [1m[32mINSERT INTO "aml_document_kinds" ("title", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["title", "title1"], ["created_at", "2018-08-31 13:12:44.888216"], ["updated_at", "2018-08-31 13:12:44.888216"]]
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::OrderDocument Create (0.3ms)[0m  [1m[32mINSERT INTO "aml_order_documents" ("document_kind_id", "created_at", "updated_at", "image", "order_id") VALUES (?, ?, ?, ?, ?)[0m  [["document_kind_id", 1], ["created_at", "2018-08-31 13:12:44.907152"], ["updated_at", "2018-08-31 13:12:44.907152"], ["image", "test.png"], ["order_id", 4]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "aml_document_kind_field_definitions"."id" FROM "aml_document_kind_field_definitions" INNER JOIN "aml_document_kinds" ON "aml_document_kind_field_definitions"."document_kind_id" = "aml_document_kinds"."id" WHERE "aml_document_kinds"."id" = ? AND "aml_document_kind_field_definitions"."archived_at" IS NULL[0m  [["id", 1]]
+  [1m[35m (2.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAML::ClientDocumentField Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "aml_client_document_fields" WHERE "aml_client_document_fields"."order_document_id" = ? LIMIT ?[0m  [["order_document_id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35mSQL (5.9ms)[0m  [1m[31mDELETE FROM "aml_clients";DELETE FROM "aml_document_kinds";DELETE FROM "aml_order_documents";DELETE FROM "aml_orders"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::Client Create (0.2ms)[0m  [1m[32mINSERT INTO "aml_clients" ("first_name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["first_name", "Name"], ["created_at", "2018-08-31 13:12:44.940843"], ["updated_at", "2018-08-31 13:12:44.940843"]]
+  [1m[36mAML::Client Load (0.1ms)[0m  [1m[34mSELECT  "aml_clients".* FROM "aml_clients" WHERE "aml_clients"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mAML::Order Create (0.1ms)[0m  [1m[32mINSERT INTO "aml_orders" ("created_at", "updated_at", "client_id") VALUES (?, ?, ?)[0m  [["created_at", "2018-08-31 13:12:44.943218"], ["updated_at", "2018-08-31 13:12:44.943218"], ["client_id", 4]]
+  [1m[36mAML::DocumentKind Load (0.1ms)[0m  [1m[34mSELECT "aml_document_kinds".* FROM "aml_document_kinds" WHERE "aml_document_kinds"."archived_at" IS NULL[0m
+  [1m[36mAML::Client Update (0.1ms)[0m  [1m[33mUPDATE "aml_clients" SET "aml_order_id" = ? WHERE "aml_clients"."id" = ?[0m  [["aml_order_id", 5], ["id", 4]]
+  [1m[35m (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::Order Create (0.3ms)[0m  [1m[32mINSERT INTO "aml_orders" ("first_name", "surname", "patronymic", "birth_date", "created_at", "updated_at", "client_id") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "First name"], ["surname", "Surname"], ["patronymic", "patronymic"], ["birth_date", "1988-08-31 00:00:00"], ["created_at", "2018-08-31 13:12:44.947617"], ["updated_at", "2018-08-31 13:12:44.947617"], ["client_id", 4]]
+  [1m[36mAML::DocumentKind Load (0.1ms)[0m  [1m[34mSELECT "aml_document_kinds".* FROM "aml_document_kinds" WHERE "aml_document_kinds"."archived_at" IS NULL[0m
+  [1m[35m (2.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::DocumentKind Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "aml_document_kinds" WHERE "aml_document_kinds"."title" = ? LIMIT ?[0m  [["title", "title2"], ["LIMIT", 1]]
+  [1m[36mAML::DocumentKind Create (0.2ms)[0m  [1m[32mINSERT INTO "aml_document_kinds" ("title", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["title", "title2"], ["created_at", "2018-08-31 13:12:44.953442"], ["updated_at", "2018-08-31 13:12:44.953442"]]
+  [1m[35m (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::DocumentKindFieldDefinition Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "aml_document_kind_field_definitions" WHERE "aml_document_kind_field_definitions"."title" = ? AND "aml_document_kind_field_definitions"."document_kind_id" = ? LIMIT ?[0m  [["title", "title1"], ["document_kind_id", 2], ["LIMIT", 1]]
+  [1m[36mAML::DocumentKindFieldDefinition Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "aml_document_kind_field_definitions" WHERE "aml_document_kind_field_definitions"."key" = ? AND "aml_document_kind_field_definitions"."archived_at" IS NULL LIMIT ?[0m  [["key", "key1"], ["LIMIT", 1]]
+  [1m[36mAML::DocumentKindFieldDefinition Create (0.3ms)[0m  [1m[32mINSERT INTO "aml_document_kind_field_definitions" ("key", "title", "created_at", "updated_at", "document_kind_id") VALUES (?, ?, ?, ?, ?)[0m  [["key", "key1"], ["title", "title1"], ["created_at", "2018-08-31 13:12:44.968449"], ["updated_at", "2018-08-31 13:12:44.968449"], ["document_kind_id", 2]]
+  [1m[35m (2.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::DocumentKindFieldDefinition Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "aml_document_kind_field_definitions" WHERE "aml_document_kind_field_definitions"."title" = ? AND "aml_document_kind_field_definitions"."document_kind_id" = ? LIMIT ?[0m  [["title", "title2"], ["document_kind_id", 2], ["LIMIT", 1]]
+  [1m[36mAML::DocumentKindFieldDefinition Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "aml_document_kind_field_definitions" WHERE "aml_document_kind_field_definitions"."key" = ? AND "aml_document_kind_field_definitions"."archived_at" IS NULL LIMIT ?[0m  [["key", "key2"], ["LIMIT", 1]]
+  [1m[36mAML::DocumentKindFieldDefinition Create (0.3ms)[0m  [1m[32mINSERT INTO "aml_document_kind_field_definitions" ("key", "title", "created_at", "updated_at", "document_kind_id") VALUES (?, ?, ?, ?, ?)[0m  [["key", "key2"], ["title", "title2"], ["created_at", "2018-08-31 13:12:44.974900"], ["updated_at", "2018-08-31 13:12:44.974900"], ["document_kind_id", 2]]
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::OrderDocument Create (0.3ms)[0m  [1m[32mINSERT INTO "aml_order_documents" ("document_kind_id", "created_at", "updated_at", "image", "order_id") VALUES (?, ?, ?, ?, ?)[0m  [["document_kind_id", 2], ["created_at", "2018-08-31 13:12:44.980930"], ["updated_at", "2018-08-31 13:12:44.980930"], ["image", "test.png"], ["order_id", 6]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "aml_document_kind_field_definitions"."id" FROM "aml_document_kind_field_definitions" INNER JOIN "aml_document_kinds" ON "aml_document_kind_field_definitions"."document_kind_id" = "aml_document_kinds"."id" WHERE "aml_document_kinds"."id" = ? AND "aml_document_kind_field_definitions"."archived_at" IS NULL[0m  [["id", 2]]
+  [1m[36mAML::DocumentKindFieldDefinition Load (0.2ms)[0m  [1m[34mSELECT  "aml_document_kind_field_definitions".* FROM "aml_document_kind_field_definitions" WHERE "aml_document_kind_field_definitions"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAML::ClientDocumentField Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "aml_client_document_fields" WHERE "aml_client_document_fields"."document_kind_field_definition_id" = ? AND "aml_client_document_fields"."order_document_id" = ? LIMIT ?[0m  [["document_kind_field_definition_id", 1], ["order_document_id", 2], ["LIMIT", 1]]
+  [1m[36mAML::ClientDocumentField Create (0.1ms)[0m  [1m[32mINSERT INTO "aml_client_document_fields" ("created_at", "updated_at", "order_document_id", "document_kind_field_definition_id") VALUES (?, ?, ?, ?)[0m  [["created_at", "2018-08-31 13:12:44.997192"], ["updated_at", "2018-08-31 13:12:44.997192"], ["order_document_id", 2], ["document_kind_field_definition_id", 1]]
+  [1m[36mAML::DocumentKindFieldDefinition Load (0.1ms)[0m  [1m[34mSELECT  "aml_document_kind_field_definitions".* FROM "aml_document_kind_field_definitions" WHERE "aml_document_kind_field_definitions"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mAML::ClientDocumentField Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "aml_client_document_fields" WHERE "aml_client_document_fields"."document_kind_field_definition_id" = ? AND "aml_client_document_fields"."order_document_id" = ? LIMIT ?[0m  [["document_kind_field_definition_id", 2], ["order_document_id", 2], ["LIMIT", 1]]
+  [1m[36mAML::ClientDocumentField Create (0.1ms)[0m  [1m[32mINSERT INTO "aml_client_document_fields" ("created_at", "updated_at", "order_document_id", "document_kind_field_definition_id") VALUES (?, ?, ?, ?)[0m  [["created_at", "2018-08-31 13:12:44.999813"], ["updated_at", "2018-08-31 13:12:44.999813"], ["order_document_id", 2], ["document_kind_field_definition_id", 2]]
+  [1m[35m (2.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "aml_client_document_fields" WHERE "aml_client_document_fields"."order_document_id" = ?[0m  [["order_document_id", 2]]
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35mSQL (7.8ms)[0m  [1m[31mDELETE FROM "aml_client_document_fields";DELETE FROM "aml_clients";DELETE FROM "aml_document_kind_field_definitions";DELETE FROM "aml_document_kinds";DELETE FROM "aml_order_documents";DELETE FROM "aml_orders"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::DocumentKind Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "aml_document_kinds" WHERE "aml_document_kinds"."title" = ? LIMIT ?[0m  [["title", "title3"], ["LIMIT", 1]]
+  [1m[36mAML::DocumentKind Create (0.2ms)[0m  [1m[32mINSERT INTO "aml_document_kinds" ("title", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["title", "title3"], ["created_at", "2018-08-31 13:12:45.015571"], ["updated_at", "2018-08-31 13:12:45.015571"]]
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::Client Create (0.3ms)[0m  [1m[32mINSERT INTO "aml_clients" ("first_name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["first_name", "Name"], ["created_at", "2018-08-31 13:12:45.019515"], ["updated_at", "2018-08-31 13:12:45.019515"]]
+  [1m[36mAML::Client Load (0.1ms)[0m  [1m[34mSELECT  "aml_clients".* FROM "aml_clients" WHERE "aml_clients"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mAML::Order Create (0.1ms)[0m  [1m[32mINSERT INTO "aml_orders" ("created_at", "updated_at", "client_id") VALUES (?, ?, ?)[0m  [["created_at", "2018-08-31 13:12:45.021924"], ["updated_at", "2018-08-31 13:12:45.021924"], ["client_id", 5]]
+  [1m[36mAML::DocumentKind Load (0.1ms)[0m  [1m[34mSELECT "aml_document_kinds".* FROM "aml_document_kinds" WHERE "aml_document_kinds"."archived_at" IS NULL[0m
+  [1m[36mAML::OrderDocument Create (0.2ms)[0m  [1m[32mINSERT INTO "aml_order_documents" ("document_kind_id", "created_at", "updated_at", "order_id") VALUES (?, ?, ?, ?)[0m  [["document_kind_id", 3], ["created_at", "2018-08-31 13:12:45.026981"], ["updated_at", "2018-08-31 13:12:45.026981"], ["order_id", 7]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "aml_document_kind_field_definitions"."id" FROM "aml_document_kind_field_definitions" INNER JOIN "aml_document_kinds" ON "aml_document_kind_field_definitions"."document_kind_id" = "aml_document_kinds"."id" WHERE "aml_document_kinds"."id" = ? AND "aml_document_kind_field_definitions"."archived_at" IS NULL[0m  [["id", 3]]
+  [1m[36mAML::Client Update (0.1ms)[0m  [1m[33mUPDATE "aml_clients" SET "aml_order_id" = ? WHERE "aml_clients"."id" = ?[0m  [["aml_order_id", 7], ["id", 5]]
+  [1m[35m (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::Order Create (0.6ms)[0m  [1m[32mINSERT INTO "aml_orders" ("first_name", "surname", "patronymic", "birth_date", "created_at", "updated_at", "client_id") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "First name"], ["surname", "Surname"], ["patronymic", "patronymic"], ["birth_date", "1988-08-31 00:00:00"], ["created_at", "2018-08-31 13:12:45.032901"], ["updated_at", "2018-08-31 13:12:45.032901"], ["client_id", 5]]
+  [1m[36mAML::DocumentKind Load (0.1ms)[0m  [1m[34mSELECT "aml_document_kinds".* FROM "aml_document_kinds" WHERE "aml_document_kinds"."archived_at" IS NULL[0m
+  [1m[36mAML::OrderDocument Create (0.5ms)[0m  [1m[32mINSERT INTO "aml_order_documents" ("document_kind_id", "created_at", "updated_at", "order_id") VALUES (?, ?, ?, ?)[0m  [["document_kind_id", 3], ["created_at", "2018-08-31 13:12:45.036503"], ["updated_at", "2018-08-31 13:12:45.036503"], ["order_id", 8]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "aml_document_kind_field_definitions"."id" FROM "aml_document_kind_field_definitions" INNER JOIN "aml_document_kinds" ON "aml_document_kind_field_definitions"."document_kind_id" = "aml_document_kinds"."id" WHERE "aml_document_kinds"."id" = ? AND "aml_document_kind_field_definitions"."archived_at" IS NULL[0m  [["id", 3]]
+  [1m[35m (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35mSQL (7.4ms)[0m  [1m[31mDELETE FROM "aml_clients";DELETE FROM "aml_document_kinds";DELETE FROM "aml_order_documents";DELETE FROM "aml_orders"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::DocumentKind Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "aml_document_kinds" WHERE "aml_document_kinds"."title" = ? LIMIT ?[0m  [["title", "title4"], ["LIMIT", 1]]
+  [1m[36mAML::DocumentKind Create (0.5ms)[0m  [1m[32mINSERT INTO "aml_document_kinds" ("title", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["title", "title4"], ["created_at", "2018-08-31 13:12:45.053736"], ["updated_at", "2018-08-31 13:12:45.053736"]]
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::Client Create (0.6ms)[0m  [1m[32mINSERT INTO "aml_clients" ("first_name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["first_name", "Name"], ["created_at", "2018-08-31 13:12:45.058579"], ["updated_at", "2018-08-31 13:12:45.058579"]]
+  [1m[36mAML::Client Load (0.2ms)[0m  [1m[34mSELECT  "aml_clients".* FROM "aml_clients" WHERE "aml_clients"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mAML::Order Create (0.4ms)[0m  [1m[32mINSERT INTO "aml_orders" ("created_at", "updated_at", "client_id") VALUES (?, ?, ?)[0m  [["created_at", "2018-08-31 13:12:45.062207"], ["updated_at", "2018-08-31 13:12:45.062207"], ["client_id", 6]]
+  [1m[36mAML::DocumentKind Load (0.1ms)[0m  [1m[34mSELECT "aml_document_kinds".* FROM "aml_document_kinds" WHERE "aml_document_kinds"."archived_at" IS NULL[0m
+  [1m[36mAML::OrderDocument Create (0.5ms)[0m  [1m[32mINSERT INTO "aml_order_documents" ("document_kind_id", "created_at", "updated_at", "order_id") VALUES (?, ?, ?, ?)[0m  [["document_kind_id", 4], ["created_at", "2018-08-31 13:12:45.066029"], ["updated_at", "2018-08-31 13:12:45.066029"], ["order_id", 9]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "aml_document_kind_field_definitions"."id" FROM "aml_document_kind_field_definitions" INNER JOIN "aml_document_kinds" ON "aml_document_kind_field_definitions"."document_kind_id" = "aml_document_kinds"."id" WHERE "aml_document_kinds"."id" = ? AND "aml_document_kind_field_definitions"."archived_at" IS NULL[0m  [["id", 4]]
+  [1m[36mAML::Client Update (0.1ms)[0m  [1m[33mUPDATE "aml_clients" SET "aml_order_id" = ? WHERE "aml_clients"."id" = ?[0m  [["aml_order_id", 9], ["id", 6]]
+  [1m[35m (4.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::Order Create (0.7ms)[0m  [1m[32mINSERT INTO "aml_orders" ("first_name", "surname", "patronymic", "birth_date", "created_at", "updated_at", "client_id") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "First name"], ["surname", "Surname"], ["patronymic", "patronymic"], ["birth_date", "1988-08-31 00:00:00"], ["created_at", "2018-08-31 13:12:45.075566"], ["updated_at", "2018-08-31 13:12:45.075566"], ["client_id", 6]]
+  [1m[36mAML::DocumentKind Load (0.1ms)[0m  [1m[34mSELECT "aml_document_kinds".* FROM "aml_document_kinds" WHERE "aml_document_kinds"."archived_at" IS NULL[0m
+  [1m[36mAML::OrderDocument Create (0.6ms)[0m  [1m[32mINSERT INTO "aml_order_documents" ("document_kind_id", "created_at", "updated_at", "order_id") VALUES (?, ?, ?, ?)[0m  [["document_kind_id", 4], ["created_at", "2018-08-31 13:12:45.080467"], ["updated_at", "2018-08-31 13:12:45.080467"], ["order_id", 10]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "aml_document_kind_field_definitions"."id" FROM "aml_document_kind_field_definitions" INNER JOIN "aml_document_kinds" ON "aml_document_kind_field_definitions"."document_kind_id" = "aml_document_kinds"."id" WHERE "aml_document_kinds"."id" = ? AND "aml_document_kind_field_definitions"."archived_at" IS NULL[0m  [["id", 4]]
+  [1m[35m (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "aml_order_documents" WHERE "aml_order_documents"."order_id" = ?[0m  [["order_id", 10]]
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35mSQL (7.7ms)[0m  [1m[31mDELETE FROM "aml_clients";DELETE FROM "aml_document_kinds";DELETE FROM "aml_order_documents";DELETE FROM "aml_orders"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::Client Create (0.6ms)[0m  [1m[32mINSERT INTO "aml_clients" ("first_name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["first_name", "Name"], ["created_at", "2018-08-31 13:12:45.100023"], ["updated_at", "2018-08-31 13:12:45.100023"]]
+  [1m[36mAML::Client Load (0.1ms)[0m  [1m[34mSELECT  "aml_clients".* FROM "aml_clients" WHERE "aml_clients"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mAML::Order Create (0.4ms)[0m  [1m[32mINSERT INTO "aml_orders" ("created_at", "updated_at", "client_id") VALUES (?, ?, ?)[0m  [["created_at", "2018-08-31 13:12:45.103292"], ["updated_at", "2018-08-31 13:12:45.103292"], ["client_id", 7]]
+  [1m[36mAML::DocumentKind Load (0.1ms)[0m  [1m[34mSELECT "aml_document_kinds".* FROM "aml_document_kinds" WHERE "aml_document_kinds"."archived_at" IS NULL[0m
+  [1m[36mAML::Client Update (0.5ms)[0m  [1m[33mUPDATE "aml_clients" SET "aml_order_id" = ? WHERE "aml_clients"."id" = ?[0m  [["aml_order_id", 11], ["id", 7]]
+  [1m[35m (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "aml_order_documents"."id" FROM "aml_order_documents" WHERE "aml_order_documents"."order_id" = ?[0m  [["order_id", 11]]
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35mSQL (4.0ms)[0m  [1m[31mDELETE FROM "aml_clients";DELETE FROM "aml_orders"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::DocumentKind Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "aml_document_kinds" WHERE "aml_document_kinds"."title" = ? LIMIT ?[0m  [["title", "title5"], ["LIMIT", 1]]
+  [1m[36mAML::DocumentKind Create (0.5ms)[0m  [1m[32mINSERT INTO "aml_document_kinds" ("title", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["title", "title5"], ["created_at", "2018-08-31 13:12:45.121810"], ["updated_at", "2018-08-31 13:12:45.121810"]]
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::DocumentKindFieldDefinition Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "aml_document_kind_field_definitions" WHERE "aml_document_kind_field_definitions"."title" = ? AND "aml_document_kind_field_definitions"."document_kind_id" = ? LIMIT ?[0m  [["title", "title3"], ["document_kind_id", 5], ["LIMIT", 1]]
+  [1m[36mAML::DocumentKindFieldDefinition Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "aml_document_kind_field_definitions" WHERE "aml_document_kind_field_definitions"."key" = ? AND "aml_document_kind_field_definitions"."archived_at" IS NULL LIMIT ?[0m  [["key", "key3"], ["LIMIT", 1]]
+  [1m[36mAML::DocumentKindFieldDefinition Create (0.5ms)[0m  [1m[32mINSERT INTO "aml_document_kind_field_definitions" ("key", "title", "created_at", "updated_at", "document_kind_id") VALUES (?, ?, ?, ?, ?)[0m  [["key", "key3"], ["title", "title3"], ["created_at", "2018-08-31 13:12:45.128652"], ["updated_at", "2018-08-31 13:12:45.128652"], ["document_kind_id", 5]]
+  [1m[35m (1.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::DocumentKindFieldDefinition Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "aml_document_kind_field_definitions" WHERE "aml_document_kind_field_definitions"."title" = ? AND "aml_document_kind_field_definitions"."document_kind_id" = ? LIMIT ?[0m  [["title", "title4"], ["document_kind_id", 5], ["LIMIT", 1]]
+  [1m[36mAML::DocumentKindFieldDefinition Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "aml_document_kind_field_definitions" WHERE "aml_document_kind_field_definitions"."key" = ? AND "aml_document_kind_field_definitions"."archived_at" IS NULL LIMIT ?[0m  [["key", "key4"], ["LIMIT", 1]]
+  [1m[36mAML::DocumentKindFieldDefinition Create (0.5ms)[0m  [1m[32mINSERT INTO "aml_document_kind_field_definitions" ("key", "title", "created_at", "updated_at", "document_kind_id") VALUES (?, ?, ?, ?, ?)[0m  [["key", "key4"], ["title", "title4"], ["created_at", "2018-08-31 13:12:45.134540"], ["updated_at", "2018-08-31 13:12:45.134540"], ["document_kind_id", 5]]
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "aml_document_kind_field_definitions"."id" FROM "aml_document_kind_field_definitions" WHERE "aml_document_kind_field_definitions"."document_kind_id" = ?[0m  [["document_kind_id", 5]]
+  [1m[36mAML::DocumentKindFieldDefinition Load (0.2ms)[0m  [1m[34mSELECT "aml_document_kind_field_definitions".* FROM "aml_document_kind_field_definitions" WHERE "aml_document_kind_field_definitions"."document_kind_id" = ?[0m  [["document_kind_id", 5]]
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35mSQL (4.0ms)[0m  [1m[31mDELETE FROM "aml_document_kind_field_definitions";DELETE FROM "aml_document_kinds"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::Client Create (0.6ms)[0m  [1m[32mINSERT INTO "aml_clients" ("first_name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["first_name", "Name"], ["created_at", "2018-08-31 13:12:45.154074"], ["updated_at", "2018-08-31 13:12:45.154074"]]
+  [1m[36mAML::Client Load (0.1ms)[0m  [1m[34mSELECT  "aml_clients".* FROM "aml_clients" WHERE "aml_clients"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mAML::Order Create (0.4ms)[0m  [1m[32mINSERT INTO "aml_orders" ("created_at", "updated_at", "client_id") VALUES (?, ?, ?)[0m  [["created_at", "2018-08-31 13:12:45.157290"], ["updated_at", "2018-08-31 13:12:45.157290"], ["client_id", 8]]
+  [1m[36mAML::DocumentKind Load (0.1ms)[0m  [1m[34mSELECT "aml_document_kinds".* FROM "aml_document_kinds" WHERE "aml_document_kinds"."archived_at" IS NULL[0m
+  [1m[36mAML::Client Update (0.1ms)[0m  [1m[33mUPDATE "aml_clients" SET "aml_order_id" = ? WHERE "aml_clients"."id" = ?[0m  [["aml_order_id", 12], ["id", 8]]
+  [1m[35m (2.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::Order Create (0.6ms)[0m  [1m[32mINSERT INTO "aml_orders" ("first_name", "surname", "patronymic", "birth_date", "created_at", "updated_at", "client_id") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "First name"], ["surname", "Surname"], ["patronymic", "patronymic"], ["birth_date", "1988-08-31 00:00:00"], ["created_at", "2018-08-31 13:12:45.163258"], ["updated_at", "2018-08-31 13:12:45.163258"], ["client_id", 8]]
+  [1m[36mAML::DocumentKind Load (0.0ms)[0m  [1m[34mSELECT "aml_document_kinds".* FROM "aml_document_kinds" WHERE "aml_document_kinds"."archived_at" IS NULL[0m
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::DocumentKind Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "aml_document_kinds" WHERE "aml_document_kinds"."title" = ? LIMIT ?[0m  [["title", "title6"], ["LIMIT", 1]]
+  [1m[36mAML::DocumentKind Create (0.5ms)[0m  [1m[32mINSERT INTO "aml_document_kinds" ("title", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["title", "title6"], ["created_at", "2018-08-31 13:12:45.169214"], ["updated_at", "2018-08-31 13:12:45.169214"]]
+  [1m[35m (1.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::OrderDocument Create (0.3ms)[0m  [1m[32mINSERT INTO "aml_order_documents" ("document_kind_id", "created_at", "updated_at", "image", "order_id") VALUES (?, ?, ?, ?, ?)[0m  [["document_kind_id", 6], ["created_at", "2018-08-31 13:12:45.173384"], ["updated_at", "2018-08-31 13:12:45.173384"], ["image", "test.png"], ["order_id", 13]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "aml_document_kind_field_definitions"."id" FROM "aml_document_kind_field_definitions" INNER JOIN "aml_document_kinds" ON "aml_document_kind_field_definitions"."document_kind_id" = "aml_document_kinds"."id" WHERE "aml_document_kinds"."id" = ? AND "aml_document_kind_field_definitions"."archived_at" IS NULL[0m  [["id", 6]]
+  [1m[35m (2.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAML::ClientDocumentField Load (0.2ms)[0m  [1m[34mSELECT "aml_client_document_fields".* FROM "aml_client_document_fields" WHERE "aml_client_document_fields"."order_document_id" = ?[0m  [["order_document_id", 7]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "aml_document_kind_field_definitions"."id" FROM "aml_document_kind_field_definitions" WHERE "aml_document_kind_field_definitions"."document_kind_id" = ?[0m  [["document_kind_id", 6]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "aml_order_documents"."id" FROM "aml_order_documents" WHERE "aml_order_documents"."order_id" = ?[0m  [["order_id", 13]]
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35mSQL (7.3ms)[0m  [1m[31mDELETE FROM "aml_clients";DELETE FROM "aml_document_kinds";DELETE FROM "aml_order_documents";DELETE FROM "aml_orders"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::Client Create (0.4ms)[0m  [1m[32mINSERT INTO "aml_clients" ("first_name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["first_name", "Name"], ["created_at", "2018-08-31 13:12:45.199687"], ["updated_at", "2018-08-31 13:12:45.199687"]]
+  [1m[36mAML::Client Load (0.1ms)[0m  [1m[34mSELECT  "aml_clients".* FROM "aml_clients" WHERE "aml_clients"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mAML::Order Create (0.5ms)[0m  [1m[32mINSERT INTO "aml_orders" ("created_at", "updated_at", "client_id") VALUES (?, ?, ?)[0m  [["created_at", "2018-08-31 13:12:45.205135"], ["updated_at", "2018-08-31 13:12:45.205135"], ["client_id", 9]]
+  [1m[36mAML::DocumentKind Load (0.1ms)[0m  [1m[34mSELECT "aml_document_kinds".* FROM "aml_document_kinds" WHERE "aml_document_kinds"."archived_at" IS NULL[0m
+  [1m[36mAML::Client Update (0.2ms)[0m  [1m[33mUPDATE "aml_clients" SET "aml_order_id" = ? WHERE "aml_clients"."id" = ?[0m  [["aml_order_id", 14], ["id", 9]]
+  [1m[35m (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAML::Order Create (0.6ms)[0m  [1m[32mINSERT INTO "aml_orders" ("first_name", "surname", "patronymic", "birth_date", "created_at", "updated_at", "client_id") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "First name"], ["surname", "Surname"], ["patronymic", "patronymic"], ["birth_date", "1988-08-31 00:00:00"], ["created_at", "2018-08-31 13:12:45.212067"], ["updated_at", "2018-08-31 13:12:45.212067"], ["client_id", 9]]
+  [1m[36mAML::DocumentKind Load (0.0ms)[0m  [1m[34mSELECT "aml_document_kinds".* FROM "aml_document_kinds" WHERE "aml_document_kinds"."archived_at" IS NULL[0m
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "aml_order_documents"."id" FROM "aml_order_documents" WHERE "aml_order_documents"."order_id" = ?[0m  [["order_id", 15]]
+  [1m[36mAML::OrderDocument Load (0.2ms)[0m  [1m[34mSELECT "aml_order_documents".* FROM "aml_order_documents" WHERE "aml_order_documents"."order_id" = ?[0m  [["order_id", 15]]
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35mSQL (4.1ms)[0m  [1m[31mDELETE FROM "aml_clients";DELETE FROM "aml_orders"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m

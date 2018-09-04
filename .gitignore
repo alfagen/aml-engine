@@ -53,3 +53,4 @@ bower.json
 node_modules/
 
 test/dummy/log/development.log
+test/dummy/log/test.log

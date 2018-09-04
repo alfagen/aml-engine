@@ -2,6 +2,9 @@
 
 module AML
   class OrderDocument < ApplicationRecord
+    # 'Can`t update document of locker order'
+    ClosedOrderError = Class.new StandardError
+
     extend Enumerize
     include Workflow
     include Authority::Abilities
@@ -11,11 +14,13 @@ module AML
     belongs_to :order, class_name: 'AML::Order', foreign_key: 'order_id', inverse_of: :order_documents
     belongs_to :document_kind, class_name: 'AML::DocumentKind', foreign_key: 'document_kind_id', inverse_of: :order_documents
 
+    # TODO переиименовать в document_fields
     has_many :client_document_fields, class_name: 'AML::ClientDocumentField', dependent: :destroy
-    has_many :document_kind_field_definitions, through: :document_kind, source: :definitions
+    has_many :definitions, through: :document_kind, source: :definitions
 
     scope :ordered, -> { order 'id desc' }
 
+    # TODO недавать загружать в обрабатываемую или обработанную заявку
     # validates :image, presence: true
     # validates :document_kind_id, uniqueness: { scope: :order_id }
 
@@ -38,7 +43,10 @@ module AML
       end
     end
 
+    before_validation :validate_order_open!
+
     after_create :create_fields!
+    before_save :save_fields!
 
     def client_document_fields_attributes
       client_document_fields.map do |document_field|
@@ -53,17 +61,16 @@ module AML
       end.freeze
     end
 
-    def fields=(_value)
-      self.client_document_fields_attributes = fields.map do |_k, v|
-        {
-          definition: document_kind_field_definitions.find_by(key: key),
-          order_document_id: id,
-          value: v
-        }
-      end
+    def fields=(new_fields = {})
+      validate_order_open!
+      @fields = new_fields
     end
 
     private
+
+    def validate_order_open!
+      raise ClosedOrderError if order.is_locked?
+    end
 
     # TODO: устанавливать когда хоть что-нибудь появится, а может лучше вообще из API
     def order_loading
@@ -71,9 +78,20 @@ module AML
     end
 
     def create_fields!
-      document_kind_field_definitions.alive.pluck(:id).each do |definition_id|
+      definitions.alive.pluck(:id).each do |definition_id|
         client_document_fields.create! definition_id: definition_id, order_document: self
       end
+    end
+
+    def save_fields!
+      return if @fields.nil?
+
+      updated_ids = client_document_fields.each do |cdf|
+        cdf.update value: fields[cdf.key]
+        cdf.id
+      end
+
+      client_document_fields.where.not(id: updated_ids).update_all value: nil
     end
   end
 end

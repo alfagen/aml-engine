@@ -1,4 +1,5 @@
 module AML
+  # TODO Переименовать в DocumentField
   class ClientDocumentField < ApplicationRecord
     scope :ordered, -> { order 'id desc' }
 

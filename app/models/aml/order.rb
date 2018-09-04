@@ -19,18 +19,23 @@ module AML
     # validates :surname, presence: true
     # validates :patronymic, presence: true
     #
+    # TODO Проверять что заявку можно менять
     ## TODO validate date
     # validates :birth_date, presence: true
 
     workflow do
+      # Находится на стадии загрузки пользователем
+      #
       state :none do
         event :load, transitions_to: :pending
       end
 
+      # Пользователь загрузил, ждет когда оператор начнет обрабатывать
       state :pending do
         event :process, transitions_to: :processing
       end
 
+      # Оператор начал обрабатывать
       state :processing do
         event :accept, transitions_to: :accepted
         event :reject, transitions_to: :rejected
@@ -47,6 +52,10 @@ module AML
     end
 
     after_create :create_documents!
+
+    def is_locked?
+      accepted? || processing? || accepted? || rejected?
+    end
 
     def complete?
       order_documents.select(:complete?).count == order_documents.count

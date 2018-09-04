@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 # development dependencies will be added by default to the :development group.
 gemspec
 
-gem 'archivable', github: 'BrandyMint/archivable'
+gem 'dapi-archivable'
 
 gem 'carrierwave'
 gem 'authority'

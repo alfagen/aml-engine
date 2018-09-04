@@ -5,18 +5,50 @@ require "aml/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "aml"
-  s.version     = AML::VERSION
-  s.authors     = ["Authors"]
-  s.email       = ["email"]
-  s.homepage    = "http://page.com"
-  s.summary     = "Summary of AML."
-  s.description = "Description of AML."
-  s.license     = "MIT"
+    s.name        = "aml"
+    s.version     = AML::VERSION
+    s.authors     = ["Authors"]
+    s.email       = ["email"]
+    s.homepage    = "http://page.com"
+    s.summary     = "Summary of AML."
+    s.description = "Description of AML."
+    s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
+    s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency "rails", "~> 5.2.1"
+    s.add_runtime_dependency 'carrierwave'
+    s.add_runtime_dependency 'authority'
+    s.add_runtime_dependency 'fast_jsonapi'
+    s.add_runtime_dependency 'valid_email'
+    s.add_runtime_dependency 'enumerize'
+    s.add_runtime_dependency 'workflow'
+    s.add_runtime_dependency 'sorcery'
 
-  s.add_development_dependency "sqlite3"
+    s.add_runtime_dependency "rails", "~> 5.2.1"
+    s.add_runtime_dependency "dapi-archivable", "~> 0.1.2"
+
+    s.add_development_dependency "sqlite3"
+    s.add_development_dependency 'rubocop'
+    s.add_development_dependency 'rubocop-rspec'
+    s.add_development_dependency 'guard-bundler'
+    s.add_development_dependency 'guard-ctags-bundler'
+    s.add_development_dependency 'guard-rspec'
+    s.add_development_dependency 'guard-rubocop'
+    s.add_development_dependency 'pry'
+    s.add_development_dependency 'pry-doc'
+    # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+    s.add_development_dependency 'byebug'
+    # Добавляет show-routes и show-models
+    # и делает рельсовую конслоль через pry
+    s.add_development_dependency 'pry-rails'
+
+    # show-method
+    # hist --grep foo
+    # Adds step-by-step debugging and stack navigation capabilities to pry using byebug.
+    s.add_development_dependency 'pry-byebug'
+
+    s.add_development_dependency 'factory_bot'
+    s.add_development_dependency 'factory_bot_rails'
+    s.add_development_dependency 'rspec-rails', '~> 3.7'
+    s.add_development_dependency 'database_rewinder'
 end

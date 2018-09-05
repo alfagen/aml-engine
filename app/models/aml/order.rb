@@ -64,7 +64,7 @@ module AML
     def get_order_document_by_kind(document_kind)
       with_lock do
         order_documents
-          .create_with(order: order)
+          .create_with(order: self)
           .find_or_create_by!(document_kind: document_kind)
       end
     end

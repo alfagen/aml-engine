@@ -3,8 +3,7 @@ class AML::ClientSerializer
 
   set_type :aml_client
 
-  belongs_to :current_order, record_type: :aml_order
-  # attributes :first_name, :surname, :patronymic, :birth_date
+  belongs_to :current_order, record_type: :aml_order, serializer: 'AML::OrderSerializer'
 
   attributes :workflow_state
 end

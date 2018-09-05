@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# TODO При изменении данных у Клиента создается новая заявка, в нее копируются все документы,
+# но статус у них сбрасывается.
+
 module AML
   class Client < ApplicationRecord
     include Authority::Abilities

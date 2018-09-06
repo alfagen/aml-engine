@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AML
-  class OperatorController < AML::ApplicationController
+  class OperatorsController < AML::ApplicationController
     include Pagination
 
     def index

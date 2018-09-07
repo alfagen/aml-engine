@@ -4,5 +4,5 @@ class AML::DocumentKindSerializer
 
   has_many :definitions, record_type: :aml_document_kind_field_definition
 
-  attributes :title, :position
+  attributes :title, :position, :details
 end

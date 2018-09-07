@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_31_122808) do
+ActiveRecord::Schema.define(version: 2018_09_07_052103) do
 
   create_table "aml_client_document_fields", force: :cascade do |t|
     t.string "value"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2018_08_31_122808) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "document_kind_id"
+    t.integer "position"
     t.index ["document_kind_id", "key"], name: "index_aml_document_kind_field_definitions_on_key", unique: true
   end
 
@@ -50,6 +51,8 @@ ActiveRecord::Schema.define(version: 2018_08_31_122808) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "archived_at"
+    t.text "details"
+    t.integer "position"
     t.index ["title"], name: "index_aml_document_kinds_on_title", unique: true
   end
 

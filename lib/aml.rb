@@ -1,3 +1,5 @@
+require 'archivable'
+
 require "aml/engine"
 
 module AML

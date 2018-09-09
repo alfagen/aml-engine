@@ -14,6 +14,7 @@ module AML
 
     after_create :create_current_order!
 
+    # Нужно для для сериализера
     alias_attribute :current_order_id, :aml_order_id
 
     # TODO: Не может быть без имени если находится в статусе оформляется или принят/отклонен

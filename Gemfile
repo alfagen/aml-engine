@@ -17,6 +17,7 @@ gem 'workflow'
 gem 'sorcery'
 
 group :development do
+    gem 'mysql2'
     gem 'rubocop'
     gem 'rubocop-rspec'
     gem 'guard-bundler'

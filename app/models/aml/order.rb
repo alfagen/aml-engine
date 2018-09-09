@@ -70,13 +70,13 @@ module AML
     end
 
     def missing_document_kinds
-      AML::DocumentKind.where.not(id: order_documents.pluck(:document_kind_id))
+      DocumentKind.where.not(id: order_documents.pluck(:document_kind_id))
     end
 
     private
 
     def create_documents!
-      AML::DocumentKind.alive.each do  |document_kind|
+      DocumentKind.alive.each do  |document_kind|
         order_documents.create! order: self, document_kind: document_kind
       end
     end

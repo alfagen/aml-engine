@@ -2,6 +2,8 @@ FactoryBot.define do
   factory(:document_kind, class: AML::DocumentKind) do
     sequence(:title) { |n| "title#{n}" }
 
+    association :document_group
+
     # title { generate :title }
 
     trait :with_definitions do

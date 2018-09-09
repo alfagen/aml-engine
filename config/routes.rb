@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 AML::Engine.routes.draw do
-  # default_url_options Settings.default_url_options.symbolize_keys
-
-  root to: redirect('/aml/orders')
 
   concern :archivable do
     member do
@@ -12,11 +9,7 @@ AML::Engine.routes.draw do
     end
   end
 
-  get 'login' => 'user_sessions#new', :as => :login
-  delete 'logout' => 'user_sessions#destroy', :as => :logout
-  resources :password_resets, only: %i[new create edit update]
-  resource :password, only: %i[edit update]
-  resources :user_sessions, only: %i[new create destroy]
+
   resources :operators, except: %i[show destroy] do
     member do
       put :block

@@ -1,8 +1,0 @@
-= simple_form_for(user_session, method: :post) do |f|
-  = f.input :login, as: :string, label: false, hint: 'Логин (email)'
-  = f.input :password, label: false, hint: 'Пароль'
-  .row
-    .col-md-6
-      = f.button :submit, 'Войти', class: 'btn btn-success'
-    .col-md-6
-      = link_to 'Забыл пароль', new_password_reset_path

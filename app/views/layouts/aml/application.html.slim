@@ -1,13 +1,13 @@
 head
   title AML
   = csrf_meta_tags
-  = stylesheet_link_tag    'aml/application', media: 'all', 'data-turbolinks-track': 'reload'
-  = javascript_include_tag 'aml/application', 'data-turbolinks-track': 'reload'
+  = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+  = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 body
-  .m-b-lg= render 'aml/application/navigation'
+  .m-b-lg= render 'navigation'
   .container.m-t-md
     = top_breadcrumbs
   .container.m-t-md
     = yield
 
-  = render 'aml/application/flashes'
+  = render 'flashes'

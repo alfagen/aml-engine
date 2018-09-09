@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 AML::Engine.routes.draw do
-
   concern :archivable do
     member do
       delete :archive
@@ -9,14 +8,12 @@ AML::Engine.routes.draw do
     end
   end
 
-
-  resources :operators, except: %i[show destroy] do
-    member do
-      put :block
-      put :unblock
-    end
+  resources :document_kinds, only: %i[index new create show] do
+    concerns :archivable
   end
-  resources :document_kinds, only: %i[index new create show]
+  resources :document_groups, only: %i[index new create show] do
+    concerns :archivable
+  end
   resources :document_kind_field_definitions, only: %i[new create edit update] do
     concerns :archivable
   end

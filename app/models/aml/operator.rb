@@ -33,6 +33,10 @@ module AML
       end
     end
 
+    def to_partial_path
+      'operator'
+    end
+
     def active_for_authentication?
       unblocked?
     end

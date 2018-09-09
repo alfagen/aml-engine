@@ -1,5 +1,0 @@
-h2 Напишите email для восстановления пароля
-
-= simple_form_for(:password_reset, url: password_resets_path, method: :post) do |f|
-  = f.input :email, as: :string, label: false, hint: 'Логин (email)'
-  = f.button :submit, 'Восстановить пароль', class: 'btn btn-success'

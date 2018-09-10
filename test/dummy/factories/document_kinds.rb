@@ -4,8 +4,6 @@ FactoryBot.define do
 
     association :document_group
 
-    # title { generate :title }
-
     trait :with_definitions do
       after(:create) do |instance|
         create :document_kind_field_definition, document_kind: instance

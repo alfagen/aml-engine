@@ -3,7 +3,7 @@ module AML
     include Authority::Abilities
     include Archivable
 
-    has_many :document_kinds, class_name: 'AML::DocumentKinds', dependent: :destroy
+    has_many :document_kinds, class_name: 'AML::DocumentKind', dependent: :destroy
 
     scope :ordered, -> { order :position }
 

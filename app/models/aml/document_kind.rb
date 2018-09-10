@@ -13,5 +13,8 @@ module AML
     has_many :order_documents, class_name: 'AML::OrderDocument', dependent: :destroy
 
     validates :title, presence: true, uniqueness: true
+
+    # Поддержка для Serializer
+    alias_attribute :document_group_id, :aml_document_group_id
   end
 end

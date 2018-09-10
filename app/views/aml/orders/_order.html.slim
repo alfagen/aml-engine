@@ -2,7 +2,7 @@ tr
   td = order.id
   td = render partial: 'documents', locals: { documents: order.order_documents }
   td #{order.first_name}, #{order.surname}, #{order.patronymic}
-  td = I18n.l order.birth_date
+  td = order&.birth_date || 'Отсутствует'
   td = order.workflow_state
   td = order.operator&.email || 'Не назначен'
   td

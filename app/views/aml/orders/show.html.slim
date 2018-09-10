@@ -1,6 +1,6 @@
 h2 Заявка: #{order.id}
 h4 Клиент: #{order.first_name} #{order.surname} #{order.patronymic}
-h4 Дата рождения: #{order.birth_date.strftime('%F')}
+h4 Дата рождения: #{order&.birth_date || 'Отсутствует'}
 h4 Состояние: #{order.workflow_state}
 - if order.current_state >= :processing
   h4 Оператор: #{order.operator.email}
@@ -16,4 +16,4 @@ h4 Состояние: #{order.workflow_state}
     = render partial: 'aml/order_documents/documents_list', locals: { documents: documents }
   - if order.none?
     h4 Добавить документ
-    = render partial: 'aml/order_documents/form', locals: { order_document: AML::OrderDocument.new, order: order, document_kinds: order.missing_documents }
+    = render partial: 'aml/order_documents/form', locals: { order_document: AML::OrderDocument.new, order: order, document_kinds: order.missing_document_kinds }

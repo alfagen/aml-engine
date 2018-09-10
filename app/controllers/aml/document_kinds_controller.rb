@@ -22,7 +22,7 @@ module AML
 
     def show
       render :show, locals: { document_kind: document_kind,
-                              field_definitions: document_kind.document_kind_field_definitions }
+                              field_definitions: document_kind.definitions }
     end
 
     private

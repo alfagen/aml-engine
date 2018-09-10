@@ -1,3 +1,4 @@
 tr
   td = document_kind.title
-  td = link_to "Дополнительные поля (#{document_kind.document_kind_field_definitions.alive.count})", document_kind_path(document_kind), class: 'btn btn-default'
+  td = link_to document_kind.document_group.title, document_group_path(document_kind.document_group)
+  td = link_to "Дополнительные поля (#{document_kind.definitions.alive.count})", document_kind_path(document_kind), class: 'btn btn-default'

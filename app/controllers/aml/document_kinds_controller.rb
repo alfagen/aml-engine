@@ -9,7 +9,7 @@ module AML
     end
 
     def new
-      render :new, locals: { document_kind: AML::DocumentKind.new(permitted_params) }
+      render :new, locals: { document_kind: AML::DocumentKind.new(permitted_params), document_groups: AML::DocumentGroup.all }
     end
 
     def create
@@ -32,7 +32,7 @@ module AML
     end
 
     def permitted_params
-      params.fetch(:aml_document_kind, {}).permit(:title)
+      params.fetch(:document_kind, {}).permit(:title, :details, :position, :aml_document_group_id)
     end
   end
 end

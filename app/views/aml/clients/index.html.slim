@@ -3,7 +3,7 @@
   h2 Список клиентoв
   - if clients.any?
     h5 Поиск по полям клиента:
-    = search_form_for @q, clients_path, builder: SimpleForm::FormBuilder do |f|
+    = search_form_for @q, { path: clients_path, builder: SimpleForm::FormBuilder } do |f|
       = f.search_field :first_name_or_surname_or_patronymic_cont
       = f.submit 'Искать', class: 'btn btn-success'
     table.table.table-condensed

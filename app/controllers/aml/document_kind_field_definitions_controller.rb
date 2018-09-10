@@ -44,7 +44,7 @@ module AML
     end
 
     def permitted_params
-      params.fetch(:aml_document_kind_field_definition, {}).permit(:key, :title, :document_kind_id)
+      params.fetch(:document_kind_field_definition, {}).permit(:key, :title, :document_kind_id)
     end
   end
 end

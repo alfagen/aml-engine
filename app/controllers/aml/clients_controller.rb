@@ -39,7 +39,7 @@ module AML
     end
 
     def permitted_params
-      params.fetch(:aml_client, {}).permit(:first_name, :surname, :patronymic, :birth_date)
+      params.fetch(:client, {}).permit(:first_name, :surname, :patronymic, :birth_date)
     end
   end
 end

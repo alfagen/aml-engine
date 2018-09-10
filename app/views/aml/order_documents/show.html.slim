@@ -24,4 +24,4 @@
         td = field.definition.alive?
         td = link_to 'Изменить значение', edit_order_document_field_path(field), class: 'btn btn-default' if order_document.order.taken_by?(current_user)
 h4 Файл:
-= image_tag(order_document.image.url, style: 'height:auto;width:100%;')
+= image_tag(order_document.image.url, style: 'height:auto;width:100%;') if order_document.image.present?

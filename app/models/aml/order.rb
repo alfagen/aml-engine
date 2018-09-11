@@ -12,22 +12,11 @@ module AML
 
     scope :ordered, -> { order 'id desc' }
 
-    enumerize :workflow_state, in: %w[none pending processing accepted rejected], scope: true
-
-    # TODO: в noe статус может быть без этих полей
-    # validates :first_name, presence: true
-    # validates :surname, presence: true
-    # validates :patronymic, presence: true
-    #
-    # TODO Проверять что заявку можно менять
-    ## TODO validate date
-    # validates :birth_date, presence: true
-
     workflow do
       # Находится на стадии загрузки пользователем
       #
       state :none do
-        event :load, transitions_to: :pending
+        event :done, transitions_to: :pending, if: :all_documents_loaded?
       end
 
       # Пользователь загрузил, ждет когда оператор начнет обрабатывать
@@ -35,7 +24,7 @@ module AML
         event :process, transitions_to: :processing
       end
 
-      # Оператор начал обрабатывать
+       # Оператор начал обрабатывать
       state :processing do
         event :accept, transitions_to: :accepted
         event :reject, transitions_to: :rejected
@@ -53,6 +42,10 @@ module AML
 
     after_create :create_documents!
 
+    def reject(reject_reason)
+      update reject_reason: reject_reason
+    end
+
     def is_locked?
       accepted? || processing? || accepted? || rejected?
     end
@@ -67,6 +60,10 @@ module AML
           .create_with(order: self)
           .find_or_create_by!(document_kind: document_kind)
       end
+    end
+
+    def all_documents_loaded?
+      order_documents.map(&:workflow_state).uniq == ['loaded']
     end
 
     def missing_document_kinds

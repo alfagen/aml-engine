@@ -7,7 +7,15 @@ RSpec.describe AML::OrderDocument, type: :model do
 
   context 'вид документа без полей' do
     let(:document_kind) { create :document_kind }
+    it { expect(subject).to be_none }
     it { expect(subject.client_document_fields).to be_empty }
+
+    describe 'загружаем документ' do
+      before do
+        subject.update image: Rack::Test::UploadedFile.new(Rails.root.join('test_files', 'test.png'))
+      end
+      it { expect(subject).to be_loaded }
+    end
   end
 
   describe 'с полями' do
@@ -25,7 +33,6 @@ RSpec.describe AML::OrderDocument, type: :model do
     it do
       expect { subject.fields = {} }.to_not raise_error
     end
-
 
     it 'устанавливаем поля через fields=' do
       subject.fields = fields

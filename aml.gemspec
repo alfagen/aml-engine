@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency 'fast_jsonapi'
     s.add_runtime_dependency 'valid_email'
     s.add_runtime_dependency 'enumerize'
-    s.add_runtime_dependency 'workflow'
+    s.add_runtime_dependency 'workflow', '~> 1.3.0'
     s.add_runtime_dependency 'sorcery'
 
     s.add_runtime_dependency "rails", "~> 5.2.1"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_09_174004) do
+ActiveRecord::Schema.define(version: 2018_09_11_080249) do
 
   create_table "aml_client_document_fields", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "value"
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 2018_09_09_174004) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image"
-    t.string "workflow_state", default: "pending", null: false
+    t.string "workflow_state", default: "none", null: false
     t.bigint "order_id"
     t.index ["document_kind_id"], name: "index_aml_order_documents_on_document_kind_id"
     t.index ["order_id", "document_kind_id"], name: "index_aml_order_documents_on_order_id_and_document_kind_id", unique: true
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 2018_09_09_174004) do
     t.bigint "client_id"
     t.bigint "operator_id"
     t.timestamp "archived_at"
+    t.text "reject_reason"
     t.index ["client_id"], name: "index_aml_orders_on_client_id"
     t.index ["operator_id"], name: "index_aml_orders_on_operator_id"
   end

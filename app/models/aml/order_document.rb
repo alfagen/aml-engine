@@ -24,12 +24,18 @@ module AML
     # validates :image, presence: true
     # validates :document_kind_id, uniqueness: { scope: :order_id }
 
-    enumerize :workflow_state, in: %w[none pending processing accepted rejected], scope: true
-
-    accepts_nested_attributes_for :client_document_fields, update_only: true
+    # none - Документ ожидает загрузки
+    # loaded - Документ загружен
+    # processing - Проверка документа
+    # accepted - Документ одобрен
+    # rejected - Отклонен (причина reason)
+    #
 
     workflow do
-      state :pending do
+      state :none do
+        event :load, transitions_to: :loaded
+      end
+      state :loaded do
         event :accept, transitions_to: :accepted
         event :reject, transitions_to: :rejected
       end
@@ -47,6 +53,8 @@ module AML
 
     after_create :create_fields!
     before_save :save_fields!
+
+    accepts_nested_attributes_for :client_document_fields, update_only: true
 
     def client_document_fields_attributes
       client_document_fields.map do |document_field|

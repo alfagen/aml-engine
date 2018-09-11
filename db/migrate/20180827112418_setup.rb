@@ -18,8 +18,8 @@ class Setup < ActiveRecord::Migration[5.2]
       t.string "patronymic"
       t.string "workflow_state", default: "none", null: false
       t.date "birth_date"
-      t.bigint "aml_order_id"
-      t.index ["aml_order_id"], name: "index_aml_clients_on_aml_order_id"
+      t.bigint "order_id"
+      t.index ["order_id"], name: "index_aml_clients_on_order_id"
     end
 
     create_table "aml_document_kind_field_definitions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

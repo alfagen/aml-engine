@@ -1,5 +1,0 @@
-= simple_form_for document_kind_field_definition, method: :post, url: document_kind_field_definitions_path do |f|
-  = f.input :key, as: :string, label: false, hint: 'Ключ поля'
-  = f.input :title, as: :string, label: false, hint: 'Название поля'
-  = f.hidden_field :document_kind_id, value: document_kind.id
-  = f.button :submit, 'Создать/редактировать', class: 'btn btn-success'

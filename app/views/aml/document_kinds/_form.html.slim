@@ -1,6 +1,0 @@
-= simple_form_for document_kind, method: :post, url: document_kinds_path do |f|
-  = f.input :aml_document_group_id, label: false, hint: 'Выберите группу документов',collection: document_groups, include_blank: false
-  = f.input :title, label: false, hint: 'Название типа документа'
-  = f.input :details, label: false, hint: 'Описание документа'
-  = f.input :position, label: false, hint: 'Номер документа'
-  = f.button :submit, 'Создать', class: 'btn btn-success'

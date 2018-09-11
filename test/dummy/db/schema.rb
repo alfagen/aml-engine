@@ -30,8 +30,8 @@ ActiveRecord::Schema.define(version: 2018_09_11_080249) do
     t.string "patronymic"
     t.string "workflow_state", default: "none", null: false
     t.date "birth_date"
-    t.bigint "aml_order_id"
-    t.index ["aml_order_id"], name: "index_aml_clients_on_aml_order_id"
+    t.bigint "order_id"
+    t.index ["order_id"], name: "index_aml_clients_on_order_id"
   end
 
   create_table "aml_document_groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -61,8 +61,8 @@ ActiveRecord::Schema.define(version: 2018_09_11_080249) do
     t.timestamp "archived_at"
     t.text "details"
     t.integer "position"
-    t.bigint "aml_document_group_id"
-    t.index ["aml_document_group_id"], name: "index_aml_document_kinds_on_aml_document_group_id"
+    t.bigint "document_group_id"
+    t.index ["document_group_id"], name: "index_aml_document_kinds_on_aml_document_group_id"
     t.index ["title"], name: "index_aml_document_kinds_on_title", unique: true
   end
 

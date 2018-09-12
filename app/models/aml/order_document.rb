@@ -6,7 +6,6 @@ module AML
     ClosedOrderError = Class.new StandardError
 
     extend Enumerize
-    include Authority::Abilities
     include Workflow
 
     mount_uploader :image, FileUploader

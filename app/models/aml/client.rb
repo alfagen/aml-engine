@@ -5,8 +5,6 @@
 
 module AML
   class Client < ApplicationRecord
-    include Authority::Abilities
-
     scope :ordered, -> { order 'id desc' }
 
     has_many :orders, class_name: 'AML::Order', dependent: :destroy

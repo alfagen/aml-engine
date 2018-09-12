@@ -2,7 +2,6 @@ module AML
   # TODO Переименовать в FielDefinition
   #
   class DocumentKindFieldDefinition < ApplicationRecord
-    include Authority::Abilities
     include Archivable
 
     belongs_to :document_kind, class_name: 'AML::DocumentKind',

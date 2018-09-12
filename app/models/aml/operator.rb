@@ -3,11 +3,9 @@ require 'valid_email'
 module AML
   class Operator < ApplicationRecord
     extend Enumerize
-    include Workflow
     include Authority::UserAbilities
     include Authority::Abilities
-
-    authenticates_with_sorcery!
+    include Workflow
 
     enumerize :workflow_state, in: %w[blocked unblocked], scope: true
     enum role: [:operator, :administrator]

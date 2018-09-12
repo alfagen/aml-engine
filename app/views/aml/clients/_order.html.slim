@@ -1,4 +1,0 @@
-tr
-  td #{order.id}
-  td #{order.workflow_state}
-  td = link_to 'Показать', order_path(order), class: 'btn btn-default' if current_user.can_process?(AML::Order)

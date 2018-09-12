@@ -92,10 +92,10 @@ GEM
     enumerize (2.2.2)
       activesupport (>= 3.2)
     erubi (1.7.1)
-    factory_bot (4.11.0)
+    factory_bot (4.11.1)
       activesupport (>= 3.0.0)
-    factory_bot_rails (4.11.0)
-      factory_bot (~> 4.11.0)
+    factory_bot_rails (4.11.1)
+      factory_bot (~> 4.11.1)
       railties (>= 3.0.0)
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
@@ -237,7 +237,7 @@ GEM
       rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
-    rubocop (0.58.2)
+    rubocop (0.59.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.5, != 2.5.1.1)
@@ -245,7 +245,7 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
-    rubocop-rspec (1.29.0)
+    rubocop-rspec (1.29.1)
       rubocop (>= 0.58.0)
     ruby-progressbar (1.10.0)
     ruby_dep (1.5.0)
@@ -280,7 +280,6 @@ PLATFORMS
 
 DEPENDENCIES
   aml!
-  authority
   byebug
   carrierwave
   dapi-archivable
@@ -301,10 +300,9 @@ DEPENDENCIES
   rspec-rails (~> 3.7)
   rubocop
   rubocop-rspec
-  sorcery
   sqlite3
   valid_email
   workflow!
 
 BUNDLED WITH
-   1.16.4
+   1.16.3

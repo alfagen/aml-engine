@@ -3,8 +3,6 @@ require 'valid_email'
 module AML
   class Operator < ApplicationRecord
     extend Enumerize
-    include Authority::UserAbilities
-    include Authority::Abilities
     include Workflow
 
     enumerize :workflow_state, in: %w[blocked unblocked], scope: true

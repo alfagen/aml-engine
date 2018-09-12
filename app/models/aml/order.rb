@@ -70,11 +70,12 @@ module AML
       DocumentKind.where.not(id: order_documents.pluck(:document_kind_id))
     end
 
-    private
-
+    # Создает и до-создает набор документов для
+    # заявки. Выполняется при содании заявки и при добавлении нового вида документов
+    #
     def create_documents!
       DocumentKind.alive.each do  |document_kind|
-        order_documents.create! order: self, document_kind: document_kind
+        order_documents.find_or_create_by! order: self, document_kind: document_kind
       end
     end
   end

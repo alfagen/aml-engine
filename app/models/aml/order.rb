@@ -1,8 +1,8 @@
 module AML
   class Order < ApplicationRecord
     extend Enumerize
-    include Workflow
     include Authority::Abilities
+    include Workflow
     include Archivable
 
     belongs_to :client, class_name: 'AML::Client', foreign_key: 'client_id', inverse_of: :orders, dependent: :destroy

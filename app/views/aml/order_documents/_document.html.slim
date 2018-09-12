@@ -1,7 +1,0 @@
-tr
-  td = "#{document.order.first_name}, #{document.order.surname}, #{document.order.patronymic}"
-  td = document.order_id
-  td = document.document_kind.title
-  td = link_to image_tag(document.image.url, size: '100'), order_document_path(document)
-  td = document.workflow_state
-  td = link_to 'Показать', order_document_path(document), class: 'btn btn-default'

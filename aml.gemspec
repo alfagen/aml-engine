@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency "rails", "~> 5.2.1"
     s.add_runtime_dependency "dapi-archivable", "~> 0.1.2"
 
-    s.add_development_dependency "sqlite3"
+    s.add_development_dependency "mysql2"
     s.add_development_dependency 'rubocop'
     s.add_development_dependency 'rubocop-rspec'
     s.add_development_dependency 'guard-bundler'

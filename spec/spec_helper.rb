@@ -26,7 +26,6 @@ Rails.backtrace_cleaner.remove_silencers!
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
-DatabaseCleaner = DatabaseRewinder
 RSpec.configure do |config|
 	config.include FactoryBot::Syntax::Methods
 	# rspec-expectations config goes here. You can use an alternate
@@ -43,32 +42,15 @@ RSpec.configure do |config|
 		expectations.include_chain_clauses_in_custom_matcher_descriptions = true
 	end
 
-  config.before(:suite) do
-    if config.use_transactional_fixtures?
-      raise(<<-MSG)
-        Delete line `config.use_transactional_fixtures = true` from rails_helper.rb
-        (or set it to false) to prevent uncommitted transactions being used in
-        JavaScript-dependent specs.
-
-        During testing, the app-under-test that the browser driver connects to
-        uses a different database connection to the database connection used by
-        the spec. The app's database connection would not be able to access
-        uncommitted transaction data setup over the spec's database connection.
-      MSG
-    end
-    # Truncate database to clean up garbage from
-    # interrupted or badly written examples
-    DatabaseCleaner.clean_with(:truncation) unless ENV['SKIP_DB_TRUNCATION']
+	config.before(:suite) do
+    DatabaseRewinder.clean_all
+    # or
+    # DatabaseRewinder.clean_with :any_arg_that_would_be_actually_ignored_anyway
   end
 
-  config.around(:each) do |example|
-    DatabaseCleaner.strategy = example.metadata[:js] ? :truncation : :transaction
-
-    DatabaseCleaner.cleaning do
-      example.run
-    end
+  config.after(:each) do
+    DatabaseRewinder.clean
   end
-
 	# rspec-mocks config goes here. You can use an alternate test double
 	# library (such as bogus or mocha) by changing the `mock_with` option here.
 	config.mock_with :rspec do |mocks|

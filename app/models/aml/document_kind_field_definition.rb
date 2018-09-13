@@ -9,7 +9,7 @@ module AML
                                inverse_of: :definitions
 
     # Зачем эта ассоциация тут?
-    has_many :client_document_fields, dependent: :destroy
+    has_many :document_fields, dependent: :destroy
 
     scope :ordered, -> { order 'position desc' }
 

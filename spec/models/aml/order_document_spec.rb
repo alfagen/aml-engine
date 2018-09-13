@@ -8,7 +8,7 @@ RSpec.describe AML::OrderDocument, type: :model do
   context 'вид документа без полей' do
     let(:document_kind) { create :document_kind }
     it { expect(subject).to be_none }
-    it { expect(subject.client_document_fields).to be_empty }
+    it { expect(subject.document_fields).to be_empty }
 
     describe 'загружаем документ' do
       before do
@@ -26,7 +26,7 @@ RSpec.describe AML::OrderDocument, type: :model do
     let(:fields) { { key => value } }
 
     it 'если в виде документа есть дефиниции, то под них создаются поля' do
-      expect(subject.client_document_fields).to be_many
+      expect(subject.document_fields).to be_many
       expect(subject.fields.values.compact).to be_empty
     end
 

@@ -14,7 +14,7 @@ module AML
     belongs_to :document_kind, class_name: 'AML::DocumentKind', foreign_key: 'document_kind_id', inverse_of: :order_documents
 
     # TODO переиименовать в document_fields
-    has_many :client_document_fields, class_name: 'AML::ClientDocumentField', dependent: :destroy
+    has_many :document_fields, class_name: 'AML::DocumentField', dependent: :destroy
     has_many :definitions, through: :document_kind, source: :definitions
 
     scope :ordered, -> { order 'id desc' }
@@ -53,17 +53,17 @@ module AML
     after_create :create_fields!
     before_save :save_fields!
 
-    accepts_nested_attributes_for :client_document_fields, update_only: true
+    accepts_nested_attributes_for :document_fields, update_only: true
 
-    def client_document_fields_attributes
-      client_document_fields.map do |document_field|
+    def document_fields_attributes
+      document_fields.map do |document_field|
         document_field.as_json only: %i[value document_kind_field_definition_id]
       end
     end
 
     def fields(reload = false)
       @fields = nil if reload
-      @fields ||= client_document_fields.each_with_object({}) do |document_field, agg|
+      @fields ||= document_fields.each_with_object({}) do |document_field, agg|
         agg[document_field.key] = document_field.value
       end.freeze
     end
@@ -86,19 +86,19 @@ module AML
 
     def create_fields!
       definitions.alive.pluck(:id).each do |definition_id|
-        client_document_fields.create! definition_id: definition_id, order_document: self
+        document_fields.create! definition_id: definition_id, order_document: self
       end
     end
 
     def save_fields!
       return if @fields.nil?
 
-      updated_ids = client_document_fields.each do |cdf|
+      updated_ids = document_fields.each do |cdf|
         cdf.update value: fields[cdf.key]
         cdf.id
       end
 
-      client_document_fields.where.not(id: updated_ids).update_all value: nil
+      document_fields.where.not(id: updated_ids).update_all value: nil
     end
   end
 end

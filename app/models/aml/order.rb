@@ -15,7 +15,7 @@ module AML
       # Находится на стадии загрузки пользователем
       #
       state :none do
-        event :done, transitions_to: :pending, if: :all_documents_loaded?
+        event :done, transitions_to: :pending
       end
 
       # Пользователь загрузил, ждет когда оператор начнет обрабатывать
@@ -63,10 +63,6 @@ module AML
 
     def all_documents_loaded?
       order_documents.map(&:workflow_state).uniq == ['loaded']
-    end
-
-    def missing_document_kinds
-      DocumentKind.where.not(id: order_documents.pluck(:document_kind_id))
     end
 
     # Создает и до-создает набор документов для

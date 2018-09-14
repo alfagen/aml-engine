@@ -12,10 +12,6 @@ RSpec.describe AML::Order, type: :model do
   it { expect(subject.order_documents).to be_one }
   it { expect(subject).to_not be_all_documents_loaded }
 
-  it do
-    expect{ subject.done! }.to raise_error(Workflow::NoTransitionAllowed)
-  end
-
   describe 'загруженные документы' do
     let(:order_document) { subject.order_documents.take }
     before do

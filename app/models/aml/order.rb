@@ -65,10 +65,6 @@ module AML
       order_documents.map(&:workflow_state).uniq == ['loaded']
     end
 
-    def missing_document_kinds
-      DocumentKind.where.not(id: order_documents.pluck(:document_kind_id))
-    end
-
     # Создает и до-создает набор документов для
     # заявки. Выполняется при содании заявки и при добавлении нового вида документов
     #

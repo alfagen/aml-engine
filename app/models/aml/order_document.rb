@@ -34,6 +34,7 @@ module AML
       state :none do
         event :load, transitions_to: :loaded
       end
+
       state :loaded do
         event :accept, transitions_to: :accepted
         event :reject, transitions_to: :rejected
@@ -77,11 +78,6 @@ module AML
 
     def validate_order_open!
       raise ClosedOrderError if order.is_locked?
-    end
-
-    # TODO: устанавливать когда хоть что-нибудь появится, а может лучше вообще из API
-    def order_loading
-      order.load! if order.none? && order.complete?
     end
 
     def create_fields!

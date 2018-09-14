@@ -15,7 +15,7 @@ module AML
       # Находится на стадии загрузки пользователем
       #
       state :none do
-        event :done, transitions_to: :pending
+        event :done, transitions_to: :pending, if: :all_documents_loaded?
       end
 
       # Пользователь загрузил, ждет когда оператор начнет обрабатывать

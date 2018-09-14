@@ -26,8 +26,8 @@ AML::Engine.routes.draw do
       put :stop
     end
   end
-  resources :client_document_fields, only: %i[edit update]
-  resources :order_documents, only: %i[show index new create] do
+  resources :document_fields, only: %i[edit update]
+  resources :order_documents, only: %i[show index edit update] do
     member do
       put :accept
       put :reject

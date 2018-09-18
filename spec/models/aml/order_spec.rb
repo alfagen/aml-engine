@@ -44,7 +44,10 @@ RSpec.describe AML::Order, type: :model do
 
         context 'отклонили' do
           let(:reject_reason) { 'bad image' }
-          before { subject.reject! reject_reason }
+          before do 
+            subject.reject!
+            subject.update! reject_reason: reject_reason
+          end
           it { expect(subject).to be_rejected }
           it { expect(subject.reject_reason).to eq reject_reason }
         end

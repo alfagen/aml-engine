@@ -41,10 +41,6 @@ module AML
 
     after_create :create_documents!
 
-    def reject(reject_reason)
-      update reject_reason: reject_reason
-    end
-
     def is_locked?
       accepted? || processing? || accepted? || rejected?
     end

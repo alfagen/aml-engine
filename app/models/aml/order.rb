@@ -42,6 +42,7 @@ module AML
     after_create :create_documents!
 
     def reject(reject_reason)
+      halt! 'Причина должна быть указана' unless reject_reason.present?
       update reject_reason: reject_reason
     end
 
@@ -72,6 +73,10 @@ module AML
       DocumentKind.alive.each do  |document_kind|
         order_documents.find_or_create_by! order: self, document_kind: document_kind
       end
+    end
+
+    def reason_present?
+      reject_reason.present?
     end
   end
 end

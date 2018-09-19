@@ -42,7 +42,7 @@ module AML
     after_create :create_documents!
 
     def reject(reject_reason:)
-      raise 'Причина должна быть указана' unless reject_reason.present?
+      halt! 'Причина должна быть указана' unless reject_reason.present?
       update reject_reason: reject_reason
     end
 

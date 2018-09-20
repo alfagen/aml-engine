@@ -12,7 +12,7 @@ module AML
 
     has_many :orders, class_name: 'AML::Order', dependent: :destroy
 
-    validates :password, length: { minimum: 8 }, on: :update, if: -> { crypted_password.nil? }
+    validates :password, length: { minimum: 8 }, on: :update, if: :crypted_password_changed?
     validates :password, confirmation: true, on: :update, if: :crypted_password_changed?
     validates :password_confirmation, presence: true, on: :update, if: :crypted_password_changed?
     validates :email, presence: true, uniqueness: true, email: true

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_13_100117) do
+ActiveRecord::Schema.define(version: 2018_09_20_085112) do
 
   create_table "aml_clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "first_name"
@@ -21,7 +21,9 @@ ActiveRecord::Schema.define(version: 2018_09_13_100117) do
     t.string "workflow_state", default: "none", null: false
     t.date "birth_date"
     t.bigint "aml_order_id"
+    t.bigint "aml_status_id"
     t.index ["aml_order_id"], name: "index_aml_clients_on_aml_order_id"
+    t.index ["aml_status_id"], name: "index_aml_clients_on_aml_status_id"
   end
 
   create_table "aml_document_fields", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -32,6 +34,14 @@ ActiveRecord::Schema.define(version: 2018_09_13_100117) do
     t.bigint "document_kind_field_definition_id"
     t.index ["document_kind_field_definition_id"], name: "fk_rails_bd0e9183bb"
     t.index ["order_document_id", "document_kind_field_definition_id"], name: "client_document_fields_index", unique: true
+  end
+
+  create_table "aml_document_group_to_statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "aml_document_group_id", null: false
+    t.bigint "aml_status_id", null: false
+    t.index ["aml_document_group_id", "aml_status_id"], name: "aml_dgts_uniq", unique: true
+    t.index ["aml_document_group_id"], name: "index_aml_document_group_to_statuses_on_aml_document_group_id"
+    t.index ["aml_status_id"], name: "index_aml_document_group_to_statuses_on_aml_status_id"
   end
 
   create_table "aml_document_groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -110,9 +120,20 @@ ActiveRecord::Schema.define(version: 2018_09_13_100117) do
     t.index ["operator_id"], name: "index_aml_orders_on_operator_id"
   end
 
+  create_table "aml_statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "details"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["title"], name: "index_aml_statuses_on_title", unique: true
+  end
+
   add_foreign_key "aml_clients", "aml_orders", on_delete: :nullify
+  add_foreign_key "aml_clients", "aml_statuses"
   add_foreign_key "aml_document_fields", "aml_document_kind_field_definitions", column: "document_kind_field_definition_id"
   add_foreign_key "aml_document_fields", "aml_order_documents", column: "order_document_id"
+  add_foreign_key "aml_document_group_to_statuses", "aml_document_groups"
+  add_foreign_key "aml_document_group_to_statuses", "aml_statuses"
   add_foreign_key "aml_document_kind_field_definitions", "aml_document_kinds", column: "document_kind_id"
   add_foreign_key "aml_order_documents", "aml_document_kinds", column: "document_kind_id"
   add_foreign_key "aml_order_documents", "aml_orders", column: "order_id"

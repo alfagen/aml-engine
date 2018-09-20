@@ -5,5 +5,5 @@ class AML::StatusSerializer
 
   has_many :aml_document_groups, record_type: :aml_document_group, serializer: 'AML::DocumentGroupSerializer'
 
-  attributes :title, :details
+  attributes :title, :position, :details
 end

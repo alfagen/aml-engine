@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_20_091420) do
+ActiveRecord::Schema.define(version: 2018_09_21_082824) do
 
   create_table "aml_clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "first_name"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2018_09_20_091420) do
     t.string "workflow_state", default: "none", null: false
     t.date "birth_date"
     t.bigint "aml_order_id"
-    t.bigint "aml_status_id"
+    t.bigint "aml_status_id", null: false
     t.index ["aml_order_id"], name: "index_aml_clients_on_aml_order_id"
     t.index ["aml_status_id"], name: "index_aml_clients_on_aml_status_id"
   end
@@ -127,6 +127,8 @@ ActiveRecord::Schema.define(version: 2018_09_20_091420) do
     t.datetime "updated_at", null: false
     t.integer "position"
     t.timestamp "archived_at"
+    t.string "key", null: false
+    t.index ["key"], name: "index_aml_statuses_on_key", unique: true
     t.index ["title"], name: "index_aml_statuses_on_title", unique: true
   end
 

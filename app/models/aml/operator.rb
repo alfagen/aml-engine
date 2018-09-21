@@ -1,4 +1,5 @@
 require 'valid_email'
+require 'enumerize'
 
 module AML
   class Operator < ApplicationRecord

@@ -7,8 +7,8 @@ require "aml/version"
 Gem::Specification.new do |s|
     s.name        = "aml"
     s.version     = AML::VERSION
-    s.authors     = ["Authors"]
-    s.email       = ["email"]
+    s.authors     = ["Valentin Andreed", "Danil Pismenny"]
+    s.email       = ["danil@brandymint.ru"]
     s.homepage    = "http://page.com"
     s.summary     = "Summary of AML."
     s.description = "Description of AML."
@@ -45,6 +45,8 @@ Gem::Specification.new do |s|
     # Adds step-by-step debugging and stack navigation capabilities to pry using byebug.
     s.add_development_dependency 'pry-byebug'
 
+    s.add_development_dependency 'activesupport'
+    s.add_development_dependency 'ruby-graphviz', '~> 1.0.0'
     s.add_development_dependency 'factory_bot'
     s.add_development_dependency 'factory_bot_rails'
     s.add_development_dependency 'rspec-rails', '~> 3.7'

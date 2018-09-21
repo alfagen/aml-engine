@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'carrierwave'
 
 module AML
   class FileUploader < CarrierWave::Uploader::Base

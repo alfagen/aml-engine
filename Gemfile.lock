@@ -229,6 +229,7 @@ GEM
       unicode-display_width (~> 1.0, >= 1.0.1)
     rubocop-rspec (1.29.1)
       rubocop (>= 0.58.0)
+    ruby-graphviz (1.0.9)
     ruby-progressbar (1.10.0)
     ruby_dep (1.5.0)
     shellany (0.0.1)
@@ -256,6 +257,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport
   aml!
   byebug
   carrierwave
@@ -277,8 +279,9 @@ DEPENDENCIES
   rspec-rails (~> 3.7)
   rubocop
   rubocop-rspec
+  ruby-graphviz (~> 1.0.0)
   valid_email
   workflow!
 
 BUNDLED WITH
-   1.16.3
+   1.16.4

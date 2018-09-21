@@ -260,10 +260,8 @@ DEPENDENCIES
   activesupport
   aml!
   byebug
-  carrierwave
   dapi-archivable
   database_rewinder
-  enumerize
   factory_bot
   factory_bot_rails
   fast_jsonapi!
@@ -280,7 +278,6 @@ DEPENDENCIES
   rubocop
   rubocop-rspec
   ruby-graphviz (~> 1.0.0)
-  valid_email
   workflow!
 
 BUNDLED WITH

@@ -3,7 +3,7 @@ class AddKeyToStatuses < ActiveRecord::Migration[5.2]
     add_column :aml_statuses, :key, :string
 
     AML::Status.find_each do |a|
-      a.update key: Random.hex
+      a.update key: SecureRandom.hex(6)
     end
 
     change_column_null :aml_statuses, :key, false

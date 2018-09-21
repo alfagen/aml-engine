@@ -4,4 +4,4 @@
 
 
 
-![Статусы документа](blob/master/doc/aml_order_documents_workflow.png)
+![Статусы документа](./blob/master/doc/aml_order_documents_workflow.png)

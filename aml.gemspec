@@ -7,7 +7,7 @@ require "aml/version"
 Gem::Specification.new do |s|
     s.name        = "aml"
     s.version     = AML::VERSION
-    s.authors     = ["Valentin Andreed", "Danil Pismenny"]
+    s.authors     = ["Valentin Andreev", "Danil Pismenny"]
     s.email       = ["danil@brandymint.ru"]
     s.homepage    = "http://page.com"
     s.summary     = "Summary of AML."

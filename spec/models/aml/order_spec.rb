@@ -2,10 +2,10 @@ require 'spec_helper'
 
 RSpec.describe AML::Order, type: :model do
   before do
-    create :document_kind
+    create :aml_document_kind
   end
 
-  subject { create :order }
+  subject { create :aml_order }
 
   it { expect(subject).to be_persisted }
   it { expect(subject).to be_none }
@@ -17,9 +17,9 @@ RSpec.describe AML::Order, type: :model do
   end
 
   describe 'загруженные документы' do
-    let(:order_document) { subject.order_documents.take }
+    let(:aml_order_document) { subject.order_documents.take }
     before do
-      order_document.update image: Rack::Test::UploadedFile.new(Rails.root.join('test_files', 'test.png'))
+      aml_order_document.update image: Rack::Test::UploadedFile.new(Rails.root.join('test_files', 'test.png'))
     end
 
     it { expect(subject).to be_all_documents_loaded }

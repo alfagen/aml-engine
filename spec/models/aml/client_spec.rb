@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 RSpec.describe AML::Client, type: :model do
-  subject { create :aml_client }
+  let(:aml_status) { create :aml_status, :default }
+
+  subject { create :aml_client, aml_status_id: aml_status.id }
 
   it { expect(subject).to be_persisted }
   it { expect(subject.current_order).to be_persisted }

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe AML::ClientSerializer, type: :services do
-  let(:aml_client) { create :aml_client, aml_status: create(:aml_status) }
+  let(:aml_client) { create :aml_client, aml_status: create(:aml_status, key: AML.default_status_key) }
 
   subject { described_class.new aml_client, include: described_class.relationships_to_serialize.keys }
 

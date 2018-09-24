@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 RSpec.describe AML::OrderDocument, type: :model do
-  let(:order) { create :order }
+  let(:aml_order) { create :aml_order }
 
-  subject { create :order_document, order: order, document_kind: document_kind }
+  subject { create :aml_order_document, order: aml_order, document_kind: aml_document_kind }
 
   context 'вид документа без полей' do
-    let(:document_kind) { create :document_kind }
+    let(:aml_document_kind) { create :aml_document_kind }
     it { expect(subject).to be_none }
     it { expect(subject.document_fields).to be_empty }
 
@@ -19,8 +19,8 @@ RSpec.describe AML::OrderDocument, type: :model do
   end
 
   describe 'с полями' do
-    let(:document_kind) { create :document_kind, :with_definitions }
-    let(:definition) { document_kind.definitions.take }
+    let(:aml_document_kind) { create :aml_document_kind, :with_definitions }
+    let(:definition) { aml_document_kind.definitions.take }
     let(:key) { definition.key }
     let(:value) { generate :value }
     let(:fields) { { key => value } }
@@ -53,7 +53,7 @@ RSpec.describe AML::OrderDocument, type: :model do
 
     describe 'документ на обработки' do
       before do
-        order.update_column :workflow_state, :processing
+        aml_order.update_column :workflow_state, :processing
       end
 
       it do

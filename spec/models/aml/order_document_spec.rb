@@ -16,6 +16,11 @@ RSpec.describe AML::OrderDocument, type: :model do
         subject.update image: Rack::Test::UploadedFile.new(Rails.root.join('test_files', 'test.png'))
       end
       it { expect(subject).to be_loaded }
+
+      it 'загрузил повторно' do
+        subject.update image: Rack::Test::UploadedFile.new(Rails.root.join('test_files', 'test.png'))
+        expect(subject).to be_loaded
+      end
     end
   end
 

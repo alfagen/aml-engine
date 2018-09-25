@@ -38,6 +38,7 @@ module AML
       state :loaded do
         event :accept, transitions_to: :accepted
         event :reject, transitions_to: :rejected
+        event :load, transitions_to: :loaded
       end
 
       state :accepted do

@@ -24,13 +24,7 @@ module AML
   #
   def self.seed_demo!
     AML::DocumentKind.transaction do
-      AML::OrderDocument.delete_all
-      AML::DocumentKind.delete_all
-      AML::DocumentGroupToStatus.delete_all
-      AML::DocumentGroup.delete_all
-      AML::Order.delete_all
-      AML::Client.delete_all
-      AML::Status.delete_all
+      delete_all! true
 
       g1 = AML::DocumentGroup.create! title: 'Верификация Паспорта'
       d = AML::DocumentKind.create! title: 'Загрузите фотографию вашего пасморта (ID)', document_group: g1
@@ -41,12 +35,26 @@ module AML
       d = AML::DocumentKind.create! title: 'Загрузите селфи с документом', document_group: g2
 
       AML::Status.create!(title: 'Гостевой', key: AML.default_status_key)
+
       s1 = AML::Status.create!(title: 'Простой', key: 'personal')
       s1.aml_document_groups << g1
+
       s2 = AML::Status.create!(title: 'Сложный', key: 'professional')
       s2.aml_document_groups << g1
       s2.aml_document_groups << g2
     end
+  end
+
+  def self.delete_all!(permit)
+    raise unless permit
+
+    AML::OrderDocument.delete_all
+    AML::DocumentKind.delete_all
+    AML::DocumentGroupToStatus.delete_all
+    AML::DocumentGroup.delete_all
+    AML::Order.delete_all
+    AML::Client.delete_all
+    AML::Status.delete_all
   end
 
   # После создания новых видов документов, добавляем их во все заявки

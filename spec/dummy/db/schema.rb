@@ -116,7 +116,7 @@ ActiveRecord::Schema.define(version: 2018_09_25_074415) do
     t.bigint "operator_id"
     t.timestamp "archived_at"
     t.text "reject_reason"
-    t.bigint "aml_status_id"
+    t.bigint "aml_status_id", null: false
     t.index ["aml_status_id"], name: "index_aml_orders_on_aml_status_id"
     t.index ["client_id"], name: "index_aml_orders_on_client_id"
     t.index ["operator_id"], name: "index_aml_orders_on_operator_id"

@@ -1,7 +1,6 @@
 class AddStatusToOrder < ActiveRecord::Migration[5.2]
   def change
-    add_reference :aml_orders, :aml_status, foreign_key: true
-
-    AML::Order.update_all aml_status_id: AML.default_status.id if AML::Status.any?
+    AML.delete_all! true
+    add_reference :aml_orders, :aml_status, foreign_key: true, null: false
   end
 end

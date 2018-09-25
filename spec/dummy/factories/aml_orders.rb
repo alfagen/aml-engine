@@ -6,5 +6,9 @@ FactoryBot.define do
     birth_date { Time.zone.today - 30.years }
     association :client, factory: :aml_client
     aml_status
+
+    trait :processing do
+      workflow_state { 'processing' }
+    end
   end
 end

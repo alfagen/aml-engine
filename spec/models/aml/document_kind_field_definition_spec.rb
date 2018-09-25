@@ -1,5 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe AML::DocumentKindFieldDefinition, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { create :aml_document_kind_field_definition }
+
+  it { expect(subject).to be_persisted }
 end

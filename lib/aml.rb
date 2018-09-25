@@ -24,11 +24,13 @@ module AML
   #
   def self.seed_demo!
     AML::DocumentKind.transaction do
-      AML::OrderDocument.destroy_all
-      AML::DocumentKind.destroy_all
-      AML::DocumentGroup.destroy_all
-      AML::DocumentGroupToStatus.destroy_all
-      AML::Status.destroy_all
+      AML::OrderDocument.delete_all
+      AML::DocumentKind.delete_all
+      AML::DocumentGroupToStatus.delete_all
+      AML::DocumentGroup.delete_all
+      AML::Order.delete_all
+      AML::Client.delete_all
+      AML::Status.delete_all
 
       g1 = AML::DocumentGroup.create! title: 'Верификация Паспорта'
       d = AML::DocumentKind.create! title: 'Загрузите фотографию вашего пасморта (ID)', document_group: g1

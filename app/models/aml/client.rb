@@ -9,9 +9,8 @@ module AML
 
     has_many :orders, class_name: 'AML::Order', dependent: :destroy
     belongs_to :current_order, class_name: 'AML::Order', dependent: :destroy, foreign_key: :aml_order_id, optional: true
-    belongs_to :aml_status, class_name: 'AML::Status'
+    belongs_to :aml_status, class_name: 'AML::Status', optional: true
 
-    before_validation :set_default_aml_status, unless: :aml_status
     after_create :create_current_order!
 
     # Нужно для для сериализера
@@ -30,12 +29,6 @@ module AML
     def create_current_order! attrs = {}
       order = super attrs.merge client_id: id
       update_column :aml_order_id, order.id
-    end
-
-    private
-
-    def set_default_aml_status
-      self.aml_status ||= AML.default_status
     end
   end
 end

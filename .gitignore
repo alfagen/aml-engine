@@ -7,7 +7,6 @@ capybara-*.html
 tags
 gems.tags
 *.sqlite3
-test/dummy/public/*
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /public/system
@@ -52,5 +51,6 @@ bower.json
 # Ignore node_modules
 node_modules/
 
-test/dummy/log/development.log
-test/dummy/log/test.log
+spec/dummy/log/development.log
+spec/dummy/log/spec.log
+spec/dummy/public/*

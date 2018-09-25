@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 RSpec.describe AML::Order, type: :model do
-  before do
-    create :aml_document_kind
-  end
+  let(:aml_status) { create :aml_status, :default }
 
-  subject { create :aml_order }
+  before { create :aml_document_kind }
+
+  subject { create :aml_order, aml_status_id: aml_status.id }
 
   it { expect(subject).to be_persisted }
   it { expect(subject).to be_none }

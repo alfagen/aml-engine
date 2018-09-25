@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 RSpec.describe AML::OrderDocument, type: :model do
-  let(:aml_order) { create :aml_order }
+  let(:aml_status) { create :aml_status, :default }
+  let(:aml_order) { create :aml_order, aml_status_id: aml_status.id }
 
   subject { create :aml_order_document, order: aml_order, document_kind: aml_document_kind }
 

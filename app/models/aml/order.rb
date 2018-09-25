@@ -4,12 +4,15 @@ module AML
     include Workflow
     include Archivable
 
+    scope :ordered, -> { order 'id desc' }
+
     belongs_to :client, class_name: 'AML::Client', foreign_key: 'client_id', inverse_of: :orders, dependent: :destroy
     belongs_to :operator, class_name: 'AML::Operator', foreign_key: 'operator_id', optional: true, inverse_of: :orders
+    belongs_to :aml_status, class_name: 'AML::Status'
 
     has_many :order_documents, class_name: 'AML::OrderDocument', dependent: :destroy
 
-    scope :ordered, -> { order 'id desc' }
+    before_validation :set_default_aml_status, unless: :aml_status
 
     workflow do
       # Находится на стадии загрузки пользователем
@@ -73,6 +76,10 @@ module AML
       DocumentKind.alive.each do  |document_kind|
         order_documents.find_or_create_by! order: self, document_kind: document_kind
       end
+    end
+
+    def set_default_aml_status
+      self.aml_status ||= AML.default_status
     end
   end
 end

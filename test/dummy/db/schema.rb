@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_21_082824) do
+ActiveRecord::Schema.define(version: 2018_09_24_130455) do
 
   create_table "aml_clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "first_name"
@@ -116,6 +116,8 @@ ActiveRecord::Schema.define(version: 2018_09_21_082824) do
     t.bigint "operator_id"
     t.timestamp "archived_at"
     t.text "reject_reason"
+    t.bigint "aml_status_id"
+    t.index ["aml_status_id"], name: "index_aml_orders_on_aml_status_id"
     t.index ["client_id"], name: "index_aml_orders_on_client_id"
     t.index ["operator_id"], name: "index_aml_orders_on_operator_id"
   end
@@ -143,4 +145,5 @@ ActiveRecord::Schema.define(version: 2018_09_21_082824) do
   add_foreign_key "aml_order_documents", "aml_orders", column: "order_id"
   add_foreign_key "aml_orders", "aml_clients", column: "client_id"
   add_foreign_key "aml_orders", "aml_operators", column: "operator_id"
+  add_foreign_key "aml_orders", "aml_statuses"
 end

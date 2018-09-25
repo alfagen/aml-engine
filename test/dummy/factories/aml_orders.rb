@@ -5,5 +5,6 @@ FactoryBot.define do
     patronymic { 'patronymic' }
     birth_date { Time.zone.today - 30.years }
     association :client, factory: :aml_client
+    aml_status
   end
 end

@@ -4,8 +4,8 @@ FactoryBot.define do
 
     trait :with_kinds do
       after(:create) do |instance|
-        create :aml_document_kind, document_group: instance
-        create :aml_document_kind, document_group: instance
+        create :aml_document_kind, aml_document_group: instance
+        create :aml_document_kind, aml_document_group: instance
       end
     end
   end

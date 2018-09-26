@@ -6,10 +6,9 @@ module AML
 
     scope :ordered, -> { order 'position desc' }
 
-    belongs_to :document_group, class_name: 'AML::DocumentGroup', foreign_key: :aml_document_group_id, inverse_of: :document_kinds
-    has_many :definitions, class_name: 'AML::DocumentKindFieldDefinition', dependent: :destroy
-
-    has_many :order_documents, class_name: 'AML::OrderDocument', dependent: :destroy
+    belongs_to :aml_document_group, class_name: 'AML::DocumentGroup', foreign_key: :aml_document_group_id, inverse_of: :aml_document_kinds
+    has_many :aml_definitions, class_name: 'AML::DocumentKindFieldDefinition', dependent: :destroy
+    has_many :aml_order_documents, class_name: 'AML::OrderDocument', dependent: :destroy, inverse_of: :aml_document_kinds
 
     validates :title, presence: true, uniqueness: true
 

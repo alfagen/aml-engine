@@ -10,5 +10,5 @@ RSpec.describe AML::Client, type: :model do
 
   it { expect(subject).to be_persisted }
   it { expect(subject.aml_status).to be_nil }
-  it { expect(subject.current_order).to be_persisted }
+  it { expect(subject.aml_current_order).to be_persisted }
 end

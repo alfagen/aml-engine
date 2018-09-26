@@ -27,12 +27,12 @@ module AML
       delete_all! true
 
       g1 = AML::DocumentGroup.create! title: 'Верификация Паспорта'
-      d = AML::DocumentKind.create! title: 'Загрузите фотографию вашего пасморта (ID)', document_group: g1
-      d = AML::DocumentKind.create! title: 'Загрузите селфи с вашим паспортом', document_group: g1
+      d = AML::DocumentKind.create! title: 'Загрузите фотографию вашего пасморта (ID)', aml_document_group: g1
+      d = AML::DocumentKind.create! title: 'Загрузите селфи с вашим паспортом',aml_document_group: g1
 
       g2 = AML::DocumentGroup.create! title: 'Верификация второго документа'
-      d = AML::DocumentKind.create! title: 'Загрузите фотографию документа', document_group: g2
-      d = AML::DocumentKind.create! title: 'Загрузите селфи с документом', document_group: g2
+      d = AML::DocumentKind.create! title: 'Загрузите фотографию документа', aml_document_group: g2
+      d = AML::DocumentKind.create! title: 'Загрузите селфи с документом', aml_document_group: g2
 
       AML::Status.create!(title: 'Гостевой', key: AML.default_status_key)
 

@@ -4,12 +4,12 @@ module AML
   class DocumentKindFieldDefinition < ApplicationRecord
     include Archivable
 
-    belongs_to :document_kind, class_name: 'AML::DocumentKind',
-                               foreign_key: 'document_kind_id',
-                               inverse_of: :definitions
+    belongs_to :aml_document_kind, class_name: 'AML::DocumentKind',
+                                   foreign_key: 'document_kind_id',
+                                   inverse_of: :aml_definitions
 
     # Зачем эта ассоциация тут?
-    has_many :document_fields, dependent: :destroy
+    has_many :aml_document_fields, class_name: 'AML::DocumentField', inverse_of: :aml_definitions
 
     scope :ordered, -> { order 'position desc' }
 

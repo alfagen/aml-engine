@@ -10,14 +10,17 @@ module AML
 
     mount_uploader :image, FileUploader
 
-    belongs_to :order, class_name: 'AML::Order', foreign_key: 'order_id', inverse_of: :order_documents
-    belongs_to :document_kind, class_name: 'AML::DocumentKind', foreign_key: 'document_kind_id', inverse_of: :order_documents
+    belongs_to :aml_order, class_name: 'AML::Order', foreign_key: 'order_id', inverse_of: :aml_order_documents
+    belongs_to :aml_document_kind, class_name: 'AML::DocumentKind', foreign_key: 'document_kind_id', inverse_of: :aml_order_documents
 
     # TODO переиименовать в document_fields
-    has_many :document_fields, class_name: 'AML::DocumentField', dependent: :destroy
-    has_many :definitions, through: :document_kind, source: :definitions
+    has_many :aml_document_fields, class_name: 'AML::DocumentField', dependent: :destroy
+    has_many :aml_definitions, through: :aml_document_kind, source: :aml_definitions
 
     scope :ordered, -> { order 'id desc' }
+
+    alias_attribute :aml_order_id, :order_id
+    alias_attribute :aml_document_kind_id, :document_kind_id
 
     # TODO недавать загружать в обрабатываемую или обработанную заявку
     # validates :image, presence: true
@@ -55,18 +58,18 @@ module AML
     after_create :create_fields!
     before_save :save_fields!
 
-    accepts_nested_attributes_for :document_fields, update_only: true
+    accepts_nested_attributes_for :aml_document_fields, update_only: true
 
     def document_fields_attributes
-      document_fields.map do |document_field|
-        document_field.as_json only: %i[value document_kind_field_definition_id]
+      aml_document_fields.map do |aml_document_field|
+        aml_document_field.as_json only: %i[value document_kind_field_definition_id]
       end
     end
 
     def fields(reload = false)
       @fields = nil if reload
-      @fields ||= document_fields.each_with_object({}) do |document_field, agg|
-        agg[document_field.key] = document_field.value
+      @fields ||= aml_document_fields.each_with_object({}) do |aml_document_field, agg|
+        agg[aml_document_field.key] = aml_document_field.value
       end.freeze
     end
 
@@ -78,24 +81,24 @@ module AML
     private
 
     def validate_order_open!
-      raise ClosedOrderError if order.is_locked?
+      raise ClosedOrderError if aml_order.is_locked?
     end
 
     def create_fields!
-      definitions.alive.pluck(:id).each do |definition_id|
-        document_fields.create! definition_id: definition_id, order_document: self
+      aml_definitions.alive.pluck(:id).each do |aml_definition_id|
+        aml_document_fields.create! document_kind_field_definition_id: aml_definition_id, aml_order_document: self
       end
     end
 
     def save_fields!
       return if @fields.nil?
 
-      updated_ids = document_fields.each do |cdf|
+      updated_ids = aml_document_fields.each do |cdf|
         cdf.update value: fields[cdf.key]
         cdf.id
       end
 
-      document_fields.where.not(id: updated_ids).update_all value: nil
+      aml_document_fields.where.not(id: updated_ids).update_all value: nil
     end
   end
 end

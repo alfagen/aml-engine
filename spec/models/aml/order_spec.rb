@@ -9,7 +9,7 @@ RSpec.describe AML::Order, type: :model do
 
   it { expect(subject).to be_persisted }
   it { expect(subject).to be_none }
-  it { expect(subject.order_documents).to be_one }
+  it { expect(subject.aml_order_documents).to be_one }
   it { expect(subject).to_not be_all_documents_loaded }
 
   it do
@@ -17,7 +17,7 @@ RSpec.describe AML::Order, type: :model do
   end
 
   describe 'загруженные документы' do
-    let(:aml_order_document) { subject.order_documents.take }
+    let(:aml_order_document) { subject.aml_order_documents.take }
     before do
       aml_order_document.update image: Rack::Test::UploadedFile.new(Rails.root.join('test_files', 'test.png'))
     end

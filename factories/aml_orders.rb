@@ -4,7 +4,7 @@ FactoryBot.define do
     surname { 'Surname' }
     patronymic { 'patronymic' }
     birth_date { Time.zone.today - 30.years }
-    association :client, factory: :aml_client
+    aml_client
     aml_status
 
     trait :processing do

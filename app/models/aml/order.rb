@@ -6,11 +6,11 @@ module AML
 
     scope :ordered, -> { order 'id desc' }
 
-    belongs_to :client, class_name: 'AML::Client', foreign_key: 'client_id', inverse_of: :orders, dependent: :destroy
-    belongs_to :operator, class_name: 'AML::Operator', foreign_key: 'operator_id', optional: true, inverse_of: :orders
+    belongs_to :aml_client, class_name: 'AML::Client', foreign_key: 'client_id', inverse_of: :aml_orders, dependent: :destroy
+    belongs_to :aml_operator, class_name: 'AML::Operator', foreign_key: 'operator_id', optional: true, inverse_of: :aml_orders
     belongs_to :aml_status, class_name: 'AML::Status'
 
-    has_many :order_documents, class_name: 'AML::OrderDocument', dependent: :destroy
+    has_many :aml_order_documents, class_name: 'AML::OrderDocument', dependent: :destroy
 
     before_validation :set_default_aml_status, unless: :aml_status
 
@@ -54,27 +54,27 @@ module AML
     end
 
     def complete?
-      order_documents.select(:complete?).count == order_documents.count
+      aml_order_documents.select(:complete?).count == aml_order_documents.count
     end
 
-    def get_order_document_by_kind(document_kind)
+    def get_order_document_by_kind(aml_document_kind)
       with_lock do
-        order_documents
+        aml_order_documents
           .create_with(order: self)
-          .find_or_create_by!(document_kind: document_kind)
+          .find_or_create_by!(aml_document_kind: aml_document_kind)
       end
     end
 
     def all_documents_loaded?
-      order_documents.map(&:workflow_state).uniq == ['loaded']
+      aml_order_documents.map(&:workflow_state).uniq == ['loaded']
     end
 
     # Создает и до-создает набор документов для
     # заявки. Выполняется при содании заявки и при добавлении нового вида документов
     #
     def create_documents!
-      DocumentKind.alive.each do  |document_kind|
-        order_documents.find_or_create_by! order: self, document_kind: document_kind
+      DocumentKind.alive.each do |aml_document_kind|
+        aml_order_documents.find_or_create_by! aml_order: self, aml_document_kind: aml_document_kind
       end
     end
 

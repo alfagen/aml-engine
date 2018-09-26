@@ -3,11 +3,11 @@ class AML::OrderDocumentSerializer
 
   set_type :aml_order_document
 
-  belongs_to :order, record_type: :aml_order
-  belongs_to :document_kind, record_type: :aml_document_kind
-  has_many :document_fields, record_type: :aml_document_fields
+  belongs_to :aml_order, record_type: :aml_order, serializer: 'AML::OrderSerializer'
+  belongs_to :aml_document_kind, record_type: :aml_document_kind, serializer: 'AML::DocumentKindSerializer'
+  has_many :aml_document_fields, record_type: :aml_document_fields, serializer: 'AML::DocumentFieldSerializer'
 
-  attributes :order_id, :image,
+  attributes :aml_order_id, :image,
     :document_fields_attributes, :fields,
     :workflow_state
 end

@@ -5,7 +5,7 @@ describe AML::OrderDocumentSerializer, type: :services do
   let(:aml_order) { create :aml_order, aml_status_id: aml_status.id }
   let(:aml_document_kind) { create :aml_document_kind }
 
-  subject { create :aml_order_document, order_id: aml_order.id }
+  subject { create :aml_order_document, aml_order: aml_order }
 
   let(:serializer) { described_class.new subject, include: described_class.relationships_to_serialize.keys }
   it { expect(serializer.as_json).to be_a Hash }

@@ -79,7 +79,7 @@ module AML
     end
 
     def set_default_aml_status
-      self.aml_status ||= AML.default_status
+      self.aml_status ||= ::AML.default_status
     end
   end
 end

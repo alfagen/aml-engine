@@ -15,7 +15,7 @@ module AML
   end
 
   def self.default_status
-    AML::Status.find_by(key: default_status_key) || raise("Default state (#{default_status_key}) is not found")
+    Status.find_by(key: default_status_key) || raise("Default state (#{default_status_key}) is not found")
   end
 
   # Первый документ - паспорт. В нём только номер документа пользователь должен указать.
@@ -23,23 +23,23 @@ module AML
   # Третий документ - документ подтверждающий адрес. В нём указывает страну, город, индекс и адрес.
   #
   def self.seed_demo!
-    AML::DocumentKind.transaction do
+    DocumentKind.transaction do
       delete_all! true
 
-      g1 = AML::DocumentGroup.create! title: 'Верификация Паспорта'
-      d = AML::DocumentKind.create! title: 'Загрузите фотографию вашего пасморта (ID)', document_group: g1
-      d = AML::DocumentKind.create! title: 'Загрузите селфи с вашим паспортом', document_group: g1
+      g1 = DocumentGroup.create! title: 'Верификация Паспорта'
+      d = DocumentKind.create! title: 'Загрузите фотографию вашего пасморта (ID)', document_group: g1
+      d = DocumentKind.create! title: 'Загрузите селфи с вашим паспортом', document_group: g1
 
-      g2 = AML::DocumentGroup.create! title: 'Верификация второго документа'
-      d = AML::DocumentKind.create! title: 'Загрузите фотографию документа', document_group: g2
-      d = AML::DocumentKind.create! title: 'Загрузите селфи с документом', document_group: g2
+      g2 = DocumentGroup.create! title: 'Верификация второго документа'
+      d = DocumentKind.create! title: 'Загрузите фотографию документа', document_group: g2
+      d = DocumentKind.create! title: 'Загрузите селфи с документом', document_group: g2
 
-      AML::Status.create!(title: 'Гостевой', key: AML.default_status_key)
+      Status.create!(title: 'Гостевой', key: default_status_key)
 
-      s1 = AML::Status.create!(title: 'Простой', key: 'personal')
+      s1 = Status.create!(title: 'Простой', key: 'personal')
       s1.aml_document_groups << g1
 
-      s2 = AML::Status.create!(title: 'Сложный', key: 'professional')
+      s2 = Status.create!(title: 'Сложный', key: 'professional')
       s2.aml_document_groups << g1
       s2.aml_document_groups << g2
     end
@@ -48,18 +48,18 @@ module AML
   def self.delete_all!(permit)
     raise unless permit
 
-    AML::OrderDocument.delete_all
-    AML::DocumentKind.delete_all
-    AML::DocumentGroupToStatus.delete_all
-    AML::DocumentGroup.delete_all
-    AML::Order.delete_all
-    AML::Client.delete_all
-    AML::Status.delete_all
+    OrderDocument.delete_all
+    DocumentKind.delete_all
+    DocumentGroupToStatus.delete_all
+    DocumentGroup.delete_all
+    Order.delete_all
+    Client.delete_all
+    Status.delete_all
   end
 
   # После создания новых видов документов, добавляем их во все заявки
   # Пригождается при разработке
   def self.create_documents!
-    AML::Order.find_each(&:create_documents!)
+    Order.find_each(&:create_documents!)
   end
 end

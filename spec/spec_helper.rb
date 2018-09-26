@@ -49,8 +49,7 @@ RSpec.configure do |config|
 
 	config.before(:suite) do
     DatabaseRewinder.clean_all
-    # or
-    # DatabaseRewinder.clean_with :any_arg_that_would_be_actually_ignored_anyway
+    FactoryBot.find_definitions
   end
 
   config.after(:each) do

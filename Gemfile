@@ -39,7 +39,6 @@ group :development, :test do
     gem 'pry-byebug'
 
     gem 'factory_bot'
-    gem 'factory_bot_rails'
     gem 'rspec-rails', '~> 3.7'
     gem 'database_rewinder'
 end

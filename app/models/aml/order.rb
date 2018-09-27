@@ -50,7 +50,7 @@ module AML
     end
 
     def is_locked?
-      accepted? || processing? || accepted? || rejected?
+      processing? || accepted? || rejected?
     end
 
     def complete?

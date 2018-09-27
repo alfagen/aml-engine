@@ -73,8 +73,10 @@ module AML
     # заявки. Выполняется при содании заявки и при добавлении нового вида документов
     #
     def create_documents!
-      DocumentKind.alive.each do  |document_kind|
-        order_documents.find_or_create_by! order: self, document_kind: document_kind
+      aml_status.aml_document_groups.find_each do |g|
+        g.document_kinds.alive.ordered.each do  |document_kind|
+          order_documents.find_or_create_by! order: self, document_kind: document_kind
+        end
       end
     end
 

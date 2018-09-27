@@ -1,9 +1,12 @@
 require 'spec_helper'
 
 RSpec.describe AML::Order, type: :model do
+  let!(:aml_document_kind) { create :aml_document_kind }
   let(:aml_status) { create :aml_status, :default }
 
-  before { create :aml_document_kind }
+  before do
+    aml_status.aml_document_groups << aml_document_kind.document_group
+  end
 
   subject { create :aml_order, aml_status_id: aml_status.id }
 
@@ -18,6 +21,7 @@ RSpec.describe AML::Order, type: :model do
 
   describe 'загруженные документы' do
     let(:aml_order_document) { subject.order_documents.take }
+
     before do
       aml_order_document.update image: Rack::Test::UploadedFile.new(Rails.root.join('test_files', 'test.png'))
     end
@@ -28,6 +32,7 @@ RSpec.describe AML::Order, type: :model do
       before do
         subject.done!
       end
+
       it { expect(subject).to be_pending }
 
       context 'обработка' do
@@ -40,7 +45,6 @@ RSpec.describe AML::Order, type: :model do
 
           it { expect(subject).to be_accepted }
         end
-
 
         context 'отклонили' do
           let(:reject_reason) { 'bad image' }

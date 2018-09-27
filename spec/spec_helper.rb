@@ -27,10 +27,13 @@ Rails.backtrace_cleaner.remove_silencers!
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
-  # TODO адаптировать по enging чтобы при ошибках в spec-ах не выскакивал полный tracelog
-  # В рельсовом проекте прописына такие исключения
-  # (?-mix:(?-mix:(?-mix:\/lib\/rspec\/(core|mocks|expectations|support|matchers|rails|autorun)(\.rb|\/))|rubygems\/core_ext\/kernel_require\.rb)|(?-mix:\/lib\d*\/ruby\/)|(?-mix:bin\/)|(?-mix:exe\/rspec)|(?-mix:\/lib\/bundler\/)|(?-mix:\/exe\/bundle:)) (?-mix:vendor\/) (?-mix:lib\/rspec\/rails)
-  config.backtrace_exclusion_patterns << /\/exe\/bundle/
+	config.backtrace_exclusion_patterns = [
+		/\/lib\d*\/ruby\//,
+		/bin\//,
+		/gems/,
+		/spec\/spec_helper\.rb/,
+		/lib\/rspec\/(core|expectations|matchers|mocks)/
+	]
 
 	config.include FactoryBot::Syntax::Methods
 	# rspec-expectations config goes here. You can use an alternate

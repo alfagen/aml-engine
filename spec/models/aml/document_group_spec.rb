@@ -4,6 +4,7 @@ RSpec.describe AML::DocumentGroup, type: :model do
   subject { create :aml_document_group }
   it { expect(subject).to be_persisted }
   it { expect(subject.aml_statuses).to be_empty }
+  it { expect(subject.document_kinds).to be_empty }
 
   context 'привязываем к группе' do
     let(:aml_status) { create :aml_status }

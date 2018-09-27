@@ -4,12 +4,12 @@ RSpec.describe AML::OrderDocument, type: :model do
   let(:aml_status) { create :aml_status, :default }
   let(:aml_order) { create :aml_order, aml_status_id: aml_status.id }
 
-  subject { create :aml_order_document, order: aml_order, document_kind: aml_document_kind }
+  subject { create :aml_order_document, aml_order: aml_order, aml_document_kind: aml_document_kind }
 
   context 'вид документа без полей' do
     let(:aml_document_kind) { create :aml_document_kind }
     it { expect(subject).to be_none }
-    it { expect(subject.document_fields).to be_empty }
+    it { expect(subject.aml_document_fields).to be_empty }
 
     describe 'загружаем документ' do
       before do
@@ -26,13 +26,13 @@ RSpec.describe AML::OrderDocument, type: :model do
 
   describe 'с полями' do
     let(:aml_document_kind) { create :aml_document_kind, :with_definitions }
-    let(:definition) { aml_document_kind.definitions.take }
-    let(:key) { definition.key }
+    let(:aml_definition) { aml_document_kind.aml_definitions.take }
+    let(:key) { aml_definition.key }
     let(:value) { generate :value }
     let(:fields) { { key => value } }
 
     it 'если в виде документа есть дефиниции, то под них создаются поля' do
-      expect(subject.document_fields).to be_many
+      expect(subject.aml_document_fields).to be_many
       expect(subject.fields.values.compact).to be_empty
     end
 

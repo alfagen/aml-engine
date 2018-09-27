@@ -5,6 +5,6 @@ FactoryBot.define do
 
     #key { generate :key }
     #title { generate :title }
-    association :document_kind, factory: :aml_document_kind
+    aml_document_kind
   end
 end

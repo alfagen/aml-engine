@@ -11,7 +11,7 @@ module AML
 
     scope :ordered, -> { order 'id desc' }
 
-    has_many :orders, class_name: 'AML::Order', dependent: :destroy
+    has_many :aml_orders, class_name: 'AML::Order', dependent: :destroy
 
     validates :password, length: { minimum: 8 }, on: :update, if: :crypted_password_changed?
     validates :password, confirmation: true, on: :update, if: :crypted_password_changed?

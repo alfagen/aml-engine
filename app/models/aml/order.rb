@@ -56,6 +56,7 @@ module AML
     end
 
     def accept
+      halt! 'Все документы должны быть приняты' unless all_documents_accepted?
       client.update current_order: self, aml_status: aml_status
     end
 
@@ -89,6 +90,10 @@ module AML
 
     def all_documents_loaded?
       order_documents.map(&:workflow_state).uniq == ['loaded']
+    end
+
+    def all_documents_accepted?
+      order_documents.map(&:workflow_state).uniq == ['accepted']
     end
 
     # Создает и до-создает набор документов для

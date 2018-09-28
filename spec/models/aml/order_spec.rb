@@ -11,6 +11,8 @@ RSpec.describe AML::Order, type: :model do
 
   subject { create :aml_order, aml_status_id: aml_status.id }
 
+  let(:aml_order_document) { subject.order_documents.take }
+
   it { expect(subject).to be_persisted }
   it { expect(subject).to be_none }
   it { expect(subject.order_documents).to be_one }
@@ -31,6 +33,7 @@ RSpec.describe AML::Order, type: :model do
       context 'создает еще одну заявку' do
         before do
           @order = create :aml_order, client: client, aml_status: status2
+          @order.order_documents << aml_order_document
           client.reload
         end
 
@@ -43,6 +46,8 @@ RSpec.describe AML::Order, type: :model do
             expect_any_instance_of(AML::Order).to receive(:all_documents_loaded?).and_return true
             @order.done!
             @order.process!
+            aml_order_document.update image: Rack::Test::UploadedFile.new(Rails.root.join('test_files', 'test.png'))
+            aml_order_document.accept!
             @order.accept!
           end
 
@@ -55,8 +60,6 @@ RSpec.describe AML::Order, type: :model do
   end
 
   describe 'загруженные документы' do
-    let(:aml_order_document) { subject.order_documents.take }
-
     before do
       aml_order_document.update image: Rack::Test::UploadedFile.new(Rails.root.join('test_files', 'test.png'))
     end
@@ -75,8 +78,15 @@ RSpec.describe AML::Order, type: :model do
           subject.process!
         end
 
-        context 'приняли' do
-          before { subject.accept! }
+        it 'нельзя принять если документы не приняты' do
+          expect{ subject.accept! }.to raise_error(Workflow::TransitionHalted)
+        end
+
+        context 'можно принять заявку если документы приняты' do
+          before do
+            subject.order_documents.take.accept!
+            subject.accept!
+          end
 
           it { expect(subject).to be_accepted }
         end
@@ -91,3 +101,4 @@ RSpec.describe AML::Order, type: :model do
     end
   end
 end
+          

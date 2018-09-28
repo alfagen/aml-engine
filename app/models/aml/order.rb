@@ -43,6 +43,7 @@ module AML
     end
 
     after_create :create_documents!
+    after_create :set_current_order!
 
     def reject(reject_reason:)
       halt! 'Причина должна быть указана' unless reject_reason.present?
@@ -78,6 +79,10 @@ module AML
           order_documents.find_or_create_by! order: self, document_kind: document_kind
         end
       end
+    end
+
+    def set_current_order!
+      client.update! current_order: self
     end
 
     def set_default_aml_status

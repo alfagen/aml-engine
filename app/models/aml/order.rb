@@ -14,11 +14,15 @@ module AML
 
     before_validation :set_default_aml_status, unless: :aml_status
 
+    validates :first_name, presence: true, if: :require_fields?
+    validates :surname, presence: true, if: :require_fields?
+    validates :birth_date, presence: true, if: :require_fields?
+
     workflow do
       # Находится на стадии загрузки пользователем
       #
       state :none do
-        event :done, transitions_to: :pending, if: :all_documents_loaded?
+        event :done, transitions_to: :pending, if: :allow_done?
       end
 
       # Пользователь загрузил, ждет когда оператор начнет обрабатывать
@@ -63,12 +67,24 @@ module AML
       order_documents.select(:complete?).count == order_documents.count
     end
 
+    def done
+      halt! 'Личная анкета не до конца заполнена' unless first_name.present? && surname.present? && birth_date.present?
+    end
+
     def get_order_document_by_kind(document_kind)
       with_lock do
         order_documents
           .create_with(order: self)
           .find_or_create_by!(document_kind: document_kind)
       end
+    end
+
+    def allow_done?
+      all_documents_loaded?
+    end
+
+    def require_fields?
+      pending? || processing? || accepted?
     end
 
     def all_documents_loaded?

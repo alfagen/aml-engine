@@ -63,12 +63,23 @@ RSpec.describe AML::Order, type: :model do
 
     it { expect(subject).to be_all_documents_loaded }
 
+    context 'заказ без ФИО' do
+      before do
+        subject.update first_name: nil
+      end
+      it 'не дает отправить' do
+        expect{ subject.done! }.to raise_error(Workflow::TransitionHalted)
+      end
+    end
+
     context 'отмечает как загруженный' do
       before do
         subject.done!
       end
 
-      it { expect(subject).to be_pending }
+      context do
+        it { expect(subject).to be_pending }
+      end
 
       context 'обработка' do
         before do

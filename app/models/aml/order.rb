@@ -44,6 +44,7 @@ module AML
     end
 
     after_create :create_documents!
+    after_create :copy_documents!
     after_create :set_current_order!
 
     def reject(reject_reason:)
@@ -92,6 +93,17 @@ module AML
 
     def set_default_aml_status
       self.aml_status ||= ::AML.default_status
+    end
+
+    def copy_documents!
+      active_documents.each do |document|
+        current_document = order_documents.find_by document_kind_id: document.document_kind_id
+        current_document.update workflow_state: 'loaded', image: document.image
+      end if active_documents
+    end
+
+    def active_documents
+      client.current_order&.order_documents&.where&.not(workflow_state: 'rejected', image: nil)
     end
   end
 end

@@ -94,11 +94,11 @@ module AML
       active_documents.each do |document|
         current_document = order_documents.find_by document_kind_id: document.document_kind_id
         current_document.update workflow_state: 'loaded', image: document.image
-      end
+      end if active_documents
     end
 
     def active_documents
-      client.current_order&.order_documents.where.not(workflow_state: 'rejected', image: nil)
+      client.current_order&.order_documents&.where&.not(workflow_state: 'rejected', image: nil)
     end
   end
 end

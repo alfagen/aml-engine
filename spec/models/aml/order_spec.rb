@@ -15,10 +15,43 @@ RSpec.describe AML::Order, type: :model do
   it { expect(subject).to be_none }
   it { expect(subject.order_documents).to be_one }
   it { expect(subject).to_not be_all_documents_loaded }
-  it { expect(AML::Order.last).to eq aml_client.current_order }
 
   it do
     expect{ subject.done! }.to raise_error(Workflow::NoTransitionAllowed)
+  end
+
+  describe 'при создани изаявки она становится текущей' do
+    let!(:client) { create :aml_client }
+
+    context 'статус клиента обновляется если принятая заявка его увеличивает' do
+      let!(:status2) { create :aml_status, position: aml_status.position + 1 }
+
+      it { expect(client.current_order.aml_status).to eq aml_status }
+
+      context 'создает еще одну заявку' do
+        before do
+          @order = create :aml_order, client: client, aml_status: status2
+          client.reload
+        end
+
+        it 'новая заявка становится текущей' do
+          expect(client.current_order).to eq @order
+        end
+
+        context 'заявку одобряют' do
+          before do
+            expect_any_instance_of(AML::Order).to receive(:all_documents_loaded?).and_return true
+            @order.done!
+            @order.process!
+            @order.accept!
+          end
+
+          it 'статус увеличивается если заявка принята' do
+            expect(client.aml_status).to eq status2
+          end
+        end
+      end
+    end
   end
 
   describe 'загруженные документы' do

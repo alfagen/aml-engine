@@ -10,5 +10,9 @@ module AML
 
     validates :title, presence: true, uniqueness: true
     validates :key, presence: true, uniqueness: true
+
+    before_create do
+      self.position = AML::Status.count + 1
+    end
   end
 end

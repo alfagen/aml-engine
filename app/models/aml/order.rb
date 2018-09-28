@@ -34,6 +34,7 @@ module AML
       end
 
       state :accepted do
+        # TODO сомнительно что можно так делать
         event :reject, transitions_to: :rejected
       end
 
@@ -48,6 +49,10 @@ module AML
     def reject(reject_reason:)
       halt! 'Причина должна быть указана' unless reject_reason.present?
       update reject_reason: reject_reason
+    end
+
+    def accept
+      client.update current_order: self, aml_status: aml_status
     end
 
     def is_locked?

@@ -3,6 +3,7 @@ require 'spec_helper'
 RSpec.describe AML::Order, type: :model do
   let!(:aml_document_kind) { create :aml_document_kind }
   let(:aml_status) { create :aml_status, :default }
+  let!(:aml_client) { create :aml_client, aml_status: aml_status }
 
   before do
     aml_status.aml_document_groups << aml_document_kind.document_group
@@ -14,6 +15,7 @@ RSpec.describe AML::Order, type: :model do
   it { expect(subject).to be_none }
   it { expect(subject.order_documents).to be_one }
   it { expect(subject).to_not be_all_documents_loaded }
+  it { expect(AML::Order.last).to eq aml_client.current_order }
 
   it do
     expect{ subject.done! }.to raise_error(Workflow::NoTransitionAllowed)

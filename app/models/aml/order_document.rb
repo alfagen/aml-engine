@@ -18,6 +18,7 @@ module AML
     has_many :definitions, through: :document_kind, source: :definitions
 
     scope :ordered, -> { order 'id desc' }
+    scope :loaded_and_available, -> { where.not(workflow_state: 'rejected').where.not(image: nil) }
 
     # TODO недавать загружать в обрабатываемую или обработанную заявку
     # validates :image, presence: true

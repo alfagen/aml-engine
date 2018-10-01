@@ -23,7 +23,7 @@ module AML
     # validates :image, presence: true
     # validates :document_kind_id, uniqueness: { scope: :order_id }
 
-    # none - Документ ожидает загрузки
+    # none - Документ ожидает загрузки (draft)
     # loaded - Документ загружен
     # processing - Проверка документа
     # accepted - Документ одобрен
@@ -31,6 +31,7 @@ module AML
     #
 
     workflow do
+      # Переименовать none в draft
       state :none do
         event :load, transitions_to: :loaded
       end

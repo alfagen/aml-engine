@@ -21,7 +21,7 @@ module AML
 
     workflow do
       # Находится на стадии загрузки пользователем
-      #
+      # TODO переименовать none в draft
       state :none do
         event :done, transitions_to: :pending, if: :allow_done?
       end

@@ -114,7 +114,7 @@ module AML
     #
     def create_and_clone_documents!
       aml_status.aml_document_groups.find_each do |g|
-        g.document_kinds.alive.ordered.each do  |document_kind|
+        g.document_kinds.alive.ordered.each do |document_kind|
           order_documents.find_or_create_by! order: self, document_kind: document_kind
         end
       end
@@ -122,10 +122,19 @@ module AML
       # TODO копировать изображения с текущей заявки
 
       if client.current_order.present? \
-          && client.current_order.attributes.slice(*ATTRIBUTES_TO_CLONE).compact.any? \
-          && attributes.slice(*ATTRIBUTES_TO_CLONE).compact.empty?
+        && client.current_order.attributes.slice(*ATTRIBUTES_TO_CLONE).compact.any? \
+        && attributes.slice(*ATTRIBUTES_TO_CLONE).compact.empty?
         assign_attributes client.current_order.attributes.slice(*ATTRIBUTES_TO_CLONE)
       end
+
+      image_to_copy.each do |document|
+        current_document = order_documents.find_by document_kind_id: document.document_kind_id
+        current_document.update workflow_state: 'loaded', image: document.image
+      end if client.current_order.present?
+    end
+
+    def image_to_copy
+      @image_to_copy ||= client.current_order.order_documents.where.not(workflow_state: 'rejected', image: nil)
     end
 
     def set_current_order!

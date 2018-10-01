@@ -3,6 +3,7 @@ module AML
     extend Enumerize
     include Workflow
     include Archivable
+    ATTRIBUTES_TO_CLONE = %w(first_name surname patronymic birth_date).freeze
 
     scope :ordered, -> { order 'id desc' }
 
@@ -47,7 +48,7 @@ module AML
       end
     end
 
-    after_create :create_documents!
+    after_create :create_and_clone_documents!
     after_create :set_current_order!
 
     def reject(reject_reason:)
@@ -111,11 +112,19 @@ module AML
     # Создает и до-создает набор документов для
     # заявки. Выполняется при содании заявки и при добавлении нового вида документов
     #
-    def create_documents!
+    def create_and_clone_documents!
       aml_status.aml_document_groups.find_each do |g|
         g.document_kinds.alive.ordered.each do  |document_kind|
           order_documents.find_or_create_by! order: self, document_kind: document_kind
         end
+      end
+
+      # TODO копировать изображения с текущей заявки
+
+      if client.current_order.present? \
+          && client.current_order.attributes.slice(*ATTRIBUTES_TO_CLONE).compact.any? \
+          && attributes.slice(*ATTRIBUTES_TO_CLONE).compact.empty?
+        assign_attributes client.current_order.attributes.slice(*ATTRIBUTES_TO_CLONE)
       end
     end
 

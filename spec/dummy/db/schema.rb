@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_28_140758) do
+ActiveRecord::Schema.define(version: 2018_10_01_092532) do
 
   create_table "aml_clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "first_name"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 2018_09_28_140758) do
     t.date "birth_date"
     t.bigint "aml_order_id"
     t.bigint "aml_status_id"
+    t.bigint "aml_accepted_order_id"
+    t.index ["aml_accepted_order_id"], name: "index_aml_clients_on_aml_accepted_order_id"
     t.index ["aml_order_id"], name: "index_aml_clients_on_aml_order_id"
     t.index ["aml_status_id"], name: "index_aml_clients_on_aml_status_id"
   end
@@ -134,6 +136,7 @@ ActiveRecord::Schema.define(version: 2018_09_28_140758) do
     t.index ["title"], name: "index_aml_statuses_on_title", unique: true
   end
 
+  add_foreign_key "aml_clients", "aml_orders", column: "aml_accepted_order_id"
   add_foreign_key "aml_clients", "aml_orders", on_delete: :nullify
   add_foreign_key "aml_clients", "aml_statuses"
   add_foreign_key "aml_document_fields", "aml_document_kind_field_definitions", column: "document_kind_field_definition_id"

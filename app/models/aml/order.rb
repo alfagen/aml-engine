@@ -58,7 +58,7 @@ module AML
 
     def accept
       halt! 'Все документы должны быть приняты' unless all_documents_accepted?
-      client.update current_order: self, aml_status: aml_status
+      client.update current_order: self, aml_accepted_order: self, aml_status: aml_status
     end
 
     def is_locked?

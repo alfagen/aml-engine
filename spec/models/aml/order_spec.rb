@@ -45,11 +45,15 @@ RSpec.describe AML::Order, type: :model do
         context 'заявку одобряют' do
           before do
             expect_any_instance_of(AML::Order).to receive(:all_documents_loaded?).and_return true
+
+            expect(@order.client.aml_accepted_order).to be_nil
             @order.done!
             @order.process! operator: operator
             aml_order_document.update image: Rack::Test::UploadedFile.new(Rails.root.join('test_files', 'test.png'))
             aml_order_document.accept!
             @order.accept!
+
+            expect(@order.client.aml_accepted_order).to eq @order
           end
 
           it 'статус увеличивается если заявка принята' do

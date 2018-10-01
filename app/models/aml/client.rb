@@ -9,6 +9,7 @@ module AML
 
     has_many :orders, class_name: 'AML::Order', dependent: :destroy
     belongs_to :current_order, class_name: 'AML::Order', dependent: :destroy, foreign_key: :aml_order_id, optional: true
+    belongs_to :aml_accepted_order, class_name: 'AML::Order', dependent: :destroy, optional: true
     belongs_to :aml_status, class_name: 'AML::Status', optional: true
 
     after_create :create_current_order!

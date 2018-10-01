@@ -3,9 +3,9 @@
 FactoryBot.define do
   factory(:aml_operator, class: AML::Operator) do
     sequence(:email) { |n| "user#{n}@example.com" }
-    password { 'password' }
-    password_confirmation { 'password' }
-    salt { 'ExqpVWiDcK2vGfeRjqTx' }
+    #password { 'password' }
+    #password_confirmation { 'password' }
+    #salt { 'ExqpVWiDcK2vGfeRjqTx' }
     # crypted_password { Sorcery::CryptoProviders::BCrypt.encrypt('password', salt) }
   end
 end

@@ -8,11 +8,18 @@ module AML
     has_many :aml_document_groups, through: :aml_document_group_to_statuses, class_name: 'AML::DocumentGroup'
     has_many :document_kinds, class_name: 'AML::DocumentKind', through: :aml_document_group_to_statuses
 
+    has_many :orders, class_name: 'AML::Order', foreign_key: :aml_status_id
+    has_many :clients, class_name: 'AML::Client', foreign_key: :aml_status_id
+
     validates :title, presence: true, uniqueness: true
     validates :key, presence: true, uniqueness: true
 
     before_create do
-      self.position = AML::Status.count + 1
+      self.position = self.class.count + 1
+    end
+
+    def to_s
+      "#{title} (#{position})"
     end
   end
 end

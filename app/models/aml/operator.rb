@@ -18,7 +18,7 @@ module AML
     validates :password_confirmation, presence: true, on: :update, if: :crypted_password_changed?
     validates :email, presence: true, uniqueness: true, email: true
 
-    after_commit :deliver_reset_password_instructions!, on: :create
+    after_commit :deliver_reset_password_instructions!, on: :create if defined? Sorcery
 
     workflow do
       state :unblocked do

@@ -4,6 +4,7 @@ RSpec.describe AML::Order, type: :model do
   let!(:aml_document_kind) { create :aml_document_kind }
   let(:aml_status) { create :aml_status, :default }
   let!(:aml_client) { create :aml_client, aml_status: aml_status }
+  let!(:operator) { create :aml_operator }
 
   before do
     aml_status.aml_document_groups << aml_document_kind.document_group
@@ -45,7 +46,7 @@ RSpec.describe AML::Order, type: :model do
           before do
             expect_any_instance_of(AML::Order).to receive(:all_documents_loaded?).and_return true
             @order.done!
-            @order.process!
+            @order.process! operator: operator
             aml_order_document.update image: Rack::Test::UploadedFile.new(Rails.root.join('test_files', 'test.png'))
             aml_order_document.accept!
             @order.accept!
@@ -86,7 +87,7 @@ RSpec.describe AML::Order, type: :model do
 
       context 'обработка' do
         before do
-          subject.process!
+          subject.process! operator: operator
         end
 
         it 'нельзя принять если документы не приняты' do
@@ -112,4 +113,4 @@ RSpec.describe AML::Order, type: :model do
     end
   end
 end
-          
+

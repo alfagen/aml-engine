@@ -34,7 +34,7 @@ module AML
       state :processing do
         event :accept, transitions_to: :accepted
         event :reject, transitions_to: :rejected
-        event :stop, transitions_to: :pending
+        event :cancel, transitions_to: :pending
       end
 
       state :accepted do
@@ -68,6 +68,14 @@ module AML
       order_documents.select(:complete?).count == order_documents.count
     end
 
+    def process(operator:)
+      update operator: operator
+    end
+
+    def cancel
+      update operator: nil
+    end
+
     def done
       halt! 'Личная анкета не до конца заполнена' unless first_name.present? && surname.present? && birth_date.present?
     end
@@ -78,6 +86,10 @@ module AML
           .create_with(order: self)
           .find_or_create_by!(document_kind: document_kind)
       end
+    end
+
+    def name
+      [first_name, surname, patronymic].compact.join ' '
     end
 
     def allow_done?

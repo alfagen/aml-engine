@@ -30,5 +30,13 @@ module AML
       order = super attrs.merge client_id: id
       update_column :aml_order_id, order.id
     end
+
+    def name
+      [first_name, surname, patronymic].compact.join ' '
+    end
+
+    def to_s
+      "##{id} #{name}"
+    end
   end
 end

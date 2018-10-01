@@ -21,5 +21,9 @@ module AML
     def to_s
       "#{title} (#{position})"
     end
+
+    def not_belong_groups
+      AML::DocumentGroup.where.not(id: aml_document_groups.pluck(:aml_document_group_id))
+    end
   end
 end

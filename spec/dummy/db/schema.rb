@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_02_072346) do
+ActiveRecord::Schema.define(version: 2018_10_02_083626) do
 
   create_table "aml_clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "first_name"
@@ -111,7 +111,7 @@ ActiveRecord::Schema.define(version: 2018_10_02_072346) do
     t.string "first_name"
     t.string "surname"
     t.string "patronymic"
-    t.datetime "birth_date"
+    t.date "birth_date"
     t.string "workflow_state", default: "none", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

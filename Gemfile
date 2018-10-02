@@ -13,6 +13,7 @@ gem 'fast_jsonapi', github: 'HoJSim/fast_jsonapi', branch: 'dev'
 gem 'valid_email'
 gem 'enumerize'
 gem 'workflow', github: 'geekq/workflow'
+gem 'ransack'
 
 group :development do
     gem 'mysql2'

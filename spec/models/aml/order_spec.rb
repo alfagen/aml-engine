@@ -95,7 +95,7 @@ RSpec.describe AML::Order, type: :model do
         end
 
         it 'нельзя принять если документы не приняты' do
-          expect{ subject.accept! }.to raise_error(Workflow::TransitionHalted)
+          expect{ subject.accept! }.to raise_error(Workflow::NoTransitionAllowed)
         end
 
         context 'можно принять заявку если документы приняты' do

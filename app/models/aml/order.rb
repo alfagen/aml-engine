@@ -33,7 +33,7 @@ module AML
 
        # Оператор начал обрабатывать
       state :processing do
-        event :accept, transitions_to: :accepted
+        event :accept, transitions_to: :accepted, if: :all_documents_accepted?
         event :reject, transitions_to: :rejected
         event :cancel, transitions_to: :pending
       end
@@ -57,7 +57,6 @@ module AML
     end
 
     def accept
-      halt! 'Все документы должны быть приняты' unless all_documents_accepted?
       client.update current_order: self, aml_accepted_order: self, aml_status: aml_status
     end
 

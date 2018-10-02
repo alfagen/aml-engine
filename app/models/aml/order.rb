@@ -81,14 +81,6 @@ module AML
       halt! 'Личная анкета не до конца заполнена' unless first_name.present? && surname.present? && birth_date.present?
     end
 
-    def get_order_document_by_kind(document_kind)
-      with_lock do
-        order_documents
-          .create_with(order: self)
-          .find_or_create_by!(document_kind: document_kind)
-      end
-    end
-
     def name
       [first_name, surname, patronymic].compact.join ' '
     end

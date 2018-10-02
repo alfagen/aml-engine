@@ -10,5 +10,9 @@ module AML
     scope :ordered, -> { order :position }
 
     validates :title, presence: true, uniqueness: true
+
+    before_create do
+      self.position ||= self.position + 1 if self.class.any?
+    end
   end
 end

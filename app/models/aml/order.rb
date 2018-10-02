@@ -3,6 +3,7 @@ module AML
     extend Enumerize
     include Workflow
     include Archivable
+
     ATTRIBUTES_TO_CLONE = %w(first_name surname patronymic birth_date).freeze
 
     scope :ordered, -> { order 'id desc' }
@@ -129,6 +130,10 @@ module AML
 
     def set_default_aml_status
       self.aml_status ||= ::AML.default_status
+    end
+
+    ransacker :id do
+      Arel.sql("CONVERT(#{table_name}.id, CHAR(8))")
     end
   end
 end

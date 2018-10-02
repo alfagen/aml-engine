@@ -32,6 +32,10 @@ module AML
       update_column :aml_order_id, order.id
     end
 
+    def reset_status!
+      update aml_status: ::AML.default_status, aml_accepted_order: nil
+    end
+
     def name
       [first_name, surname, patronymic].compact.join ' '
     end

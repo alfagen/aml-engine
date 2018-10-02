@@ -36,10 +36,10 @@ module AML
 
       Status.create!(title: 'Гостевой', key: default_status_key)
 
-      s1 = Status.create!(title: 'Простой', key: 'personal')
+      s1 = Status.create!(title: 'Персональный', key: 'personal')
       s1.aml_document_groups << g1
 
-      s2 = Status.create!(title: 'Сложный', key: 'professional')
+      s2 = Status.create!(title: 'Профессиональный', key: 'professional')
       s2.aml_document_groups << g1
       s2.aml_document_groups << g2
     end

@@ -12,7 +12,11 @@ module AML
     validates :title, presence: true, uniqueness: true
 
     before_create do
-      self.position ||= self.position + 1 if self.class.any?
+      if self.class.any?
+        self.position ||= self.class.last.position + 1
+      else
+        self.position = 1
+      end
     end
   end
 end

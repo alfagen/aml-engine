@@ -98,11 +98,11 @@ module AML
     end
 
     def all_documents_loaded?
-      order_documents.map(&:workflow_state).uniq == ['loaded']
+      order_documents.reject(&:loaded?).empty?
     end
 
     def all_documents_accepted?
-      order_documents.map(&:workflow_state).uniq == ['accepted']
+      order_documents.reject(&:accepted?).empty?
     end
 
     private

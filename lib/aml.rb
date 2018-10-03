@@ -48,6 +48,8 @@ module AML
   def self.delete_all!(permit)
     raise unless permit
 
+    Client.update_all aml_order_id: nil, aml_status_id: nil, aml_accepted_order_id: nil
+
     OrderDocument.delete_all
     DocumentKind.delete_all
     DocumentGroupToStatus.delete_all

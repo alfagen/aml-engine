@@ -53,6 +53,7 @@ module AML
       end
     end
 
+    before_create :copy_fields_from_current_order!
     after_create :create_and_clone_documents!
     after_create :set_current_order!
 
@@ -107,6 +108,14 @@ module AML
 
     private
 
+    def copy_fields_from_current_order!
+      if client.current_order.present? \
+        && client.current_order.attributes.slice(*ATTRIBUTES_TO_CLONE).compact.any? \
+        && attributes.slice(*ATTRIBUTES_TO_CLONE).compact.empty?
+        assign_attributes client.current_order.attributes.slice(*ATTRIBUTES_TO_CLONE)
+      end
+    end
+
     # Создает и до-создает набор документов для
     # заявки. Выполняется при содании заявки и при добавлении нового вида документов
     #
@@ -121,12 +130,6 @@ module AML
             create_with(image: image).
             find_or_create_by! order: self, document_kind: document_kind
         end
-      end
-
-      if client.current_order.present? \
-        && client.current_order.attributes.slice(*ATTRIBUTES_TO_CLONE).compact.any? \
-        && attributes.slice(*ATTRIBUTES_TO_CLONE).compact.empty?
-        assign_attributes client.current_order.attributes.slice(*ATTRIBUTES_TO_CLONE)
       end
     end
 

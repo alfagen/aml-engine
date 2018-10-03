@@ -9,6 +9,8 @@ module AML
 
     attributes :first_name, :surname, :patronymic, :workflow_state, :birth_date, :created_at, :updated_at
 
+    attributes :reject_reason
+
     attribute :is_locked do |o|
       o.is_locked?
     end

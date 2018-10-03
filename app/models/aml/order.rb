@@ -20,6 +20,10 @@ module AML
     validates :surname, presence: true, if: :require_fields?
     validates :birth_date, presence: true, if: :require_fields?
 
+    ransacker :id do
+      Arel.sql("CONVERT(#{table_name}.id, CHAR(8))")
+    end
+
     workflow do
       # Находится на стадии загрузки пользователем
       # TODO переименовать none в draft
@@ -101,6 +105,8 @@ module AML
       order_documents.map(&:workflow_state).uniq == ['accepted']
     end
 
+    private
+
     # Создает и до-создает набор документов для
     # заявки. Выполняется при содании заявки и при добавлении нового вида документов
     #
@@ -130,10 +136,6 @@ module AML
 
     def set_default_aml_status
       self.aml_status ||= ::AML.default_status
-    end
-
-    ransacker :id do
-      Arel.sql("CONVERT(#{table_name}.id, CHAR(8))")
     end
   end
 end

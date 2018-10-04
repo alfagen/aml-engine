@@ -76,7 +76,7 @@ RSpec.describe AML::Order, type: :model do
         subject.update first_name: nil
       end
       it 'не дает отправить' do
-        expect{ subject.done! }.to raise_error(Workflow::TransitionHalted)
+        expect{ subject.done! }.to raise_error(Workflow::NoTransitionAllowed)
       end
     end
 

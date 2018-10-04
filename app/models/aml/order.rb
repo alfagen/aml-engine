@@ -83,7 +83,7 @@ module AML
     end
 
     def done
-      halt! 'Личная анкета не до конца заполнена' unless first_name.present? && surname.present? && birth_date.present?
+      halt! 'Личная анкета не до конца заполнена' unless fields_present?
     end
 
     def name
@@ -91,7 +91,11 @@ module AML
     end
 
     def allow_done?
-      all_documents_loaded?
+      all_documents_loaded? && fields_present?
+    end
+
+    def fields_present?
+      first_name.present? && surname.present? && birth_date.present?
     end
 
     def require_fields?

@@ -59,9 +59,9 @@ module AML
     after_create :create_and_clone_documents!
     after_create :set_current_order!
 
-    def reject(reject_reason:)
+    def reject(reject_reason:, details: nil)
       halt! 'Причина должна быть указана' unless reject_reason.is_a? AML::RejectReason
-      update aml_reject_reason: reject_reason
+      update aml_reject_reason: reject_reason, reject_reason_details: details
     end
 
     def accept

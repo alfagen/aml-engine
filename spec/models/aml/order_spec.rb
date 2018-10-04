@@ -109,7 +109,7 @@ RSpec.describe AML::Order, type: :model do
 
         context 'отклонили' do
           let(:reject_reason) { create :aml_reject_reason }
-          before { subject.reject! reject_reason: reject_reason }
+          before { subject.reject! reject_reason: reject_reason, details: 'детали' }
           it { expect(subject).to be_rejected }
           it { expect(subject.aml_reject_reason).to eq reject_reason }
         end

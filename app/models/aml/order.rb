@@ -8,9 +8,10 @@ module AML
 
     scope :ordered, -> { order 'id desc' }
 
-    belongs_to :client, class_name: 'AML::Client', foreign_key: 'client_id', inverse_of: :orders, dependent: :destroy
-    belongs_to :operator, class_name: 'AML::Operator', foreign_key: 'operator_id', optional: true, inverse_of: :orders
+    belongs_to :client, class_name: 'AML::Client', foreign_key: :client_id, inverse_of: :orders, dependent: :destroy
+    belongs_to :operator, class_name: 'AML::Operator', foreign_key: :operator_id, optional: true, inverse_of: :orders
     belongs_to :aml_status, class_name: 'AML::Status'
+    belongs_to :aml_reject_reason, class_name: 'AML::RejectReason', optional: true
 
     has_many :order_documents, class_name: 'AML::OrderDocument', dependent: :destroy
     has_many :required_document_kinds, through: :aml_status, source: :document_kinds
@@ -59,8 +60,8 @@ module AML
     after_create :set_current_order!
 
     def reject(reject_reason:)
-      halt! 'Причина должна быть указана' unless reject_reason.present?
-      update reject_reason: reject_reason
+      halt! 'Причина должна быть указана' unless reject_reason.is_a? AML::RejectReason
+      update aml_reject_reason: reject_reason
     end
 
     def accept

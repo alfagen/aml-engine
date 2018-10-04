@@ -31,6 +31,10 @@ module AML
       end
     end
 
+    def to_s
+      "[#{id}] #{name}"
+    end
+
     def to_partial_path
       'operator'
     end

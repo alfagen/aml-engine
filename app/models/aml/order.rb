@@ -13,6 +13,7 @@ module AML
     belongs_to :aml_status, class_name: 'AML::Status'
 
     has_many :order_documents, class_name: 'AML::OrderDocument', dependent: :destroy
+    has_many :required_document_kinds, through: :aml_status, source: :document_kinds
 
     before_validation :set_default_aml_status, unless: :aml_status
 
@@ -33,7 +34,7 @@ module AML
 
       # Пользователь загрузил, ждет когда оператор начнет обрабатывать
       state :pending do
-        event :process, transitions_to: :processing
+        event :start, transitions_to: :processing
       end
 
        # Оператор начал обрабатывать
@@ -70,11 +71,15 @@ module AML
       !none?
     end
 
+    def is_owner?(operator)
+      self.operator == operator
+    end
+
     def complete?
       order_documents.select(:complete?).count == order_documents.count
     end
 
-    def process(operator:)
+    def start(operator:)
       update operator: operator
     end
 
@@ -103,11 +108,11 @@ module AML
     end
 
     def all_documents_loaded?
-      order_documents.reject(&:loaded?).empty?
+      order_documents.any? && order_documents.reject(&:loaded?).empty?
     end
 
     def all_documents_accepted?
-      order_documents.reject(&:accepted?).empty?
+      order_documents.any? && order_documents.reject(&:accepted?).empty?
     end
 
     private

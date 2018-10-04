@@ -48,7 +48,7 @@ RSpec.describe AML::Order, type: :model do
 
             expect(@order.client.aml_accepted_order).to be_nil
             @order.done!
-            @order.process! operator: operator
+            @order.start! operator: operator
             aml_order_document.update image: Rack::Test::UploadedFile.new(Rails.root.join('test_files', 'test.png'))
             aml_order_document.accept!
             @order.accept!
@@ -91,7 +91,7 @@ RSpec.describe AML::Order, type: :model do
 
       context 'обработка' do
         before do
-          subject.process! operator: operator
+          subject.start! operator: operator
         end
 
         it 'нельзя принять если документы не приняты' do

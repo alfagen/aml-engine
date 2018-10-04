@@ -7,8 +7,10 @@ FactoryBot.define do
     association :client, factory: :aml_client
     aml_status
 
-    trait :processing do
-      workflow_state { 'processing' }
+    AML::Order.workflow_spec.states.keys.each do |state|
+      trait state do
+        workflow_state { state.to_s }
+      end
     end
   end
 end

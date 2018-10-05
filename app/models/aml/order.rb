@@ -118,12 +118,16 @@ module AML
 
     private
 
+    def attributes_to_clone
+      @attributes_to_clone ||= attributes.slice(*ATTRIBUTES_TO_CLONE)
+    end
+
     def copy_fields_from_current_order!
-      if client.current_order.present? \
-        && client.current_order.attributes.slice(*ATTRIBUTES_TO_CLONE).compact.any? \
-        && attributes.slice(*ATTRIBUTES_TO_CLONE).compact.empty?
-        assign_attributes client.current_order.attributes.slice(*ATTRIBUTES_TO_CLONE)
-      end
+      return unless attributes_to_clone.empty?
+      return unless client.current_order.present?
+      return unless client.current_order.attributes_to_clone.compact.any?
+
+      assign_attributes client.current_order.attributes_to_clone
     end
 
     # Создает и до-создает набор документов для

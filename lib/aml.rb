@@ -42,6 +42,9 @@ module AML
       s2 = Status.create!(title: 'Профессиональный', key: 'professional')
       s2.aml_document_groups << g1
       s2.aml_document_groups << g2
+
+      RejectReason.create! details: 'Не хватает документов'
+      RejectReason.create! details: 'Ошибка в документах'
     end
   end
 
@@ -57,6 +60,8 @@ module AML
     Order.delete_all
     Client.delete_all
     Status.delete_all
+
+    RejectReason.delete_all
   end
 
   # После создания новых видов документов, добавляем их во все заявки

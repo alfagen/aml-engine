@@ -116,14 +116,16 @@ module AML
       order_documents.any? && order_documents.reject(&:accepted?).empty?
     end
 
-    private
+    protected
 
     def attributes_to_clone
       @attributes_to_clone ||= attributes.slice(*ATTRIBUTES_TO_CLONE)
     end
 
+    private
+
     def copy_fields_from_current_order!
-      return unless attributes_to_clone.empty?
+      return unless attributes_to_clone.compact.empty?
       return unless client.current_order.present?
       return unless client.current_order.attributes_to_clone.compact.any?
 

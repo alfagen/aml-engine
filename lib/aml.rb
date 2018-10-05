@@ -43,8 +43,8 @@ module AML
       s2.aml_document_groups << g1
       s2.aml_document_groups << g2
 
-      RejectReason.create! details: 'Не хватает документов'
-      RejectReason.create! details: 'Ошибка в документах'
+      RejectReason.create! title: 'Не хватает документов'
+      RejectReason.create! title: 'Ошибка в документах'
     end
   end
 

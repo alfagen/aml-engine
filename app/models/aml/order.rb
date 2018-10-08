@@ -50,9 +50,7 @@ module AML
         event :reject, transitions_to: :rejected
       end
 
-      state :rejected do
-        event :accept, transitions_to: :accepted
-      end
+      state :rejected
     end
 
     before_create :copy_fields_from_current_order!

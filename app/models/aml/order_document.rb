@@ -8,7 +8,7 @@ module AML
     extend Enumerize
     include Workflow
 
-    mount_uploader :image, FileUploader
+    mount_uploader :image, DocumentFileUploader
 
     belongs_to :order, class_name: 'AML::Order', foreign_key: 'order_id', inverse_of: :order_documents
     belongs_to :document_kind, class_name: 'AML::DocumentKind', foreign_key: 'document_kind_id', inverse_of: :order_documents

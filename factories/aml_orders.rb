@@ -24,7 +24,7 @@ FactoryBot.define do
       after :create do |order|
         create_list :aml_order_document, 2, :loaded, order: order
         order.done!
-        order.start!
+        order.start!(operator: order.operator)
       end
     end
 
@@ -32,7 +32,7 @@ FactoryBot.define do
       after :create do |order|
         create_list :aml_order_document, 2, :loaded, order: order
         order.done!
-        order.start!
+        order.start!(operator: order.operator)
         order.accept!
       end
     end

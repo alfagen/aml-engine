@@ -63,7 +63,7 @@ module AML
     end
 
     def accept
-      client.update current_order: self, aml_accepted_order: self, aml_status: aml_status
+      client.update attributes_to_clone.merge current_order: self, aml_accepted_order: self, aml_status: aml_status
     end
 
     def is_locked?

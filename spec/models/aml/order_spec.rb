@@ -24,7 +24,7 @@ RSpec.describe AML::Order, type: :model do
   end
 
   describe 'при создани изаявки она становится текущей' do
-    let!(:client) { create :aml_client }
+    let!(:client) { create :aml_client, first_name: nil }
 
     context 'статус клиента обновляется если принятая заявка его увеличивает' do
       let!(:status2) { create :aml_status, position: aml_status.position + 1 }
@@ -44,6 +44,7 @@ RSpec.describe AML::Order, type: :model do
 
         context 'заявку одобряют' do
           before do
+            expect(@order.client.first_name).to be_nil
             expect_any_instance_of(AML::Order).to receive(:all_documents_loaded?).and_return true
 
             expect(@order.client.aml_accepted_order).to be_nil
@@ -54,6 +55,8 @@ RSpec.describe AML::Order, type: :model do
             @order.accept!
 
             expect(@order.client.aml_accepted_order).to eq @order
+            expect(@order.client.first_name).to_not be_nil
+            expect(@order.client.first_name).to eq @order.first_name
           end
 
           it 'статус увеличивается если заявка принята' do

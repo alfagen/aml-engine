@@ -49,7 +49,7 @@ RSpec.describe AML::Order, type: :model do
             expect(@order.client.aml_accepted_order).to be_nil
             @order.done!
             @order.start! operator: operator
-            aml_order_document.update image: Rack::Test::UploadedFile.new(Rails.root.join('test_files', 'test.png'))
+            aml_order_document.update image: Rack::Test::UploadedFile.new(Rails.root.join('spec', 'test_files', 'test.png'))
             aml_order_document.accept!
             @order.accept!
 
@@ -66,7 +66,7 @@ RSpec.describe AML::Order, type: :model do
 
   describe 'загруженные документы' do
     before do
-      aml_order_document.update image: Rack::Test::UploadedFile.new(Rails.root.join('test_files', 'test.png'))
+      aml_order_document.update image: Rack::Test::UploadedFile.new(Rails.root.join('spec', 'test_files', 'test.png'))
     end
 
     it { expect(subject).to be_all_documents_loaded }

@@ -4,6 +4,6 @@ module AML
 
     set_type :aml_reject_reason
 
-    attributes :details
+    attributes :title
   end
 end

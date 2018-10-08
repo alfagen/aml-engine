@@ -8,7 +8,8 @@ module AML
     belongs_to :aml_status, record_type: :aml_status, serializer: 'AML::StatusSerializer'
     belongs_to :aml_reject_reason, record_type: :aml_status, serializer: 'AML::RejectReasonSerializer'
 
-    attributes :first_name, :surname, :patronymic, :workflow_state, :reject_reason_details, :birth_date, :created_at, :updated_at
+    attributes :first_name, :surname, :patronymic, :workflow_state, :reject_reason_details, :birth_date,
+      :created_at, :updated_at
 
     attribute :reject_reason do |o|
       [o.aml_reject_reason.title, o.reject_reason_details].compact.join('. ') if o.rejected?

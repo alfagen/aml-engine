@@ -13,12 +13,12 @@ RSpec.describe AML::OrderDocument, type: :model do
 
     describe 'загружаем документ' do
       before do
-        subject.update image: Rack::Test::UploadedFile.new(Rails.root.join('test_files', 'test.png'))
+        subject.update image: Rack::Test::UploadedFile.new(Rails.root.join('spec', 'test_files', 'test.png'))
       end
       it { expect(subject).to be_loaded }
 
       it 'загрузил повторно' do
-        subject.update image: Rack::Test::UploadedFile.new(Rails.root.join('test_files', 'test.png'))
+        subject.update image: Rack::Test::UploadedFile.new(Rails.root.join('spec', 'test_files', 'test.png'))
         expect(subject).to be_loaded
       end
     end

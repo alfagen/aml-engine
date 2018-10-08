@@ -8,5 +8,9 @@ FactoryBot.define do
     trait :administrator do
       role { 'administrator' }
     end
+
+    trait :blocked do
+      workflow_state { :blocked }
+    end
   end
 end

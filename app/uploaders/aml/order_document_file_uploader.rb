@@ -1,5 +1,5 @@
 module AML
-  class DocumentFileUploader < FileUploader
+  class OrderDocumentFileUploader < ApplicationUploader
     after :store, :load!
 
     delegate :load!, to: :model

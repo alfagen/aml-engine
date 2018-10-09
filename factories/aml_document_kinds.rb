@@ -10,5 +10,10 @@ FactoryBot.define do
         create :aml_document_kind_field_definition, document_kind: instance
       end
     end
+
+    trait :with_image do
+      image { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'test_files', 'test.pdf')) }
+      file_title { 'file_title' }
+    end
   end
 end

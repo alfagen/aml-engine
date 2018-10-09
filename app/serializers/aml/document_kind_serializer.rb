@@ -6,5 +6,5 @@ class AML::DocumentKindSerializer
 
   belongs_to :document_group, record_type: :aml_document_group
 
-  attributes :title, :position, :details
+  attributes :title, :position, :details, :file, :file_title
 end

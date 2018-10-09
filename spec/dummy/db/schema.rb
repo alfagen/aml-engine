@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 2018_10_08_120856) do
     t.text "details"
     t.integer "position"
     t.bigint "aml_document_group_id"
-    t.string "image"
+    t.string "file"
     t.string "file_title"
     t.index ["aml_document_group_id"], name: "index_aml_document_kinds_on_aml_document_group_id"
     t.index ["title"], name: "index_aml_document_kinds_on_title", unique: true

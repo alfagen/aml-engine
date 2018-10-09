@@ -4,7 +4,7 @@ module AML
   class DocumentKind < ApplicationRecord
     include Archivable
 
-    mount_uploader :image, FileUploader
+    mount_uploader :file, FileUploader
 
     scope :ordered, -> { order 'position desc' }
 
@@ -13,7 +13,7 @@ module AML
     has_many :order_documents, class_name: 'AML::OrderDocument', dependent: :destroy
 
     validates :title, presence: true, uniqueness: true
-    validates :file_title, on: :update, presence: { if: :image? }
+    validates :file_title, on: :update, presence: true, if: :file?
 
     # Поддержка для Serializer
     alias_attribute :document_group_id, :aml_document_group_id

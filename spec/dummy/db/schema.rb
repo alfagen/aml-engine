@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 2018_10_10_070944) do
     t.text "details"
     t.integer "position"
     t.bigint "aml_document_group_id"
+    t.string "goal"
     t.string "file"
     t.string "file_title"
     t.index ["aml_document_group_id"], name: "index_aml_document_kinds_on_aml_document_group_id"

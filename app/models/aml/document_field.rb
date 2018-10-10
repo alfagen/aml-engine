@@ -1,7 +1,11 @@
 module AML
   # TODO Переименовать в DocumentField
   class DocumentField < ApplicationRecord
-    ClosedOrderError = Class.new StandardError
+    class ClosedOrderError < StandardError
+      def message
+        'Нельзя редактировать поле документа. Заявка закрыта для изменений.'
+      end
+    end
 
     scope :ordered, -> { order 'id desc' }
 

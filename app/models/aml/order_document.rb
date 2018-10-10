@@ -12,6 +12,7 @@ module AML
 
     belongs_to :order, class_name: 'AML::Order', foreign_key: 'order_id', inverse_of: :order_documents
     belongs_to :document_kind, class_name: 'AML::DocumentKind', foreign_key: 'document_kind_id', inverse_of: :order_documents
+    belongs_to :aml_reject_reason, class_name: 'AML::RejectReason', optional: true
 
     # TODO переиименовать в document_fields
     has_many :document_fields, class_name: 'AML::DocumentField', dependent: :destroy

@@ -137,7 +137,7 @@ ActiveRecord::Schema.define(version: 2018_10_10_070944) do
     t.timestamp "archived_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "kind"
+    t.integer "kind", null: false
     t.index ["title"], name: "index_aml_reject_reasons_on_title", unique: true
   end
 

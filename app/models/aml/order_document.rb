@@ -60,6 +60,11 @@ module AML
 
     accepts_nested_attributes_for :document_fields, update_only: true
 
+    def reject(reject_reason:, details: nil)
+      halt! 'Причина должна быть указана' unless reject_reason.is_a? AML::RejectReason
+      update aml_reject_reason: reject_reason, reject_reason_details: details
+    end
+
     def document_fields_attributes
       document_fields.map do |document_field|
         document_field.as_json only: %i[value document_kind_field_definition_id]
@@ -81,7 +86,7 @@ module AML
     private
 
     def validate_order_open!
-      raise ClosedOrderError if order.is_locked?
+      raise ClosedOrderError if order.is_locked? && image_changed?
     end
 
     def create_fields!

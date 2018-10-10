@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_10_070944) do
+ActiveRecord::Schema.define(version: 2018_10_10_124654) do
 
   create_table "aml_clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "first_name"
@@ -74,9 +74,9 @@ ActiveRecord::Schema.define(version: 2018_10_10_070944) do
     t.text "details"
     t.integer "position"
     t.bigint "aml_document_group_id"
-    t.string "goal"
     t.string "file"
     t.string "file_title"
+    t.string "goal"
     t.index ["aml_document_group_id"], name: "index_aml_document_kinds_on_aml_document_group_id"
     t.index ["title"], name: "index_aml_document_kinds_on_title", unique: true
   end

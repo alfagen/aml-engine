@@ -3,7 +3,11 @@
 module AML
   class OrderDocument < ApplicationRecord
     # 'Can`t update document of locker order'
-    ClosedOrderError = Class.new StandardError
+    class ClosedOrderError < StandardError
+      def message
+        'Нельзя редактировать документ. Заявка закрыта для изменений.'
+      end
+    end
 
     extend Enumerize
     include Workflow

@@ -63,11 +63,11 @@ RSpec.describe AML::OrderDocument, type: :model do
       end
 
       it do
-        expect { subject.save }.to raise_error AML::OrderDocument::ClosedOrderError
+        expect { subject.update image: Rack::Test::UploadedFile.new(Rails.root.join('spec', 'test_files', 'test.png'))}.to raise_error AML::OrderDocument::ClosedOrderError
       end
 
       it do
-        expect { subject.fields = {} }.to raise_error AML::OrderDocument::ClosedOrderError
+        expect { subject.document_fields.first.update value: 'new_value' }.to raise_error AML::DocumentField::ClosedOrderError
       end
     end
   end

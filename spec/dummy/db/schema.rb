@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_10_124654) do
+ActiveRecord::Schema.define(version: 2018_10_10_070944) do
 
   create_table "aml_clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "first_name"
@@ -105,6 +105,9 @@ ActiveRecord::Schema.define(version: 2018_10_10_124654) do
     t.string "image"
     t.string "workflow_state", default: "none", null: false
     t.bigint "order_id"
+    t.bigint "aml_reject_reason_id"
+    t.text "reject_reason_details"
+    t.index ["aml_reject_reason_id"], name: "index_aml_order_documents_on_aml_reject_reason_id"
     t.index ["document_kind_id"], name: "index_aml_order_documents_on_document_kind_id"
     t.index ["order_id", "document_kind_id"], name: "index_aml_order_documents_on_order_id_and_document_kind_id", unique: true
     t.index ["order_id"], name: "index_aml_order_documents_on_order_id"
@@ -135,6 +138,7 @@ ActiveRecord::Schema.define(version: 2018_10_10_124654) do
     t.timestamp "archived_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "kind", null: false
     t.index ["title"], name: "index_aml_reject_reasons_on_title", unique: true
   end
 

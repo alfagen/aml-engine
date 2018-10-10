@@ -38,12 +38,11 @@ FactoryBot.define do
     end
 
     trait :rejected do
-      association :aml_reject_reason
       after :create do |order|
         create_list :aml_order_document, 2, :loaded, order: order
         order.done!
         order.start!(operator: order.operator)
-        order.reject!(reject_reason: create(:aml_reject_reason), details: 'reject reason details')
+        order.reject!(reject_reason: create(:aml_reject_reason, :order_reason), details: 'reject reason details')
       end
     end
   end

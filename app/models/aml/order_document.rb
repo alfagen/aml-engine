@@ -12,6 +12,7 @@ module AML
 
     belongs_to :order, class_name: 'AML::Order', foreign_key: 'order_id', inverse_of: :order_documents
     belongs_to :document_kind, class_name: 'AML::DocumentKind', foreign_key: 'document_kind_id', inverse_of: :order_documents
+    belongs_to :aml_reject_reason, class_name: 'AML::RejectReason', optional: true
 
     # TODO переиименовать в document_fields
     has_many :document_fields, class_name: 'AML::DocumentField', dependent: :destroy
@@ -59,6 +60,11 @@ module AML
 
     accepts_nested_attributes_for :document_fields, update_only: true
 
+    def reject(reject_reason:, details: nil)
+      halt! 'Причина должна быть указана' unless reject_reason.is_a? AML::RejectReason
+      update aml_reject_reason: reject_reason, reject_reason_details: details
+    end
+
     def document_fields_attributes
       document_fields.map do |document_field|
         document_field.as_json only: %i[value document_kind_field_definition_id]
@@ -80,7 +86,7 @@ module AML
     private
 
     def validate_order_open!
-      raise ClosedOrderError if order.is_locked?
+      raise ClosedOrderError if order.is_locked? && image_changed?
     end
 
     def create_fields!

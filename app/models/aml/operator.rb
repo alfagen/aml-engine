@@ -15,7 +15,7 @@ module AML
 
     has_many :orders, class_name: 'AML::Order', dependent: :destroy
 
-    validate :current_password_is_correct, on: :update, if: -> { current_password.present? }
+    validate :current_password_is_correct, on: :update, if: -> { crypted_password.present? }
     validates :password, length: { minimum: 8 }, on: :update, if: :crypted_password_changed?
     validates :password, confirmation: true, on: :update, if: :crypted_password_changed?
     validates :password_confirmation, presence: true, on: :update, if: :crypted_password_changed?

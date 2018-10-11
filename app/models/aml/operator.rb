@@ -5,6 +5,9 @@ module AML
   class Operator < ApplicationRecord
     extend Enumerize
     include Workflow
+    include CurrentPassword
+
+    authenticates_with_sorcery! if defined? Sorcery
 
     enumerize :workflow_state, in: %w[blocked unblocked], scope: true
     enum role: [:operator, :administrator]
@@ -19,7 +22,7 @@ module AML
     validates :email, presence: true, uniqueness: true, email: true
     validates :name, presence: true, uniqueness: true
 
-    after_commit :deliver_reset_password_instructions!, on: :create if defined? Sorcery
+    after_commit :deliver_reset_password_instructions!, on: :create, if: :require_password_instruction?
 
     workflow do
       state :unblocked do
@@ -37,6 +40,10 @@ module AML
 
     def to_partial_path
       'operator'
+    end
+
+    def require_password_instruction?
+      defined?(Sorcery) && respond_to?(:deliver_reset_password_instructions!)
     end
 
     def active_for_authentication?

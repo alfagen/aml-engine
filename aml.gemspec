@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency 'enumerize'
     s.add_runtime_dependency 'workflow', '~> 1.3.0'
     s.add_runtime_dependency 'ransack'
+    s.add_runtime_dependency 'sorcery'
 
     s.add_runtime_dependency "rails", "~> 5.2.1"
     s.add_runtime_dependency "dapi-archivable", "~> 0.1.2"

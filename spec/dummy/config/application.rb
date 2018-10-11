@@ -5,6 +5,7 @@ require 'rails/all'
 Bundler.require(*Rails.groups)
 
 require 'archivable'
+require 'sorcery'
 require "aml"
 
 module Dummy

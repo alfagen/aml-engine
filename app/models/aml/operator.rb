@@ -6,6 +6,8 @@ module AML
     extend Enumerize
     include Workflow
 
+    attr_accessor :current_password
+
     enumerize :workflow_state, in: %w[blocked unblocked], scope: true
     enum role: [:operator, :administrator]
 
@@ -13,6 +15,7 @@ module AML
 
     has_many :orders, class_name: 'AML::Order', dependent: :destroy
 
+    validate :current_password_is_correct, on: :update, if: -> { current_password.present? }
     validates :password, length: { minimum: 8 }, on: :update, if: :crypted_password_changed?
     validates :password, confirmation: true, on: :update, if: :crypted_password_changed?
     validates :password_confirmation, presence: true, on: :update, if: :crypted_password_changed?
@@ -41,6 +44,12 @@ module AML
 
     def active_for_authentication?
       unblocked?
+    end
+
+    def current_password_is_correct
+      unless Operator.find(id).valid_password? current_password
+        errors.add(:current_password, 'Текущий пароль не верен.')
+      end
     end
   end
 end

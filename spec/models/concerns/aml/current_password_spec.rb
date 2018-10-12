@@ -22,16 +22,20 @@ RSpec.describe AML::CurrentPassword, type: :model do
     end
   end
 
+  context 'создание пароля при регистрации не требует текущего пароля' do
+    let(:password) { generate :aml_password }
+    let(:operator) { create :aml_operator }
+
+    it { expect(operator).to be_valid }
+    it do
+      expect { operator.update! password: password, password_confirmation: password }.to_not raise_error
+    end
+  end
+
   context 'создаем оператора с паролем' do
     let(:password) { generate :aml_password }
     let(:operator) { create :aml_operator, password: password, password_confirmation: password }
     it { expect(operator.valid_password? password).to be_truthy }
-
-    context 'создание пароля при регистрации не требует текущего пароля' do
-      let(:new_operator) { create :aml_operator }
-
-      it { expect(new_operator.update password: password, password_confirmation: password).to eq(true) }
-    end
 
     context 'не дает изменить пароль без current_password' do
       let(:new_password) { generate :aml_password }

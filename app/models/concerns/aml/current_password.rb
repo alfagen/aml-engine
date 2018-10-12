@@ -17,7 +17,7 @@ module AML
     end
 
     def current_password_required?
-      crypted_password? && persisted?
+      crypted_password? && crypted_password_was.present? && persisted?
     end
   end
 end

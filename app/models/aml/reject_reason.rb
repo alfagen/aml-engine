@@ -1,6 +1,10 @@
 module AML
   class RejectReason < ApplicationRecord
     include Archivable
+
+    translates :title
+    globalize_accessors
+
     scope :ordered, -> { order :id }
 
     enum kind: ['order_reason', 'order_document_reason']

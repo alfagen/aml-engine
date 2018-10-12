@@ -9,6 +9,7 @@ require_relative '../lib/aml'
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 Rails.backtrace_cleaner.remove_silencers!
+I18n.locale = :ru
 
 # Load support files
 # Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }

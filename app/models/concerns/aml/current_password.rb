@@ -6,6 +6,7 @@ module AML
       attr_accessor :current_password
 
       before_validation :validate_current_password, if: :current_password_required?
+      validates :current_password, presence: true, if: :current_password_required?
     end
 
     private

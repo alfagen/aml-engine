@@ -1,4 +1,5 @@
 # Here you can configure each submodule's features.
+Rails.application.config.sorcery.submodules = [:reset_password]
 Rails.application.config.sorcery.configure do |config|
   # -- core --
   # What controller action to call for non-authenticated users. You can also
@@ -337,7 +338,7 @@ Rails.application.config.sorcery.configure do |config|
     # mailer class. Needed.
     # Default: `nil`
     #
-    # user.reset_password_mailer = UserMailer
+    user.reset_password_mailer = UserMailer
 
     # reset password email method on your mailer class.
     # Default: `:reset_password_email`

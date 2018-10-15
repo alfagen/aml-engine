@@ -5,7 +5,6 @@ module AML
   class Operator < ApplicationRecord
     extend Enumerize
     include Workflow
-    include CurrentPassword
 
     authenticates_with_sorcery! if defined? Sorcery
 

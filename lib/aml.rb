@@ -62,6 +62,12 @@ module AML
     Status.delete_all
 
     RejectReason.delete_all
+
+    DocumentGroup.translation_class.destroy_all
+    DocumentKind.translation_class.destroy_all
+    DocumentKindFieldDefinition.translation_class.destroy_all
+    RejectReason.translation_class.destroy_all
+    Status.translation_class.destroy_all
   end
 
   # После создания новых видов документов, добавляем их во все заявки

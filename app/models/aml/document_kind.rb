@@ -4,6 +4,9 @@ module AML
   class DocumentKind < ApplicationRecord
     include Archivable
 
+    translates :title, :details, :file_title
+    globalize_accessors
+
     mount_uploader :file, DocumentKindFileUploader
 
     scope :ordered, -> { order 'position desc' }

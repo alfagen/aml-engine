@@ -14,6 +14,8 @@ gem 'valid_email'
 gem 'enumerize'
 gem 'workflow', github: 'geekq/workflow'
 gem 'ransack'
+gem 'globalize', github: 'globalize/globalize', ref: 'HEAD'
+gem 'globalize-accessors'
 
 group :development do
     gem 'mysql2'

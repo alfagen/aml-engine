@@ -4,6 +4,9 @@ module AML
   class DocumentKindFieldDefinition < ApplicationRecord
     include Archivable
 
+    translates :title
+    globalize_accessors
+
     belongs_to :document_kind, class_name: 'AML::DocumentKind',
                                foreign_key: 'document_kind_id',
                                inverse_of: :definitions

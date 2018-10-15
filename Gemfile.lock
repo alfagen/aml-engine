@@ -12,6 +12,16 @@ GIT
   specs:
     workflow (1.3.0)
 
+GIT
+  remote: https://github.com/globalize/globalize.git
+  revision: ff22b92bfa283bb9f378899031dbfad38de6280d
+  ref: HEAD
+  specs:
+    globalize (5.1.0)
+      activemodel (>= 4.2, < 5.3)
+      activerecord (>= 4.2, < 5.3)
+      request_store (~> 1.0)
+
 PATH
   remote: .
   specs:
@@ -20,6 +30,8 @@ PATH
       dapi-archivable (~> 0.1.2)
       enumerize
       fast_jsonapi
+      globalize
+      globalize-accessors
       rails (~> 5.2.1)
       ransack
       sorcery
@@ -98,6 +110,8 @@ GEM
     formatador (0.2.5)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    globalize-accessors (0.2.1)
+      globalize (~> 5.0, >= 5.0.0)
     guard (2.14.2)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -216,6 +230,8 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    request_store (1.4.1)
+      rack (>= 1.4)
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
       rspec-expectations (~> 3.8.0)
@@ -288,6 +304,8 @@ DEPENDENCIES
   enumerize
   factory_bot
   fast_jsonapi!
+  globalize!
+  globalize-accessors
   guard-bundler
   guard-ctags-bundler
   guard-rspec
@@ -306,4 +324,4 @@ DEPENDENCIES
   workflow!
 
 BUNDLED WITH
-   1.16.4
+   1.16.6

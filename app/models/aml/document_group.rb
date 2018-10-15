@@ -2,6 +2,9 @@ module AML
   class DocumentGroup < ApplicationRecord
     include Archivable
 
+    translates :title, :details
+    globalize_accessors
+
     has_many :aml_document_group_to_statuses, class_name: 'AML::DocumentGroupToStatus',
       inverse_of: :aml_document_group, foreign_key: :aml_document_group_id
     has_many :aml_statuses, through: :aml_document_group_to_statuses, class_name: 'AML::Status'

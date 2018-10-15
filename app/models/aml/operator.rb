@@ -49,5 +49,14 @@ module AML
     def active_for_authentication?
       unblocked?
     end
+
+    # TODO move to sorcery
+    #
+    def change_password!(new_password)
+      clear_reset_password_token
+      self.password_confirmation = new_password
+      self.password = new_password
+      save!
+    end
   end
 end

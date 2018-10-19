@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(version: 2018_10_19_065150) do
     t.integer "access_count_to_reset_password_page", default: 0
     t.integer "role", default: 0, null: false
     t.string "name", null: false
-    t.string "locale", default: "RU", null: false
+    t.string "locale", default: "ru", null: false
     t.index ["email"], name: "index_aml_operators_on_email", unique: true
     t.index ["reset_password_token"], name: "index_aml_operators_on_reset_password_token"
   end

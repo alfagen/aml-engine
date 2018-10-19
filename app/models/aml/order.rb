@@ -90,8 +90,8 @@ module AML
       halt! 'Личная анкета не до конца заполнена' unless fields_present?
     end
 
-    def name
-      [first_name, surname, patronymic].compact.join ' '
+    def client_name
+      ["##{client_id}", first_name, surname, patronymic].compact.join ' '
     end
 
     def allow_done?

@@ -15,9 +15,11 @@ RSpec.describe AML::Client, type: :model do
 
   context 'статус можно сбросить' do
     before do
+      @saved_order = subject.current_order
       subject.reset_status!
     end
 
     it { expect(subject.aml_status).to eq default_status }
+    it { expect(subject.current_order).to_not eq @saved_order }
   end
 end

@@ -33,7 +33,10 @@ module AML
     end
 
     def reset_status!
-      update aml_status: ::AML.default_status, aml_accepted_order: nil
+      with_lock do
+        update aml_status: ::AML.default_status, aml_accepted_order: nil
+        create_current_order!
+      end
     end
 
     def name

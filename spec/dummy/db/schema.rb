@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_19_065150) do
+ActiveRecord::Schema.define(version: 2018_10_22_181513) do
 
   create_table "aml_clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "first_name"
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(version: 2018_10_19_065150) do
     t.bigint "aml_order_id"
     t.bigint "aml_status_id"
     t.bigint "aml_accepted_order_id"
+    t.string "email"
+    t.string "phone"
     t.index ["aml_accepted_order_id"], name: "index_aml_clients_on_aml_accepted_order_id"
     t.index ["aml_order_id"], name: "index_aml_clients_on_aml_order_id"
     t.index ["aml_status_id"], name: "index_aml_clients_on_aml_status_id"
@@ -58,6 +60,8 @@ ActiveRecord::Schema.define(version: 2018_10_19_065150) do
   end
 
   create_table "aml_document_groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "details"
     t.integer "position", null: false
     t.timestamp "archived_at"
     t.datetime "created_at", null: false
@@ -76,6 +80,7 @@ ActiveRecord::Schema.define(version: 2018_10_19_065150) do
 
   create_table "aml_document_kind_field_definitions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "key", null: false
+    t.string "title", null: false
     t.datetime "archived_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -97,14 +102,18 @@ ActiveRecord::Schema.define(version: 2018_10_19_065150) do
   end
 
   create_table "aml_document_kinds", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.timestamp "archived_at"
+    t.text "details"
     t.integer "position"
     t.bigint "aml_document_group_id"
-    t.string "file"
     t.string "goal"
+    t.string "file"
+    t.string "file_title"
     t.index ["aml_document_group_id"], name: "index_aml_document_kinds_on_aml_document_group_id"
+    t.index ["title"], name: "index_aml_document_kinds_on_title", unique: true
   end
 
   create_table "aml_operators", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -171,10 +180,12 @@ ActiveRecord::Schema.define(version: 2018_10_19_065150) do
   end
 
   create_table "aml_reject_reasons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "title", null: false
     t.timestamp "archived_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "kind", null: false
+    t.index ["title"], name: "index_aml_reject_reasons_on_title", unique: true
   end
 
   create_table "aml_status_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -189,12 +200,15 @@ ActiveRecord::Schema.define(version: 2018_10_19_065150) do
   end
 
   create_table "aml_statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "position", null: false
     t.timestamp "archived_at"
     t.string "key", null: false
     t.index ["key"], name: "index_aml_statuses_on_key", unique: true
+    t.index ["title"], name: "index_aml_statuses_on_title", unique: true
   end
 
   add_foreign_key "aml_clients", "aml_orders", column: "aml_accepted_order_id"

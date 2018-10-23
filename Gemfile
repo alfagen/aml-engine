@@ -17,6 +17,9 @@ gem 'ransack'
 gem 'globalize', github: 'globalize/globalize', ref: 'HEAD'
 gem 'globalize-accessors'
 
+gem 'money-rails'
+gem 'money'
+
 group :development do
     gem 'mysql2'
     gem 'rubocop'

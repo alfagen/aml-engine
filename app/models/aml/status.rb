@@ -14,6 +14,7 @@ module AML
     has_many :orders, class_name: 'AML::Order', foreign_key: :aml_status_id
     has_many :clients, class_name: 'AML::Client', foreign_key: :aml_status_id
 
+    register_currency :eur
     monetize :max_amount_limit_cents
 
     validates :title, presence: true, uniqueness: true

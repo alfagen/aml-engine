@@ -25,6 +25,8 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency 'sorcery'
     s.add_runtime_dependency 'globalize'
     s.add_runtime_dependency 'globalize-accessors'
+    s.add_runtime_dependency 'money', '~> 6.12'
+    s.add_runtime_dependency 'money-rails', '~> 1.12'
 
     s.add_runtime_dependency "rails", "~> 5.2.1"
     s.add_runtime_dependency "dapi-archivable", "~> 0.1.2"

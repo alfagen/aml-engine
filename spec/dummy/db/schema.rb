@@ -198,7 +198,7 @@ ActiveRecord::Schema.define(version: 2018_10_23_094131) do
     t.timestamp "archived_at"
     t.string "key", null: false
     t.integer "max_amount_limit_cents", default: 0, null: false
-    t.string "max_amount_limit_currency", default: "USD", null: false
+    t.string "max_amount_limit_currency", default: "EUR", null: false
     t.integer "operations_count_limit", default: 0, null: false
     t.boolean "referal_output_enabled", default: false, null: false
     t.index ["key"], name: "index_aml_statuses_on_key", unique: true

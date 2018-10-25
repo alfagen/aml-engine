@@ -57,5 +57,10 @@ module AML
       self.password = new_password
       save!
     end
+
+    def time_zone_object
+      return unless time_zone.present?
+      ActiveSupport::TimeZone[time_zone]
+    end
   end
 end

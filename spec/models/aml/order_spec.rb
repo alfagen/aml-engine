@@ -119,5 +119,16 @@ RSpec.describe AML::Order, type: :model do
       end
     end
   end
-end
 
+  context 'создали новую заявку и старая отменилась' do
+    before do
+      @current_order = aml_client.current_order
+    end
+
+    it do
+      aml_client.create_current_order!
+      expect(aml_client.current_order).to_not eq @current_order
+      expect(@current_order.reload).to be_canceled
+    end
+  end
+end

@@ -31,11 +31,13 @@ module AML
       # TODO переименовать none в draft
       state :none do
         event :done, transitions_to: :pending, if: :allow_done?
+        event :cancel, transitions_to: :canceled
       end
 
       # Пользователь загрузил, ждет когда оператор начнет обрабатывать
       state :pending do
         event :start, transitions_to: :processing
+        event :cancel, transitions_to: :canceled
       end
 
        # Оператор начал обрабатывать
@@ -50,12 +52,17 @@ module AML
         event :reject, transitions_to: :rejected
       end
 
+      # Отклонена оператором
       state :rejected
+
+      # Отменена пользователем (или автоматом при создании новой)
+      state :canceled
     end
 
     before_create :copy_fields_from_current_order!
     after_create :create_and_clone_documents!
     after_create :set_current_order!
+    after_create :cancel_previous_orders!
 
     def reject(reject_reason:, details: nil)
       halt! 'Причина должна быть указана' unless reject_reason.is_a? AML::RejectReason
@@ -149,6 +156,12 @@ module AML
 
     def set_current_order!
       client.update! current_order: self
+    end
+
+    def cancel_previous_orders!
+      client.orders.where(workflow_state: [:none, :pending]).where.not(id: id).find_each do |o|
+        o.cancel!
+      end
     end
 
     def set_default_aml_status

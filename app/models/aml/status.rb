@@ -24,6 +24,10 @@ module AML
       self.position = self.class.count + 1
     end
 
+    def default?
+      key == AML.default_status_key
+    end
+
     def to_s
       "#{title} (#{position})"
     end

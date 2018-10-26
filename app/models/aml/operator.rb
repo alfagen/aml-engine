@@ -8,9 +8,6 @@ module AML
 
     authenticates_with_sorcery! if defined? Sorcery
 
-    enumerize :workflow_state, in: %w[blocked unblocked], scope: true
-    enum role: [:operator, :administrator]
-
     scope :ordered, -> { order 'id desc' }
 
     has_many :orders, class_name: 'AML::Order', dependent: :destroy
@@ -21,7 +18,9 @@ module AML
     validates :email, presence: true, uniqueness: true, email: true
     validates :name, presence: true, uniqueness: true
 
-    after_commit :deliver_reset_password_instructions!, on: :create, if: :require_password_instruction?
+    enum role: [:operator, :administrator]
+
+    enumerize :workflow_state, in: %w[blocked unblocked], scope: true
 
     workflow do
       state :unblocked do
@@ -32,6 +31,12 @@ module AML
         event :unblock, transitions_to: :unblocked
       end
     end
+
+    # Удаляем методы определнные в workflow, чтобы они не конфликтовали
+    # с authority
+    remove_method :can_block?, :can_unblock?
+
+    after_commit :deliver_reset_password_instructions!, on: :create, if: :require_password_instruction?
 
     def to_s
       "[#{id}] #{name}"

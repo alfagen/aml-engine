@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_23_094131) do
+ActiveRecord::Schema.define(version: 2018_10_26_101822) do
 
   create_table "aml_clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "first_name"
@@ -123,7 +123,7 @@ ActiveRecord::Schema.define(version: 2018_10_23_094131) do
     t.integer "role", default: 0, null: false
     t.string "name", null: false
     t.string "locale", default: "ru", null: false
-    t.string "time_zone"
+    t.string "time_zone_name"
     t.index ["email"], name: "index_aml_operators_on_email", unique: true
     t.index ["reset_password_token"], name: "index_aml_operators_on_reset_password_token"
   end
@@ -198,7 +198,7 @@ ActiveRecord::Schema.define(version: 2018_10_23_094131) do
     t.timestamp "archived_at"
     t.string "key", null: false
     t.integer "max_amount_limit_cents", default: 0, null: false
-    t.string "max_amount_limit_currency", default: "USD", null: false
+    t.string "max_amount_limit_currency", default: "EUR", null: false
     t.integer "operations_count_limit", default: 0, null: false
     t.boolean "referal_output_enabled", default: false, null: false
     t.index ["key"], name: "index_aml_statuses_on_key", unique: true

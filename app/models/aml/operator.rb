@@ -63,9 +63,9 @@ module AML
       save!
     end
 
-    def time_zone_object
-      return unless time_zone.present?
-      ActiveSupport::TimeZone[time_zone]
+    def time_zone
+      return unless time_zone_name.present?
+      ActiveSupport::TimeZone[time_zone_name]
     end
   end
 end

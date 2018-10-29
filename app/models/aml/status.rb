@@ -24,6 +24,10 @@ module AML
       self.position = self.class.count + 1
     end
 
+    def next_status
+      AML::Status.ordered.where('position > ?', position).first
+    end
+
     def default?
       key == AML.default_status_key
     end

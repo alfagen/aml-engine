@@ -14,6 +14,9 @@ module AML
 
     after_create :create_current_order!
 
+    register_currency :eur
+    monetize :total_income_amount_cents
+
     # Нужно для для сериализера
     alias_attribute :current_order_id, :aml_order_id
 
@@ -34,7 +37,7 @@ module AML
 
     def reset_status!
       with_lock do
-        update aml_status: ::AML.default_status, aml_accepted_order: nil
+        update aml_status: nil, aml_accepted_order: nil
         create_current_order!
       end
     end

@@ -1,6 +1,7 @@
 require 'archivable'
 
-require "aml/engine"
+require 'aml/engine'
+require 'aml/limits_checker'
 
 module AML
   def self.table_name_prefix

@@ -9,9 +9,8 @@ module AML
     scope :ordered, -> { order 'id desc' }
 
     has_many :orders, class_name: 'AML::Order', dependent: :destroy
-    has_one :user, dependent: :destroy
+    has_one :user, class_name: 'User', foreign_key: :aml_operator_id, inverse_of: :aml_operator, dependent: :destroy
 
-    validates :email, presence: true, uniqueness: true, email: true
     validates :name, presence: true, uniqueness: true
 
     enum role: [:operator, :administrator]

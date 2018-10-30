@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory(:aml_operator, class: AML::Operator) do
+    sequence(:email) { |n| "user#{n}@mail.com" }
     sequence(:name) { |n| "operator#{n}" }
 
     trait :administrator do

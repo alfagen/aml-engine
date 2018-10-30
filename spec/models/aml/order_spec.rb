@@ -42,10 +42,12 @@ RSpec.describe AML::Order, type: :model do
           expect(client.current_order).to eq @order
         end
 
-        context 'заявку одобряют' do
+        context 'заявку одобряют у клиента установлена ктегория риска' do
           before do
+            client.update(risk: 'C')
             expect(@order.client.first_name).to be_nil
             expect_any_instance_of(AML::Order).to receive(:all_documents_loaded?).and_return true
+            expect_any_instance_of(AML::Order).to receive(:set_client_risk?).and_return true
 
             expect(@order.client.aml_accepted_order).to be_nil
             @order.done!
@@ -61,6 +63,24 @@ RSpec.describe AML::Order, type: :model do
 
           it 'статус увеличивается если заявка принята' do
             expect(client.aml_status).to eq status2
+          end
+        end
+
+        context 'заявку нельзя одобрить если категория риска клиента не задана' do
+          before do
+            expect(@order.client.first_name).to be_nil
+            expect_any_instance_of(AML::Order).to receive(:all_documents_loaded?).and_return true
+            expect_any_instance_of(AML::Order).to receive(:set_client_risk?).and_return false
+
+            expect(@order.client.aml_accepted_order).to be_nil
+            @order.done!
+            @order.start! operator: operator
+            aml_order_document.update image: Rack::Test::UploadedFile.new(Rails.root.join('spec', 'test_files', 'test.png'))
+            aml_order_document.accept!
+          end
+
+          it 'нельзя принять - нет категории риска клиента' do
+            expect{ @order.accept! }.to raise_error(Workflow::NoTransitionAllowed)
           end
         end
       end
@@ -104,6 +124,7 @@ RSpec.describe AML::Order, type: :model do
         context 'можно принять заявку если документы приняты' do
           before do
             subject.order_documents.take.accept!
+            subject.client.update(risk: 'C')
             subject.accept!
           end
 

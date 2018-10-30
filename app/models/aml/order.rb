@@ -42,7 +42,7 @@ module AML
 
        # Оператор начал обрабатывать
       state :processing do
-        event :accept, transitions_to: :accepted, if: :all_documents_accepted?
+        event :accept, transitions_to: :accepted, if: :all_documents_accepted? && :set_client_risk?
         event :reject, transitions_to: :rejected
         event :cancel, transitions_to: :pending
       end
@@ -125,6 +125,10 @@ module AML
 
     def attributes_to_clone
       @attributes_to_clone ||= attributes.slice(*ATTRIBUTES_TO_CLONE)
+    end
+
+    def set_client_risk?
+      client.risk != 'undefined'
     end
 
     private

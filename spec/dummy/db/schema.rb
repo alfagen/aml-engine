@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_29_130918) do
+ActiveRecord::Schema.define(version: 2018_10_30_155828) do
 
   create_table "aml_clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "first_name"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2018_10_29_130918) do
     t.integer "total_income_amount_cents", default: 0, null: false
     t.string "total_income_amount_currency", default: "eur", null: false
     t.integer "total_operations_count", default: 0, null: false
+    t.integer "risk", default: 0, null: false
     t.index ["aml_accepted_order_id"], name: "index_aml_clients_on_aml_accepted_order_id"
     t.index ["aml_order_id"], name: "index_aml_clients_on_aml_order_id"
     t.index ["aml_status_id"], name: "index_aml_clients_on_aml_status_id"

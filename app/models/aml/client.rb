@@ -12,6 +12,8 @@ module AML
     belongs_to :aml_accepted_order, class_name: 'AML::Order', dependent: :destroy, optional: true
     belongs_to :aml_status, class_name: 'AML::Status', optional: true
 
+    enum risk: [ 'undefined', 'C', 'B', 'A' ]
+
     after_create :create_current_order!
 
     register_currency :eur

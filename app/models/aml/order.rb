@@ -121,14 +121,14 @@ module AML
       order_documents.any? && order_documents.reject(&:accepted?).empty?
     end
 
+    def set_client_risk?
+      client.risk != 'undefined'
+    end
+
     protected
 
     def attributes_to_clone
       @attributes_to_clone ||= attributes.slice(*ATTRIBUTES_TO_CLONE)
-    end
-
-    def set_client_risk?
-      client.risk != 'undefined'
     end
 
     private

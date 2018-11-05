@@ -3,7 +3,11 @@ require 'spec_helper'
 RSpec.describe AML::Order, type: :model do
   let!(:aml_document_kind) { create :aml_document_kind }
   let(:aml_status) { create :aml_status, :default }
-  let!(:aml_client) { create :aml_client, aml_status: aml_status }
+  let!(:aml_client) {
+    create :aml_client,
+    aml_status: aml_status,
+    risk_category: AML::Client.risk_category.values.first
+  }
   let!(:operator) { create :aml_operator }
 
   before do
@@ -24,7 +28,9 @@ RSpec.describe AML::Order, type: :model do
   end
 
   describe 'при создани изаявки она становится текущей' do
-    let!(:client) { create :aml_client, first_name: nil }
+    let!(:client) { create :aml_client, first_name: nil,
+                    risk_category: AML::Client.risk_category.values.first
+    }
 
     context 'статус клиента обновляется если принятая заявка его увеличивает' do
       let!(:status2) { create :aml_status, position: aml_status.position + 1 }
@@ -43,6 +49,8 @@ RSpec.describe AML::Order, type: :model do
         end
 
         context 'заявку одобряют' do
+          let(:image) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'test_files', 'test.png')) }
+
           before do
             expect(@order.client.first_name).to be_nil
             expect_any_instance_of(AML::Order).to receive(:all_documents_loaded?).and_return true
@@ -50,7 +58,7 @@ RSpec.describe AML::Order, type: :model do
             expect(@order.client.aml_accepted_order).to be_nil
             @order.done!
             @order.start! operator: operator
-            aml_order_document.update image: Rack::Test::UploadedFile.new(Rails.root.join('spec', 'test_files', 'test.png'))
+            aml_order_document.update image: image
             aml_order_document.accept!
             @order.accept!
 
@@ -103,6 +111,7 @@ RSpec.describe AML::Order, type: :model do
 
         context 'можно принять заявку если документы приняты' do
           before do
+            subject.client.update_column :risk_category, AML::Client.risk_category.values.first
             subject.order_documents.take.accept!
             subject.accept!
           end

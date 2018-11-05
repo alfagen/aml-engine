@@ -42,7 +42,7 @@ module AML
 
        # Оператор начал обрабатывать
       state :processing do
-        event :accept, transitions_to: :accepted, if: :all_documents_accepted?
+        event :accept, transitions_to: :accepted, if: :allow_accept?
         event :reject, transitions_to: :rejected
         event :cancel, transitions_to: :pending
       end
@@ -115,6 +115,10 @@ module AML
 
     def all_documents_loaded?
       order_documents.any? && order_documents.reject(&:loaded?).empty?
+    end
+
+    def allow_accept?
+      all_documents_accepted? && client.risk_category.present?
     end
 
     def all_documents_accepted?

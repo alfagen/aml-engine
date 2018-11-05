@@ -5,6 +5,8 @@
 
 module AML
   class Client < ApplicationRecord
+    extend Enumerize
+
     scope :ordered, -> { order 'id desc' }
 
     has_many :orders, class_name: 'AML::Order', dependent: :destroy
@@ -19,6 +21,8 @@ module AML
 
     # Нужно для для сериализера
     alias_attribute :current_order_id, :aml_order_id
+
+    enumerize :risk_category, in: %w(A B C)
 
     # TODO: Не может быть без имени если находится в статусе оформляется или принят/отклонен
     #

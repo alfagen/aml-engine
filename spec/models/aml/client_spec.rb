@@ -22,4 +22,13 @@ RSpec.describe AML::Client, type: :model do
     it { expect(subject.aml_status).to be_nil }
     it { expect(subject.current_order).to_not eq @saved_order }
   end
+
+  describe 'risk category' do
+    it { expect(subject.risk_category).to be_nil }
+
+    it do
+      subject.update! risk_category: 'A'
+      expect(subject.risk_category).to eq 'A'
+    end
+  end
 end

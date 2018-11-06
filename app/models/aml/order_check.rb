@@ -7,13 +7,13 @@ module AML
 
     workflow do
       state :none do
-        event :accept, transitions_to: :accepted, if: :order_processing?
-        event :reject, transitions_to: :rejected, if: :order_processing?
+        event :accept, transitions_to: :accepted, if: :aml_order_processing?
+        event :reject, transitions_to: :rejected, if: :aml_order_processing?
       end
       state :accepted
       state :rejected
     end
 
-    delegate :processing?, to: :order, prefix: true
+    delegate :processing?, to: :aml_order, prefix: true
   end
 end

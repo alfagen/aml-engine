@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_05_075403) do
+ActiveRecord::Schema.define(version: 2018_11_06_070338) do
+
+  create_table "aml_check_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "url"
+    t.integer "position", default: 0, null: false
+    t.timestamp "archived_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["title"], name: "index_aml_check_lists_on_title", unique: true
+  end
 
   create_table "aml_clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "first_name"
@@ -132,6 +142,17 @@ ActiveRecord::Schema.define(version: 2018_11_05_075403) do
     t.index ["reset_password_token"], name: "index_aml_operators_on_reset_password_token"
   end
 
+  create_table "aml_order_checks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "aml_order_id", null: false
+    t.bigint "aml_check_list_id", null: false
+    t.string "workflow_state", default: "none", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["aml_check_list_id"], name: "index_aml_order_checks_on_aml_check_list_id"
+    t.index ["aml_order_id", "aml_check_list_id"], name: "index_aml_order_checks_on_aml_order_id_and_aml_check_list_id", unique: true
+    t.index ["aml_order_id"], name: "index_aml_order_checks_on_aml_order_id"
+  end
+
   create_table "aml_order_documents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "document_kind_id", null: false
     t.datetime "created_at", null: false
@@ -216,6 +237,8 @@ ActiveRecord::Schema.define(version: 2018_11_05_075403) do
   add_foreign_key "aml_document_group_to_statuses", "aml_document_groups"
   add_foreign_key "aml_document_group_to_statuses", "aml_statuses"
   add_foreign_key "aml_document_kind_field_definitions", "aml_document_kinds", column: "document_kind_id"
+  add_foreign_key "aml_order_checks", "aml_check_lists"
+  add_foreign_key "aml_order_checks", "aml_orders"
   add_foreign_key "aml_order_documents", "aml_document_kinds", column: "document_kind_id"
   add_foreign_key "aml_order_documents", "aml_orders", column: "order_id"
   add_foreign_key "aml_orders", "aml_clients", column: "client_id"

@@ -15,6 +15,7 @@ module AML
 
     has_many :order_documents, class_name: 'AML::OrderDocument', dependent: :destroy
     has_many :required_document_kinds, through: :aml_status, source: :document_kinds
+    has_many :order_checks, class_name: 'AML::OrderCheck', dependent: :destroy, inverse_of: :aml_order, foreign_key: :aml_order_id
 
     before_validation :set_default_aml_status, unless: :aml_status
 
@@ -63,6 +64,7 @@ module AML
     after_create :create_and_clone_documents!
     after_create :set_current_order!
     after_create :cancel_previous_orders!
+    after_create :create_checks
 
     def reject(reject_reason:, details: nil)
       halt! 'Причина должна быть указана' unless reject_reason.is_a? AML::RejectReason
@@ -114,15 +116,19 @@ module AML
     end
 
     def all_documents_loaded?
-      order_documents.any? && order_documents.reject(&:loaded?).empty?
+      order_documents.any? && order_documents.all? { |o| o.loaded? }
     end
 
     def allow_accept?
-      all_documents_accepted? && client.risk_category.present?
+      all_documents_accepted? && client.risk_category.present? && all_checks_accepted?
     end
 
     def all_documents_accepted?
-      order_documents.any? && order_documents.reject(&:accepted?).empty?
+      order_documents.any? && order_documents.all? { |o| o.accepted? }
+    end
+
+    def all_checks_accepted?
+      order_checks.all? { |check| check.accepted? }
     end
 
     protected
@@ -132,6 +138,12 @@ module AML
     end
 
     private
+
+    def create_checks
+      AML::CheckList.alive.ordered.each do |c|
+        order_checks.create! aml_check_list: c
+      end
+    end
 
     def copy_fields_from_current_order!
       return unless attributes_to_clone.compact.empty?

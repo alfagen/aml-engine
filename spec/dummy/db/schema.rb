@@ -10,7 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_06_070338) do
+ActiveRecord::Schema.define(version: 2018_11_07_103510) do
+
+  create_table "aml_agreement_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "aml_agreement_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title"
+    t.text "details"
+    t.index ["aml_agreement_id"], name: "index_aml_agreement_translations_on_aml_agreement_id"
+    t.index ["locale"], name: "index_aml_agreement_translations_on_locale"
+  end
+
+  create_table "aml_agreements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "url"
+    t.timestamp "archived_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "aml_check_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title", null: false
@@ -20,6 +38,19 @@ ActiveRecord::Schema.define(version: 2018_11_06_070338) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["title"], name: "index_aml_check_lists_on_title", unique: true
+  end
+
+  create_table "aml_client_agreements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "aml_client_id", null: false
+    t.bigint "aml_agreement_id", null: false
+    t.string "remote_ip", null: false
+    t.string "locale", null: false
+    t.text "user_agent", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["aml_agreement_id"], name: "index_aml_client_agreements_on_aml_agreement_id"
+    t.index ["aml_client_id", "aml_agreement_id"], name: "aml_client_agreements_idx", unique: true
+    t.index ["aml_client_id"], name: "index_aml_client_agreements_on_aml_client_id"
   end
 
   create_table "aml_clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -229,6 +260,8 @@ ActiveRecord::Schema.define(version: 2018_11_06_070338) do
     t.index ["key"], name: "index_aml_statuses_on_key", unique: true
   end
 
+  add_foreign_key "aml_client_agreements", "aml_agreements"
+  add_foreign_key "aml_client_agreements", "aml_clients"
   add_foreign_key "aml_clients", "aml_orders", column: "aml_accepted_order_id"
   add_foreign_key "aml_clients", "aml_orders", on_delete: :nullify
   add_foreign_key "aml_clients", "aml_statuses"

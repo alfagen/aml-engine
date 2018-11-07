@@ -5,6 +5,10 @@ require 'archivable'
 require 'sorcery'
 require 'rspec/rails'
 require 'factory_bot'
+
+# Плохо работает с DatabaseRewinder :(
+# require 'test_prof/recipes/rspec/let_it_be'
+#
 require_relative '../lib/aml'
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 

@@ -288,6 +288,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    test-prof (0.7.2)
     thor (0.20.0)
     thread_safe (0.3.6)
     tzinfo (1.2.5)
@@ -331,6 +332,7 @@ DEPENDENCIES
   rspec-rails (~> 3.7)
   rubocop
   rubocop-rspec
+  test-prof (~> 0.7.2)
   valid_email
   workflow!
 

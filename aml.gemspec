@@ -50,6 +50,7 @@ Gem::Specification.new do |s|
     # hist --grep foo
     # Adds step-by-step debugging and stack navigation capabilities to pry using byebug.
     s.add_development_dependency 'pry-byebug'
+    s.add_development_dependency 'test-prof', '~> 0.7.2'
 
     s.add_development_dependency 'activesupport'
     s.add_development_dependency 'factory_bot'

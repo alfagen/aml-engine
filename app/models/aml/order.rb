@@ -7,6 +7,7 @@ module AML
     ATTRIBUTES_TO_CLONE = %w(first_name surname patronymic birth_date).freeze
 
     scope :ordered, -> { order 'id desc' }
+    scope :open, -> { where workflow_state: %w(pending processing) }
 
     belongs_to :client, class_name: 'AML::Client', foreign_key: :client_id, inverse_of: :orders, dependent: :destroy
     belongs_to :operator, class_name: 'AML::Operator', foreign_key: :operator_id, optional: true, inverse_of: :orders
@@ -16,6 +17,8 @@ module AML
     has_many :order_documents, class_name: 'AML::OrderDocument', dependent: :destroy
     has_many :required_document_kinds, through: :aml_status, source: :document_kinds
     has_many :order_checks, class_name: 'AML::OrderCheck', dependent: :destroy, inverse_of: :aml_order, foreign_key: :aml_order_id
+
+    has_many :aml_check_lists, class_name: 'AML::CheckList', through: :order_checks
 
     before_validation :set_default_aml_status, unless: :aml_status
 
@@ -37,6 +40,9 @@ module AML
 
       # Пользователь загрузил, ждет когда оператор начнет обрабатывать
       state :pending do
+        on_entry do
+          create_checks
+        end
         event :start, transitions_to: :processing
         event :cancel, transitions_to: :canceled
       end
@@ -64,7 +70,6 @@ module AML
     after_create :create_and_clone_documents!
     after_create :set_current_order!
     after_create :cancel_previous_orders!
-    after_create :create_checks
 
     def reject(reject_reason:, details: nil)
       halt! 'Причина должна быть указана' unless reject_reason.is_a? AML::RejectReason

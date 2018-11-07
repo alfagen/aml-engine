@@ -2,8 +2,8 @@ module AML
   class OrderCheck < ApplicationRecord
     include Workflow
 
-    belongs_to :aml_order
-    belongs_to :aml_check_list
+    belongs_to :aml_order, class_name: 'AML::Order'
+    belongs_to :aml_check_list, class_name: 'AML::CheckList'
 
     workflow do
       state :none do

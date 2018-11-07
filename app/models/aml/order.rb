@@ -35,6 +35,8 @@ module AML
       # TODO переименовать none в draft
       state :none do
         event :done, transitions_to: :pending, if: :allow_done?
+
+        # Когда создается новая заявка, старая переходит в статус cancel
         event :cancel, transitions_to: :canceled
       end
 

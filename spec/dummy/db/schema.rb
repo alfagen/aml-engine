@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_07_103510) do
+ActiveRecord::Schema.define(version: 2018_11_12_071001) do
 
   create_table "aml_agreement_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "aml_agreement_id", null: false
@@ -152,6 +152,16 @@ ActiveRecord::Schema.define(version: 2018_11_07_103510) do
     t.string "file"
     t.string "goal"
     t.index ["aml_document_group_id"], name: "index_aml_document_kinds_on_aml_document_group_id"
+  end
+
+  create_table "aml_notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "template_id"
+    t.string "locale", null: false
+    t.string "subject", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key", "locale"], name: "index_aml_notifications_on_key_and_locale", unique: true
   end
 
   create_table "aml_operators", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

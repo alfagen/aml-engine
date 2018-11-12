@@ -44,6 +44,7 @@ module AML
       state :pending do
         on_entry do
           create_checks
+          aml_status.notify_pending self
         end
         event :start, transitions_to: :processing
         event :cancel, transitions_to: :canceled
@@ -59,10 +60,17 @@ module AML
       state :accepted do
         # TODO сомнительно что можно так делать
         event :reject, transitions_to: :rejected
+        on_entry do
+          aml_status.notify_accept self
+        end
       end
 
       # Отклонена оператором
-      state :rejected
+      state :rejected do
+        on_entry do
+          aml_status.notify_reject self
+        end
+      end
 
       # Отменена пользователем (или автоматом при создании новой)
       state :canceled

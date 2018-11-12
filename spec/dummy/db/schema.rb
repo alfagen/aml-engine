@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_12_071001) do
+ActiveRecord::Schema.define(version: 2018_11_12_145816) do
 
   create_table "aml_agreement_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "aml_agreement_id", null: false
@@ -154,14 +154,21 @@ ActiveRecord::Schema.define(version: 2018_11_12_071001) do
     t.index ["aml_document_group_id"], name: "index_aml_document_kinds_on_aml_document_group_id"
   end
 
-  create_table "aml_notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "key", null: false
-    t.string "template_id"
+  create_table "aml_notification_templates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "locale", null: false
-    t.string "subject", null: false
+    t.string "template_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["key", "locale"], name: "index_aml_notifications_on_key_and_locale", unique: true
+    t.bigint "aml_notification_id", default: 0
+    t.index ["aml_notification_id", "locale"], name: "aml_notification_templates_uniq", unique: true
+    t.index ["aml_notification_id"], name: "index_aml_notification_templates_on_aml_notification_id"
+  end
+
+  create_table "aml_notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "title", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["title"], name: "index_aml_notifications_on_title", unique: true
   end
 
   create_table "aml_operators", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -267,7 +274,13 @@ ActiveRecord::Schema.define(version: 2018_11_12_071001) do
     t.string "max_amount_limit_currency", default: "EUR", null: false
     t.integer "operations_count_limit", default: 0, null: false
     t.boolean "referal_output_enabled", default: false, null: false
+    t.bigint "on_pending_notification_id"
+    t.bigint "on_accept_notification_id"
+    t.bigint "on_reject_notification_id"
     t.index ["key"], name: "index_aml_statuses_on_key", unique: true
+    t.index ["on_accept_notification_id"], name: "index_aml_statuses_on_on_accept_notification_id"
+    t.index ["on_pending_notification_id"], name: "index_aml_statuses_on_on_pending_notification_id"
+    t.index ["on_reject_notification_id"], name: "index_aml_statuses_on_on_reject_notification_id"
   end
 
   add_foreign_key "aml_client_agreements", "aml_agreements"
@@ -287,4 +300,7 @@ ActiveRecord::Schema.define(version: 2018_11_12_071001) do
   add_foreign_key "aml_orders", "aml_clients", column: "client_id"
   add_foreign_key "aml_orders", "aml_operators", column: "operator_id"
   add_foreign_key "aml_orders", "aml_statuses"
+  add_foreign_key "aml_statuses", "aml_notifications", column: "on_accept_notification_id"
+  add_foreign_key "aml_statuses", "aml_notifications", column: "on_pending_notification_id"
+  add_foreign_key "aml_statuses", "aml_notifications", column: "on_reject_notification_id"
 end

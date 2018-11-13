@@ -1,4 +1,4 @@
-class CreateAMLNotifications < ActiveRecord::Migration[5.2]
+class CreateAMLNotificationsAgain < ActiveRecord::Migration[5.2]
   def change
     create_table :aml_notifications do |t|
       t.string :title, null: false

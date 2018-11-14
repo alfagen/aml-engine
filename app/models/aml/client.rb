@@ -13,6 +13,8 @@ module AML
     belongs_to :aml_accepted_order, class_name: 'AML::Order', dependent: :destroy, optional: true
     belongs_to :aml_status, class_name: 'AML::Status', optional: true
 
+    has_one :aml_client_info, class_name: 'AML::ClientInfo', foreign_key: :aml_client_id
+
     has_many :orders, class_name: 'AML::Order', dependent: :destroy
     has_many :client_agreements, class_name: 'AML::ClientAgreement', foreign_key: :aml_client_id, dependent: :destroy
 

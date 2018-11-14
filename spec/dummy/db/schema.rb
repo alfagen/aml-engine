@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_14_131355) do
+ActiveRecord::Schema.define(version: 2018_11_14_162237) do
 
   create_table "aml_agreement_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "aml_agreement_id", null: false
@@ -51,6 +51,26 @@ ActiveRecord::Schema.define(version: 2018_11_14_131355) do
     t.index ["aml_agreement_id"], name: "index_aml_client_agreements_on_aml_agreement_id"
     t.index ["aml_client_id", "aml_agreement_id"], name: "aml_client_agreements_idx", unique: true
     t.index ["aml_client_id"], name: "index_aml_client_agreements_on_aml_client_id"
+  end
+
+  create_table "aml_client_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "aml_client_id", null: false
+    t.string "first_name"
+    t.string "maiden_name"
+    t.string "last_name"
+    t.string "patronymic"
+    t.date "birth_date"
+    t.string "birth_place"
+    t.string "gender"
+    t.text "address"
+    t.string "citizenship"
+    t.string "passport_number"
+    t.string "second_document_number"
+    t.string "card_suffix"
+    t.string "utility_bill"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["aml_client_id"], name: "index_aml_client_infos_on_aml_client_id"
   end
 
   create_table "aml_clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -287,6 +307,7 @@ ActiveRecord::Schema.define(version: 2018_11_14_131355) do
 
   add_foreign_key "aml_client_agreements", "aml_agreements"
   add_foreign_key "aml_client_agreements", "aml_clients"
+  add_foreign_key "aml_client_infos", "aml_clients"
   add_foreign_key "aml_clients", "aml_orders", column: "aml_accepted_order_id"
   add_foreign_key "aml_clients", "aml_orders", on_delete: :nullify
   add_foreign_key "aml_clients", "aml_statuses"

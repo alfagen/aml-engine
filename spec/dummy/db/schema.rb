@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_12_145816) do
+ActiveRecord::Schema.define(version: 2018_11_14_131355) do
 
   create_table "aml_agreement_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "aml_agreement_id", null: false
@@ -230,10 +230,12 @@ ActiveRecord::Schema.define(version: 2018_11_12_145816) do
     t.bigint "aml_status_id", null: false
     t.bigint "aml_reject_reason_id"
     t.text "reject_reason_details"
+    t.timestamp "pending_at"
     t.index ["aml_reject_reason_id"], name: "index_aml_orders_on_aml_reject_reason_id"
     t.index ["aml_status_id"], name: "index_aml_orders_on_aml_status_id"
     t.index ["client_id"], name: "index_aml_orders_on_client_id"
     t.index ["operator_id"], name: "index_aml_orders_on_operator_id"
+    t.index ["workflow_state", "pending_at"], name: "index_aml_orders_on_workflow_state_and_pending_at"
   end
 
   create_table "aml_reject_reason_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

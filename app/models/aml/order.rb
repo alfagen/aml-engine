@@ -6,7 +6,6 @@ module AML
 
     ATTRIBUTES_TO_CLONE = %w(first_name surname patronymic birth_date).freeze
 
-    scope :ordered, -> { order 'id desc' }
     scope :open, -> { where workflow_state: %w(pending processing) }
 
     belongs_to :client, class_name: 'AML::Client', foreign_key: :client_id, inverse_of: :orders, dependent: :destroy
@@ -112,6 +111,7 @@ module AML
 
     def done
       halt! 'Личная анкета не до конца заполнена' unless fields_present?
+      touch :pending_at
     end
 
     def client_name

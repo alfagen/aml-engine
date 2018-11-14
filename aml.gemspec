@@ -16,6 +16,8 @@ Gem::Specification.new do |s|
 
     s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
+    s.test_files = Dir["spec/**/*"]
+
     s.add_runtime_dependency 'carrierwave'
     s.add_runtime_dependency 'fast_jsonapi'
     s.add_runtime_dependency 'valid_email'

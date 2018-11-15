@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_14_162237) do
+ActiveRecord::Schema.define(version: 2018_11_15_062109) do
 
   create_table "aml_agreement_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "aml_agreement_id", null: false
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2018_11_14_162237) do
     t.string "utility_bill"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["aml_client_id"], name: "index_aml_client_infos_on_aml_client_id"
+    t.index ["aml_client_id"], name: "index_aml_client_infos_on_aml_client_id_uniq", unique: true
   end
 
   create_table "aml_clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

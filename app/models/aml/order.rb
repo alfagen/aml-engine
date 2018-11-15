@@ -83,10 +83,12 @@ module AML
     def reject(reject_reason:, details: nil)
       halt! 'Причина должна быть указана' unless reject_reason.is_a? AML::RejectReason
       update aml_reject_reason: reject_reason, reject_reason_details: details
+      touch :operated_at
     end
 
     def accept
       client.update attributes_to_clone.merge current_order: self, aml_accepted_order: self, aml_status: aml_status
+      touch :operated_at
     end
 
     def is_locked?
@@ -107,6 +109,7 @@ module AML
 
     def cancel
       update operator: nil
+      touch :operated_at
     end
 
     def done

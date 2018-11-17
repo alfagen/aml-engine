@@ -87,7 +87,7 @@ module AML
     end
 
     def notification_locale
-      aml_client.notification_locale || I18n.default_locale
+      client.notification_locale || I18n.default_locale
     end
 
     def notify(notification_key)
@@ -106,8 +106,8 @@ module AML
         return
       end
 
-      aml_client.notify notification_template.template_id,
-        first_name: (first_name.presence || aml_client.first_name),
+      client.notify notification_template.template_id,
+        first_name: (first_name.presence || client.first_name),
         reject_reason_title: aml_reject_reason.try(:title),
         reject_reason_details: reject_reason_details.presence
     end

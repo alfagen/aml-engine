@@ -28,21 +28,6 @@ module AML
       self.position = self.class.count + 1
     end
 
-    def notify_accept(order)
-      return unless on_accept_notification
-      NotificationMailer.notify(order.aml_client, on_accept_notification).try :deliver!
-    end
-
-    def notify_reject(order)
-      return unless on_reject_notification
-      NotificationMailer.notify(order.aml_client, on_reject_notification, reason: order.reject_reason).try :deliver!
-    end
-
-    def notify_pending(order)
-      return unless on_pending_notification
-      NotificationMailer.notify(order.aml_client, on_pending_notification).try :deliver!
-    end
-
     def next_status
       AML::Status.ordered.where('position > ?', position).first
     end

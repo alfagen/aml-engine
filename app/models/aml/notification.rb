@@ -5,6 +5,10 @@ module AML
 
     after_create :create_templates
 
+    def to_s
+      title
+    end
+
     private
 
     def create_templates

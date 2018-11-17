@@ -43,6 +43,16 @@ module AML
       update_column :aml_order_id, order.id
     end
 
+    def notify(template_id, data = {})
+      AML::NotificationMailer.
+        notify( email: email, template_id: template_id, data: data).
+        deliver!
+    end
+
+    def notification_locale
+      locale.presence || client_agreements.where.not(locale: nil).pluck(:locale).first
+    end
+
     def reset_status!
       with_lock do
         update aml_status: nil, aml_accepted_order: nil, total_operations_count: 0, total_income_amount: Money.new(0, Money.default_currency)

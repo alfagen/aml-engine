@@ -43,7 +43,7 @@ module AML
       state :pending do
         on_entry do
           create_checks
-          aml_status.notify_pending self
+          notify :on_pending_notification
         end
         event :start, transitions_to: :processing
         event :cancel, transitions_to: :canceled
@@ -60,14 +60,14 @@ module AML
         # TODO сомнительно что можно так делать
         event :reject, transitions_to: :rejected
         on_entry do
-          aml_status.notify_accept self
+          notify :on_accept_notification
         end
       end
 
       # Отклонена оператором
       state :rejected do
         on_entry do
-          aml_status.notify_reject self
+          notify :on_reject_notification
         end
       end
 
@@ -84,6 +84,32 @@ module AML
       halt! 'Причина должна быть указана' unless reject_reason.is_a? AML::RejectReason
       update aml_reject_reason: reject_reason, reject_reason_details: details
       touch :operated_at
+    end
+
+    def notification_locale
+      aml_client.notification_locale || I18n.default_locale
+    end
+
+    def notify(notification_key)
+      notification = aml_status.send notification_key
+      unless notification
+        AML::NotificationMailer.logger.warn "No #{notification_key} notification for status #{aml_status}"
+        return
+      end
+
+      notification_template = notification.
+        aml_notification_templates.
+        find_by(locale: notification_locale)
+
+      unless notification_template.present? && notification_template.template_id.present?
+        AML::NotificationMailer.logger.warn "No template_id for #{notification} and #{locale}"
+        return
+      end
+
+      aml_client.notify notification_template.template_id,
+        first_name: (first_name.presence || aml_client.first_name),
+        reject_reason_title: aml_reject_reason.try(:title),
+        reject_reason_details: reject_reason_details.presence
     end
 
     def accept

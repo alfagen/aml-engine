@@ -2,6 +2,7 @@ module AML
   class NotificationMailer < ApplicationMailer
     def notify(email:, template_id:, data: {})
       mail(
+        from:        AML.mail_from,
         to:          email,
         template_id: template_id,
 
@@ -22,8 +23,7 @@ module AML
     private
 
     def mail_settings(_aml_client)
-      if Rails.env.production? ||
-          (!Rails.env.test? && defined?(Secrets) && Secrets.aml_allowed_emails.include?(aml_client.email))
+      if Rails.env.production? || AML.allowed_emails.include?(aml_client.email)
         {}
       else
         { sandbox_mode: { enable: true } }

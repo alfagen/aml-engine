@@ -2,8 +2,11 @@ require 'archivable'
 
 require 'aml/engine'
 require 'aml/limits_checker'
+require 'aml/configuration'
 
 module AML
+  extend Configuration
+
   def self.table_name_prefix
     'aml_'
   end

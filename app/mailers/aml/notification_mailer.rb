@@ -16,7 +16,7 @@ module AML
         dynamic_template_data:  data.to_json,
         # Чтобы sendgrid принял нужно хоть что-то передавать,
         # а если ничего не передавать, то запускается render
-        body: 'dummy'
+        body: "This is dummy body for sendgrid template_id=#{template_id}. Configure sendgrid_actionmailer as delivery_method in Rails"
         # mail_settings: mail_settings(aml_client)
       )
     end

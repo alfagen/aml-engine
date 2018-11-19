@@ -44,9 +44,13 @@ module AML
     end
 
     def notify(template_id, data = {})
-      AML::NotificationMailer.
-        notify( email: email, template_id: template_id, data: data).
-        deliver!
+      if email.present?
+        AML::NotificationMailer.
+          notify( email: email, template_id: template_id, data: data).
+          deliver!
+      else
+        AML::NotificationMailer.logger.error "У клиента #{id} нет email-а"
+      end
     end
 
     def notification_locale

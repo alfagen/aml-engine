@@ -17,6 +17,8 @@ gem 'ransack'
 gem 'globalize', github: 'globalize/globalize', ref: 'HEAD'
 gem 'globalize-accessors'
 
+gem 'sendgrid-actionmailer', github: 'dreimannzelt/sendgrid-actionmailer', branch: :dynamic_template_data
+
 gem 'money'
 gem 'money-rails'
 

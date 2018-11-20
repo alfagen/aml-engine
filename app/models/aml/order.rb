@@ -13,6 +13,8 @@ module AML
     belongs_to :aml_status, class_name: 'AML::Status'
     belongs_to :aml_reject_reason, class_name: 'AML::RejectReason', optional: true
 
+    has_one :aml_client_info, through: :client
+
     has_many :order_documents, class_name: 'AML::OrderDocument', dependent: :destroy
     has_many :required_document_kinds, through: :aml_status, source: :document_kinds
     has_many :order_checks, class_name: 'AML::OrderCheck', dependent: :destroy, inverse_of: :aml_order, foreign_key: :aml_order_id
@@ -84,6 +86,10 @@ module AML
       halt! 'Причина должна быть указана' unless reject_reason.is_a? AML::RejectReason
       update aml_reject_reason: reject_reason, reject_reason_details: details
       touch :operated_at
+    end
+
+    def accepted_at
+      return operated_at if accepted?
     end
 
     def notification_locale

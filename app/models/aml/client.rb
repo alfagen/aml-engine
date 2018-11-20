@@ -43,6 +43,11 @@ module AML
       update_column :aml_order_id, order.id
     end
 
+    # TODO Сохранять в таблице при before_update/create
+    def all_agreements_accepted?
+      client_agreements.count == AML::Agreement.alive.count
+    end
+
     def notify(template_id, data = {})
       if email.present?
         AML::NotificationMailer.

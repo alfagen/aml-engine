@@ -5,6 +5,8 @@ module AML
   class Operator < ApplicationRecord
     extend Enumerize
     include Workflow
+    include Authority::Abilities
+    include Authority::UserAbilities
 
     authenticates_with_sorcery! if defined? Sorcery
 

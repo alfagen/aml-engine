@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 2018_11_20_113953) do
     t.integer "total_income_amount_cents", default: 0, null: false
     t.string "total_income_amount_currency", default: "eur", null: false
     t.integer "total_operations_count", default: 0, null: false
+    t.integer "risk", default: 0, null: false
     t.string "risk_category", limit: 1
     t.string "locale"
     t.index ["aml_accepted_order_id"], name: "index_aml_clients_on_aml_accepted_order_id"

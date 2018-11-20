@@ -6,6 +6,7 @@
 module AML
   class Client < ApplicationRecord
     extend Enumerize
+    include Authority::Abilities
 
     scope :ordered, -> { order 'id desc' }
 

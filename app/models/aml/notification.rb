@@ -1,5 +1,7 @@
 module AML
   class Notification < ApplicationRecord
+    include Authority::Abilities
+
     has_many :aml_notification_templates, class_name: 'AML::NotificationTemplate', foreign_key: :aml_notification_id, dependent: :destroy
 
     has_one :status_on_pending_notification, class_name: 'AML::Status', foreign_key: :on_pending_notification_id, dependent: :nullify

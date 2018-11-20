@@ -3,6 +3,7 @@ module AML
     extend Enumerize
     include Workflow
     include Archivable
+    include Authority::Abilities
 
     ATTRIBUTES_TO_CLONE = %w(first_name surname patronymic birth_date).freeze
 

@@ -1,6 +1,7 @@
 module AML
   class RejectReason < ApplicationRecord
     include Archivable
+    include Authority::Abilities
 
     translates :title
     globalize_accessors

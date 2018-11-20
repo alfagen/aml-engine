@@ -41,8 +41,8 @@ PATH
       fast_jsonapi
       globalize
       globalize-accessors
-      money (~> 6.12)
-      money-rails (~> 1.12)
+      money (~> 6.13)
+      money-rails (~> 1.13)
       rails (~> 5.2.1)
       ransack
       sendgrid-actionmailer

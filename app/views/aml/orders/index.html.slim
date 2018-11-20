@@ -1,0 +1,8 @@
+= render 'search', workflow_state: workflow_state
+= render 'menu', workflow_state: workflow_state
+
+- if orders.any?
+  = render partial: 'orders', locals: { orders: orders, q: q }
+
+- else
+  p.alert Заявки отсутствуют

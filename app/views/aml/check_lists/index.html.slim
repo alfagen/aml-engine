@@ -1,0 +1,9 @@
+- if current_user.can_create?(AML::CheckList)
+  .pull-right= link_to 'Новый чек-лист', new_check_list_path, class: 'btn btn-success'
+
+h2 Чек-листы
+hr
+- if check_lists.any?
+  = render 'check_lists', check_lists: check_lists
+- else
+  p.alert Чек-листы отсутствуют

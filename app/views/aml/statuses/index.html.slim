@@ -1,0 +1,9 @@
+- if current_user.can_create?(AML::Status)
+  .pull-right= link_to 'Новый статус', new_status_path(status: { title: nil }), class: 'btn btn-success'
+
+h2 Статусы
+hr
+- if statuses.any?
+  = render 'statuses', statuses: statuses
+- else
+  p.alert Статусы отсутствуют

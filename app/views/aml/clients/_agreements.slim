@@ -1,0 +1,14 @@
+h2.m-t-0 Соглашения
+table.table.table-condensed
+  tbody
+    - AML::Agreement.ordered.alive.each do |agreement|
+      - client_agreement = client.client_agreements.find_by(aml_agreement: agreement)
+      tr
+        td
+          = link_to agreement.title, agreement_path(agreement), target: '_blank'
+          - if client_agreement.present?
+            .text-success
+              | Принято
+              span.m-l-md= humanized_time_in_current_time_zone client_agreement.created_at
+          - else
+            .text-danger Еще не принял

@@ -1,0 +1,15 @@
+table.table.table-condensed.table-striped
+  thead
+    tr
+      th Позиция
+      th Наименование
+      th Ссылка
+      th.text-right Действия
+  tbody
+    - check_lists.each do |check_list|
+      tr
+        td= check_list.position
+        td
+          = link_to check_list.title, check_list_path(check_list)
+        td= check_list.url
+        td.text-right = link_to 'Подробнее', check_list_path(check_list), class: 'btn btn-default'

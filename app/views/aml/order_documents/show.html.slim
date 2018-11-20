@@ -1,0 +1,34 @@
+- document_decorated = OrderDocumentDecorator.decorate order_document
+h4 Имя в заявке: #{order_document.order.first_name} #{order_document.order.surname} #{order_document.order.patronymic}
+h4 Тип документа: #{order_document.document_kind.title}
+h4 Состояние: #{order_document.workflow_state}
+- if order_document.rejected?
+  = document_decorated.reject_reason
+= link_to 'К заявке', order_path(order_document.order), class: 'btn btn-default'
+- if order_document.acceptable_by?(current_user)
+  =< link_to 'Принять', accept_order_document_path(order_document), method: :put, class: 'btn btn-success'
+- if order_document.rejectable_by?(current_user)
+  =< link_to 'Отказать', new_order_document_rejection_path(order_document), class: 'btn btn-danger'
+- if order_document.document_fields.any?
+  h4 Дополнительные поля документа:
+  table.table.table-condensed
+    thead
+      tr
+        th Название:
+        th Значение:
+        th Статус:
+        th Действия:
+    tbody
+    - order_document.document_fields.each do |field|
+      tr
+        td = field.title
+        td = field.value || 'не задано'
+        td = field.definition.alive?
+        td = link_to 'Изменить значение', edit_document_field_path(field), class: 'btn btn-default'
+h4 Группа документа:
+h5 Название: #{order_document.document_kind.document_group.title}
+h5 Описание: #{order_document.document_kind.document_group.details}
+h5 Позиция: #{order_document.document_kind.document_group.position}
+h5 Статус: #{order_document.document_kind.document_group.alive?}
+h4 Файл:
+= image_tag(order_document.image.url, style: 'height:auto;width:100%;') if order_document.image.present?

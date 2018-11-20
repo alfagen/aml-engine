@@ -1,0 +1,5 @@
+.btn-group.btn-group-sm role='group'
+  = client_risk_category_link client, nil
+
+  - AML::Client.risk_category.values.each do |risk_category|
+    = client_risk_category_link client, risk_category

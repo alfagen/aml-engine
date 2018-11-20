@@ -1,0 +1,5 @@
+.pull-right= link_to 'изменить', edit_document_group_document_kind_path(document_kind.document_group, document_kind), class: 'btn btn-default'
+= render 'back', document_kind: document_kind
+h2 Тип документа: #{document_kind.title}
+hr
+= render 'definitions', definitions: document_kind.definitions.alive.ordered

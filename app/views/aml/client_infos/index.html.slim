@@ -1,0 +1,6 @@
+h2 Клиентская информация
+hr
+- if client_infos.any?
+  = render 'client_infos', client_infos: client_infos, columns: columns
+- else
+  p.alert Отсутствуют

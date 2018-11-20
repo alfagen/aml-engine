@@ -1,0 +1,18 @@
+table.table.table-condensed.table-striped
+  thead
+    tr
+      th ID
+      th Причина отмены
+      th Заявки с такой причиной
+      th.pull-right Действия
+  tbody
+    - reject_reasons.each do |reason|
+      tr
+        td = reason.id
+        td = reason.title
+        td
+          = link_to_unless reason.orders.count.zero?, reason.orders.count, orders_path(q: { aml_reject_reason_id_eq: reason.id })
+        td
+          .pull-right
+            = link_to 'Редактировать', edit_reject_reason_path(reason), class: 'btn btn-default' if reason.updatable_by?(current_user)
+            =< link_to 'Удалить', reject_reason_path(reason), class: 'btn btn-danger', method: :delete, data: { confirm: 'Удалить причину?' } if reason.deletable_by?(current_user)

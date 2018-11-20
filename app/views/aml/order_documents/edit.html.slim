@@ -1,0 +1,3 @@
+h3 Редактировать документ
+= image_tag(order_document.image.url, style: 'height:auto;width:20%;') if order_document.image.present?
+= render 'form', order_document: order_document

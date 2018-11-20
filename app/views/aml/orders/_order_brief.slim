@@ -1,0 +1,22 @@
+- order_decorated = OrderDecorator.decorate order
+dl
+  dt Заявка отправлена
+  dd= humanized_time_in_current_time_zone order.pending_at
+  dt Клиент
+  dd= order_decorated.client_name
+
+  dt Дата рождения
+  dd= order_decorated.birth_date
+
+  dt Статус
+  dd= order_decorated.aml_status
+
+  dt Состояние
+  dd= order_decorated.workflow_state
+
+  dt Категория риска
+  dd= render 'aml/clients/risk_category', client: order.client
+
+  - if order.current_state >= :processing
+    dt Оператор
+    dd= order_decorated.operator

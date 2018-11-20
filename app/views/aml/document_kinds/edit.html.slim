@@ -1,0 +1,15 @@
+= render 'back'
+.pull-right
+  = link_to 'Удалить',
+    document_group_document_kind_path(document_kind.document_group, document_kind),
+    method: :delete,
+    class: 'btn btn-danger',
+    data: { confirm: 'Удалить насовсем со всех заявок вместе с изображениями?' }
+h3 Редактируем тип документа ##{document_kind.id}
+hr
+
+.row
+  .col-md-6
+    = render 'form', document_kind: document_kind, document_group: document_kind.document_group
+  .col-md-6
+    = render 'definitions', definitions: document_kind.definitions.alive.ordered, document_kind: document_kind

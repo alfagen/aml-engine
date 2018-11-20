@@ -1,0 +1,16 @@
+tr
+  td
+    = link_to document_kind.title, document_group_document_kind_path(document_kind.document_group, document_kind)
+  td = document_kind.goal.presence || '-'
+  td
+    - if document_kind.file.present?
+      = link_to "#{document_kind.file_title}.pdf (#{number_to_human_size document_kind.file.size})", document_kind.file.url
+    - else
+      .text-muted Файл отсутствует
+  td
+    - if document_kind.definitions.any?
+      ul
+        - document_kind.definitions.ordered.each do |d|
+          li= link_to d.title, document_group_document_kind_document_kind_field_definition_path(d.document_kind.document_group, d.document_kind, d)
+    - else
+      .text Нет полей

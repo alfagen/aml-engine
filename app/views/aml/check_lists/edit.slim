@@ -1,0 +1,10 @@
+= link_to '&larr; все чек-листы'.html_safe, check_lists_path
+.pull-right
+  = link_to 'Удалить',
+    check_list_path(check_list),
+    method: :delete,
+    data: { confirm: 'Удалить чек-лист и факты его проверки в заявках?' },
+    class: 'btn btn-danger'
+
+h3 Редактируем чек-лист
+= render 'form', check_list: check_list

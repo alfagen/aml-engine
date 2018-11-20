@@ -35,6 +35,7 @@ PATH
   remote: .
   specs:
     aml (0.3.4)
+      authority
       carrierwave
       dapi-archivable (~> 0.1.2)
       enumerize
@@ -96,6 +97,8 @@ GEM
       tzinfo (~> 1.1)
     arel (9.0.0)
     ast (2.4.0)
+    authority (3.3.0)
+      activesupport (>= 3.0.0)
     bcrypt (3.1.12)
     builder (3.2.3)
     byebug (10.0.2)

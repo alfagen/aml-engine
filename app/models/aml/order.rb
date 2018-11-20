@@ -92,6 +92,20 @@ module AML
       return operated_at if accepted?
     end
 
+    # Удачно прошло холдирование, присоедияем карту
+    # @param [String] bin - первые 4 цифры карты
+    # @param [String] suffix - последние 4 цифры карты
+    # @param [String] brand - брэнд карты (Visa/Master)
+    def attach_card!(bin:, suffix:, brand: )
+      update!(
+        card_bin:       bin,
+        card_suffix:    suffix,
+        card_brand:     brand,
+        card_holded:    true,
+        card_holded_at: Time.zone.now
+      )
+    end
+
     def notification_locale
       client.notification_locale || I18n.default_locale
     end

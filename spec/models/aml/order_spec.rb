@@ -27,6 +27,14 @@ RSpec.describe AML::Order, type: :model do
     expect{ subject.done! }.to raise_error(Workflow::NoTransitionAllowed)
   end
 
+  context 'холдирование карты' do
+    before do
+      subject.attach_card! bin: '1234', suffix: '4567', brand: 'visa'
+    end
+    it { expect(subject.card_holded_at).to be_present }
+    it { expect(subject.card_brand).to be_present }
+  end
+
   describe 'при создани изаявки она становится текущей' do
     let!(:client) { create :aml_client, first_name: nil,
                     risk_category: AML::Client.risk_category.values.first

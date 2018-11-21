@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_20_113953) do
+ActiveRecord::Schema.define(version: 2018_11_21_081848) do
 
   create_table "aml_agreement_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "aml_agreement_id", null: false
@@ -256,11 +256,14 @@ ActiveRecord::Schema.define(version: 2018_11_20_113953) do
     t.string "card_brand"
     t.string "card_bin"
     t.string "card_suffix"
-    t.boolean "card_holded", default: false, null: false
-    t.timestamp "card_holded_at"
+    t.string "card_image"
+    t.bigint "cloned_order_id"
+    t.string "card_holding_state", default: "none", null: false
+    t.timestamp "card_holding_state_updated_at"
     t.index ["aml_reject_reason_id"], name: "index_aml_orders_on_aml_reject_reason_id"
     t.index ["aml_status_id"], name: "index_aml_orders_on_aml_status_id"
     t.index ["client_id"], name: "index_aml_orders_on_client_id"
+    t.index ["cloned_order_id"], name: "index_aml_orders_on_cloned_order_id"
     t.index ["operator_id"], name: "index_aml_orders_on_operator_id"
     t.index ["workflow_state", "operated_at"], name: "index_aml_orders_on_workflow_state_and_operated_at"
     t.index ["workflow_state", "pending_at"], name: "index_aml_orders_on_workflow_state_and_pending_at"
@@ -307,6 +310,7 @@ ActiveRecord::Schema.define(version: 2018_11_20_113953) do
     t.bigint "on_pending_notification_id"
     t.bigint "on_accept_notification_id"
     t.bigint "on_reject_notification_id"
+    t.boolean "card_required", default: false, null: false
     t.index ["key"], name: "index_aml_statuses_on_key", unique: true
     t.index ["on_accept_notification_id"], name: "index_aml_statuses_on_on_accept_notification_id"
     t.index ["on_pending_notification_id"], name: "index_aml_statuses_on_on_pending_notification_id"
@@ -330,6 +334,7 @@ ActiveRecord::Schema.define(version: 2018_11_20_113953) do
   add_foreign_key "aml_order_documents", "aml_orders", column: "order_id"
   add_foreign_key "aml_orders", "aml_clients", column: "client_id"
   add_foreign_key "aml_orders", "aml_operators", column: "operator_id"
+  add_foreign_key "aml_orders", "aml_orders", column: "cloned_order_id"
   add_foreign_key "aml_orders", "aml_statuses"
   add_foreign_key "aml_statuses", "aml_notifications", column: "on_accept_notification_id"
   add_foreign_key "aml_statuses", "aml_notifications", column: "on_pending_notification_id"

@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency 'money', '~> 6.13'
     s.add_runtime_dependency 'money-rails', '~> 1.13'
     s.add_runtime_dependency 'sendgrid-actionmailer'
+    s.add_runtime_dependency 'draper', '~> 3.0.1' # , github: 'drapergem/draper'
 
     s.add_runtime_dependency "rails", "~> 5.2.1"
     s.add_runtime_dependency "dapi-archivable", "~> 0.1.2"

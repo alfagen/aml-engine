@@ -38,6 +38,7 @@ PATH
       authority
       carrierwave
       dapi-archivable (~> 0.1.2)
+      draper (~> 3.0.1)
       enumerize
       fast_jsonapi
       globalize
@@ -82,6 +83,10 @@ GEM
       globalid (>= 0.3.6)
     activemodel (5.2.1)
       activesupport (= 5.2.1)
+    activemodel-serializers-xml (1.0.2)
+      activemodel (> 5.x)
+      activesupport (> 5.x)
+      builder (~> 3.1)
     activerecord (5.2.1)
       activemodel (= 5.2.1)
       activesupport (= 5.2.1)
@@ -114,6 +119,12 @@ GEM
       activesupport
     database_rewinder (0.9.0)
     diff-lcs (1.3)
+    draper (3.0.1)
+      actionpack (~> 5.0)
+      activemodel (~> 5.0)
+      activemodel-serializers-xml (~> 1.0)
+      activesupport (~> 5.0)
+      request_store (~> 1.0)
     enumerize (2.2.2)
       activesupport (>= 3.2)
     erubi (1.7.1)

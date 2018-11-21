@@ -6,7 +6,7 @@ module AML
 
     ATTRIBUTES_TO_CLONE = %w(first_name surname patronymic birth_date).freeze
 
-    mount_uploader :cardD_image, CardImageFileUploader
+    mount_uploader :card_image, CardImageFileUploader
 
     scope :open, -> { where workflow_state: %w(pending processing) }
 

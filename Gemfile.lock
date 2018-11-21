@@ -345,6 +345,7 @@ PLATFORMS
 DEPENDENCIES
   activesupport
   aml!
+  authority
   byebug
   carrierwave
   dapi-archivable

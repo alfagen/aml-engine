@@ -1,6 +1,7 @@
 module AML
   class CheckList < ApplicationRecord
     include Archivable
+    include Authority::Abilities
 
     scope :ordered, -> { order :position }
 

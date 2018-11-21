@@ -8,6 +8,7 @@ gemspec
 
 gem 'dapi-archivable', require: 'archivable'
 
+gem 'authority'
 gem 'carrierwave'
 gem 'fast_jsonapi', github: 'HoJSim/fast_jsonapi', branch: 'dev'
 gem 'valid_email'

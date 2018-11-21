@@ -1,6 +1,8 @@
 module AML
   # TODO Переименовать в DocumentField
   class DocumentField < ApplicationRecord
+    include Authority::Abilities
+
     class ClosedOrderError < StandardError
       def message
         'Нельзя редактировать поле документа. Заявка закрыта для изменений.'

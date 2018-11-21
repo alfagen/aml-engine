@@ -1,6 +1,7 @@
 module AML
   class Status < ApplicationRecord
     include Archivable
+    include Authority::Abilities
 
     translates :title, :details
     globalize_accessors

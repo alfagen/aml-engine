@@ -3,6 +3,7 @@ module AML
   #
   class DocumentKindFieldDefinition < ApplicationRecord
     include Archivable
+    include Authority::Abilities
 
     translates :title
     globalize_accessors

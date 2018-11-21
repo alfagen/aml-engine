@@ -1,6 +1,7 @@
 module AML
   class OrderCheck < ApplicationRecord
     include Workflow
+    include Authority::Abilities
 
     belongs_to :aml_order, class_name: 'AML::Order'
     belongs_to :aml_check_list, class_name: 'AML::CheckList'

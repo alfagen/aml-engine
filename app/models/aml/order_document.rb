@@ -2,6 +2,8 @@
 
 module AML
   class OrderDocument < ApplicationRecord
+    include Authority::Abilities
+
     # 'Can`t update document of locker order'
     class ClosedOrderError < StandardError
       def message

@@ -29,9 +29,10 @@ RSpec.describe AML::Order, type: :model do
 
   context 'холдирование карты' do
     before do
-      subject.attach_card! bin: '1234', suffix: '4567', brand: 'visa'
+      subject.card_holding_start!
+      subject.card_holding_success! bin: '1234', suffix: '4567', brand: 'visa'
     end
-    it { expect(subject.card_holded_at).to be_present }
+    it { expect(subject.card_holding_state).to eq 'success' }
     it { expect(subject.card_brand).to be_present }
   end
 

@@ -146,6 +146,7 @@ RSpec.describe AML::Order, type: :model do
       aml_client.create_current_order!
       expect(aml_client.current_order).to_not eq @current_order
       expect(@current_order.reload).to be_canceled
+      expect(aml_client.current_order.cloned_order).to be_persisted
     end
   end
 end

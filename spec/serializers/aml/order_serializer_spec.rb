@@ -11,7 +11,7 @@ describe AML::OrderSerializer, type: :services do
   end
 
   context 'rejected' do
-    let(:order) { create :aml_order, :rejected, aml_status: aml_status }
+    let(:order) { create :aml_order, :rejected, aml_status: aml_status, cloned_order: create(:aml_order) }
     it { expect(subject.as_json).to be_a Hash }
   end
 end

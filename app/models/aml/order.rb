@@ -14,6 +14,7 @@ module AML
     belongs_to :operator, class_name: 'AML::Operator', foreign_key: :operator_id, optional: true, inverse_of: :orders
     belongs_to :aml_status, class_name: 'AML::Status'
     belongs_to :aml_reject_reason, class_name: 'AML::RejectReason', optional: true
+    belongs_to :cloned_order, class_name: 'AML::Order', optional: true
 
     has_one :aml_client_info, through: :client
 
@@ -214,9 +215,11 @@ module AML
     def copy_fields_from_current_order!
       return unless attributes_to_clone.compact.empty?
       return unless client.current_order.present?
-      return unless client.current_order.attributes_to_clone.compact.any?
+      self.cloned_order = client.current_order
 
-      assign_attributes client.current_order.attributes_to_clone
+      return unless cloned_order.attributes_to_clone.compact.any?
+
+      assign_attributes cloned_order.attributes_to_clone
     end
 
     # Создает и до-создает набор документов для
@@ -225,8 +228,8 @@ module AML
     def create_and_clone_documents!
       aml_status.aml_document_groups.find_each do |g|
         g.document_kinds.alive.ordered.each do |document_kind|
-          image = client.current_order.present? ?
-            client.current_order.order_documents.loaded_and_available.where(document_kind: document_kind).take&.image :
+          image = cloned_order.present? ?
+            cloned_order.order_documents.loaded_and_available.where(document_kind: document_kind).take&.image :
             nil
 
           order_documents.

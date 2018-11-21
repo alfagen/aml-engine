@@ -11,6 +11,8 @@ module AML
     attributes :first_name, :surname, :patronymic, :workflow_state, :reject_reason_details, :birth_date,
       :created_at, :updated_at
 
+    attributes :card_brand, :card_bin, :card_suffix, :card_image
+
     attribute :reject_reason do |o|
       [o.aml_reject_reason.title, o.reject_reason_details].compact.join('. ') if o.rejected?
     end

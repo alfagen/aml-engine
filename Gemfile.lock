@@ -42,7 +42,7 @@ GIT
 PATH
   remote: .
   specs:
-    aml (0.3.4)
+    aml (0.4.4)
       active_link_to
       authority
       carrierwave

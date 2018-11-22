@@ -113,7 +113,7 @@ module AML
         find_by(locale: notification_locale)
 
       unless notification_template.present? && notification_template.template_id.present?
-        AML::NotificationMailer.logger.warn "No template_id for #{notification} and #{locale}"
+        AML::NotificationMailer.logger.warn "No template_id for #{notification} and #{notification_locale}"
         return
       end
 

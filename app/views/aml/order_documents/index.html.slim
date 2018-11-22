@@ -1,0 +1,12 @@
+h2 Документы клиентoв
+ul.nav.nav-tabs
+  = active_link_to 'Ожидающие', order_documents_path(workflow_state: :none), active: active_style_tab(workflow_state), wrap_tag: :li
+  = active_link_to 'Загруженные', order_documents_path(workflow_state: :loaded), active: :exact, wrap_tag: :li
+  = active_link_to 'Принятые', order_documents_path(workflow_state: :accepted), active: :exact, wrap_tag: :li
+  = active_link_to 'Отклоненные', order_documents_path(workflow_state: :rejected), active: :exact, wrap_tag: :li
+
+hr
+- if documents.any?
+  = render partial: 'documents', locals: { documents: documents }
+- else
+  p.alert Документы отсутвуют

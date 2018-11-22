@@ -1,0 +1,7 @@
+.m-b-md= render 'tabs'
+- if reject_reasons.any?
+  = render partial: 'reject_reasons', locals: { reject_reasons: reject_reasons }
+- else
+  .alert.alert-info Список причин пуст. Добавьте хотя бы одну.
+hr
+= link_to 'Добавить причину', new_reject_reason_path(reject_reason: { kind: current_kind }), class: 'btn btn-default'

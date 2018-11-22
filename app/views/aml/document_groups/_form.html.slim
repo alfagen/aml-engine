@@ -1,0 +1,6 @@
+= simple_form_for document_group do |f|
+  = localized_render do |locale|
+    = f.input localized_attribute(:title, locale), include_blank: false
+    = f.input localized_attribute(:details, locale)
+  = f.input :position
+  = f.button :submit, 'Создать/изменить', class: 'btn btn-success'

@@ -1,0 +1,17 @@
+- if definitions.any?
+  table.table.table-condensed
+    thead
+      tr
+        th Название
+        th Ключ
+        th Действия
+        tbody
+        - definitions.each do |definition|
+          tr
+            td = definition.title
+            td = definition.key
+            td
+              => link_to 'Изменить', edit_document_group_document_kind_document_kind_field_definition_path(definition.document_kind.document_group, definition.document_kind, definition), class: 'btn btn-default'
+- else
+  .alert.alert-info Нет полей
+= link_to 'Добавить поле', new_document_group_document_kind_document_kind_field_definition_path(document_kind.document_group, document_kind), class: 'btn btn-default'

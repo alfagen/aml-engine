@@ -1,0 +1,20 @@
+- order_decorated = AML::OrderDecorator.decorate order
+tr
+  td = order_decorated.id
+  td= humanized_time_in_current_time_zone order.pending_at
+  td= humanized_time_in_current_time_zone order.operated_at
+  /td
+    /- if order_decorated.order_documents.any?
+      /= render partial: 'documents', locals: { documents: order_decorated.order_documents }
+    /- else
+      /.text-muted отсутствуют
+  td = order_decorated.client_name
+  td title=order_decorated.aml_reject_reason.try(:title)
+    = order_workflow_state order_decorated.workflow_state
+  td = order_decorated.aml_status
+  td = order_decorated.operator
+  td
+
+    = render 'order_actions', order: order
+  td
+    =< link_to 'Подробнее', order_path(order_decorated), class: 'btn btn-default'

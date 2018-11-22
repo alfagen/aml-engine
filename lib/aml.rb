@@ -62,6 +62,7 @@ module AML
     DocumentGroupToStatus.delete_all
     DocumentGroup.delete_all
     Order.delete_all
+    ClientInfo.delete_all
     Client.delete_all
     Status.delete_all
 

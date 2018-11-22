@@ -1,0 +1,10 @@
+= simple_form_for check_list do |f|
+  .row
+    .col-md-6
+      = f.input :title
+      = f.input :url
+    .col-md-6
+      .row
+        .col-md-6
+          = f.input :position
+  = f.button :submit, 'Сохранить', class: 'btn btn-success'

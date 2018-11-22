@@ -1,0 +1,28 @@
+= simple_form_for status, wrapper_mappings: { boolean: :vertical_boolean } do |f|
+  .row
+    .col-md-6
+      = localized_render do |locale|
+        = f.input localized_attribute(:title, locale)
+        = f.input localized_attribute(:details, locale)
+      = f.input :card_required
+    .col-md-6
+      .row
+        .col-md-6
+          = f.input :position
+        .col-md-6
+          = f.input :key
+
+      h3.m-b-md Ограничения
+      = f.input :max_amount_limit, as: :currency
+      = f.input :operations_count_limit
+      = f.input :referal_output_enabled
+
+      h3.m-b-md
+        | Уведомления
+        = link_to notifications_path, class: 'm-l-md' do
+          = fa_icon :gear
+      = f.association :on_pending_notification
+      = f.association :on_accept_notification
+      = f.association :on_reject_notification
+
+  = f.button :submit, 'Сохранить', class: 'btn btn-success'

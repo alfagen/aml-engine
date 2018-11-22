@@ -1,0 +1,10 @@
+= simple_form_for agreement, wrapper_mappings: { boolean: :vertical_boolean }  do |f|
+  .row
+    .col-md-6
+      = localized_render do |locale|
+        = f.input localized_attribute(:title, locale), label: 'Название'
+        = f.input localized_attribute(:details, locale), label: 'Описание', as: :text, input_html: { rows: 30, data: { redactor: true } }
+    .col-md-6
+      = f.input :url
+
+  .m-t-md= f.button :submit, 'Сохранить', class: 'btn btn-primary'

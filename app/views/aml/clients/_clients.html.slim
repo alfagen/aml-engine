@@ -1,0 +1,39 @@
+table.table.table-condensed.table-striped
+  thead
+    tr
+      th ID
+      th Создан
+      th Имя
+      th Фамилия
+      th Отчество
+      th email
+      th Телефон
+      th Дата рождения
+      th Категория риска
+      th Сумма сделок
+      th Количество сделок
+      th Статус
+      th Язык
+      th Текущая заявка
+      th.text-right Действия
+  tbody
+    - clients.each do |client|
+      - cd = AML::ClientDecorator.new client
+      tr
+        td= cd.id
+        td= humanized_time_in_current_time_zone(cd.created_at)
+        td= cd.first_name
+        td= cd.surname
+        td= cd.patronymic
+        td= cd.email
+        td= cd.phone
+        td= cd.birth_date
+        td= cd.risk_category
+        td= cd.total_income_amount
+        td= cd.total_operations_count
+        td= cd.aml_status
+        td= cd.locale || "(#{I18n.default_locale})"
+        td= cd.current_order
+        td.text-right
+          .btn-group
+            = link_to 'Подробнее', client_path(cd), class: 'btn btn-default' if client.readable_by?(current_user)

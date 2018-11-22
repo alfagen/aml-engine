@@ -1,0 +1,2 @@
+- documents.each do |document|
+  =< link_to image_tag(document.image.url, size: '60'), order_document_path(document) if document.image.present?

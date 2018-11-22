@@ -1,0 +1,10 @@
+= simple_form_for [document_kind.document_group, document_kind, document_kind_field_definition] do |f|
+  = localized_render do |locale|
+    = f.input localized_attribute(:title, locale), as: :string
+
+  .row
+    .col-md-6
+      = f.input :key, as: :string
+    .col-md-6
+      = f.input :position
+  = f.button :submit, 'Сохранить', class: 'btn btn-success'

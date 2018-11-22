@@ -1,0 +1,15 @@
+br
+- if document_kinds.any?
+  table.table.table-condensed
+    thead
+      tr
+        th Типы документа
+        th Цель в метрике
+        th Загруженный документ
+        th Поля документа
+    tbody
+      = render partial: 'aml/document_kinds/document_kind', collection: document_kinds
+- else
+  p.alert Типы документов отсутствуют.
+hr
+= link_to 'Добавить тип документа', new_document_group_document_kind_path(document_group), class: 'btn btn-default' if AML::DocumentKind.creatable_by? current_user

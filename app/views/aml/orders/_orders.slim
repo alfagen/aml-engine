@@ -1,0 +1,15 @@
+= paginate orders
+table.table.table-condensed.table-striped
+  thead
+    tr
+      th= sort_link q, :id, 'Заявка'
+      th= sort_link q, :pending_at, 'Отправлена'
+      th= sort_link q, :operated_at, 'Обработана'
+      th= sort_link q, :first_name, 'Клиент (Имя)'
+      th Cостояние
+      th= sort_link q, :aml_status_id, 'Статус'
+      th= sort_link q, :aml_operator_id,  'Оператор'
+      th Действия
+  tbody
+    = render partial: 'aml/orders/order', collection: orders
+= paginate orders

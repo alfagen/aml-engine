@@ -1,0 +1,51 @@
+- content_for :pre_header do
+  .pull-right
+    .btn-group.btn-sm
+      = link_to 'Добавить заявку', new_order_path(order: { client_id: client.id }), class: 'btn btn-success' if current_user.can_create?(AML::Order)
+      =< link_to 'Сбросить статус', reset_client_path(client), class: 'btn btn-danger', method: :delete, data: { confirm: 'Сбросить статус клиента?' } if client.resetable_by? current_user
+
+
+- cd = AML::ClientDecorator.decorate client
+.row
+  .col-md-6
+    table.table
+      tbody
+        tr
+          th Имя
+          td= cd.first_name
+        tr
+          th Фамилия
+          td= cd.surname
+        tr
+          th Отчество
+          th= cd.patronymic
+        tr
+          th Дата рождения
+          td= cd.birth_date
+        tr
+          th Email
+          td= cd.email
+        tr
+          th Количество сделок
+          td= cd.total_operations_count
+        tr
+          th Статус
+          td= cd.aml_status
+        tr
+          th Язык
+          td= cd.locale
+        tr
+          th Категория риска
+          td style="min-width: 250px"
+            = render 'risk_category', client: client
+  .col-md-6
+    = render 'agreements', client: client
+
+h2.m-t-lg Данные клиента (от оператора)
+hr
+= render 'aml/client_infos/form', client_info: client_info
+
+- if client.orders.any?
+  hr
+  h2 Заявки (#{client.orders.count})
+  = render 'aml/orders/orders', orders: orders, q: q

@@ -1,0 +1,25 @@
+.btn-group
+  - if order.startable_by?(current_user)
+    = link_to 'Начать обработку', start_order_path(order), method: :put, class: 'btn btn-success'
+
+  - if order.rejectable_by?(current_user)
+    =< link_to 'Отклонить', new_order_rejection_path(order), class: 'btn btn-danger'
+
+  - if order.donable_by?(current_user)
+    = link_to 'done (клиентская кнопка)', done_order_path(order), method: :put, class: 'btn btn-success'
+
+  - if order.cancelable_by?(current_user)
+    =< link_to 'Прекратить обработку', cancel_order_path(order), method: :put, class: 'btn btn-warning'
+
+  - if order.acceptable_by?(current_user)
+    =< link_to 'Принять', accept_order_path(order), method: :put, class: 'btn btn-success'
+
+.m-t-md
+  - unless order.fields_present?
+    .text-danger Поля не все заполнены
+
+  - unless order.all_documents_loaded?
+    .text-danger Не все документы загружены
+
+  - unless order.all_documents_accepted?
+    .text-warning Документы не все приняты

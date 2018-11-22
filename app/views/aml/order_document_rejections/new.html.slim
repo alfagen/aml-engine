@@ -1,0 +1,15 @@
+= link_to '&larr; назад в заявку'.html_safe, order_path(order_document.order)
+h1 Отклоняем документ ##{order_document.id}
+hr
+
+- if reasons.empty?
+  .alert.alert-warning
+    | В базе нет ни одной причины для отмены.
+    = link_to 'Добавить причину', new_reject_reason_path(reject_reason: { kind: 'order_document_reason' })
+
+- else
+  = simple_form_for order_document, url: order_document_rejections_path(order_document), method: :post do |f|
+    = f.input :aml_reject_reason_id, collection: reasons, include_blank: false
+    = f.input :reject_reason_details
+    hr
+    = f.button :submit, 'Пометить документ как отклоненный', class: 'btn btn-warning', data: { confirm: 'Отклонить?' }

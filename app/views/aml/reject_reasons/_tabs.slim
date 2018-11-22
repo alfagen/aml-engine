@@ -1,0 +1,3 @@
+ul.nav.nav-tabs
+  = active_link_to 'Причины отказов для заявок', reject_reasons_path(kind: 'order_reason'), wrap_tag: :li, active: current_kind == 'order_reason'
+  = active_link_to 'Причины отказов для документов', reject_reasons_path(kind: 'order_document_reason'), wrap_tag: :li, active: current_kind == 'order_document_reason'

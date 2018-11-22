@@ -1,0 +1,11 @@
+= render 'search', workflow_state: workflow_state
+= render 'menu', workflow_state: workflow_state
+
+- if orders.any?
+  .m-t-md= render partial: 'orders', locals: { orders: orders, q: q }
+
+  = link_to orders_path(q: params.fetch( :q, {} ).permit!, workflow_state: params[:workflow_state], format: :xlsx) do
+    = fa_icon :paperclip, text: 'Выгрузить (.xlsx)'
+
+- else
+  p.alert Заявки отсутствуют

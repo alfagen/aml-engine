@@ -1,0 +1,19 @@
+head
+  title= app_title
+  = csrf_meta_tags
+  = stylesheet_link_tag    'aml/application', media: 'all', 'data-turbolinks-track': 'reload'
+  = javascript_include_tag 'aml/application', 'data-turbolinks-track': 'reload'
+body
+  .m-b-lg= render 'navigation'
+  .container.m-t-md
+    .row
+      .col-md-8
+        = top_breadcrumbs
+      .col-md-4
+        - if content_for? :pre_header
+          = content_for :pre_header
+  .container.m-t-md
+    = yield
+
+  = render 'flashes'
+  .m-b-lg= render 'footer'

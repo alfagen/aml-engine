@@ -1,0 +1,28 @@
+- order_decorated = AML::OrderDecorator.decorate order
+= link_to '&larr; список заявок'.html_safe, orders_path
+hr
+
+.row
+  .col-md-4
+    h2.m-t-0 Заявка: #{order.id}
+    hr
+    = render 'order_brief', order: order
+    = render 'order_actions', order: order
+    - if order.rejected?
+      = order_decorated.reject_reason
+
+    = render 'order_card', order: order
+  .col-md-4
+    = render 'aml/clients/agreements', client: order.client
+  .col-md-4
+    = render 'order_checks', order: order
+
+- if order.order_documents.ordered.any?
+  hr
+  h4 Документы заявки:
+  = render partial: 'aml/order_documents/documents', locals: { documents: order.order_documents.ordered  }
+
+hr
+h2.m-t-lg Данные клиента (от оператора)
+hr
+= render 'aml/client_infos/form', client_info: client_info

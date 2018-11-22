@@ -1,0 +1,16 @@
+= simple_form_for order, method: :post do |f|
+  = f.input :client_id, as: :hidden
+  .row
+    .col-md-3= f.input :first_name
+    .col-md-3= f.input :surname
+    .col-md-3= f.input :patronymic
+  .row
+    .col-md-3= f.input :birth_date, as: :date_picker
+  .row
+    .col-md-3= f.input :card_brand
+    .col-md-3= f.input :card_bin
+    .col-md-3= f.input :card_suffix
+    .col-md-3= f.input :card_image, as: :file
+
+
+  = f.button :submit, 'Создать', class: 'btn btn-success'

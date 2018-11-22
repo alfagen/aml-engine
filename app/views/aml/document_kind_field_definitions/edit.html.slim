@@ -1,0 +1,9 @@
+= render 'back', document_kind: document_kind
+h1 Редактировать поле документа: #{document_kind.title}
+hr
+= render 'form', document_kind_field_definition: document_kind_field_definition
+hr
+- if document_kind_field_definition.alive?
+  = link_to 'Архивировать', archive_document_group_document_kind_document_kind_field_definition_path(document_kind.document_group, document_kind_field_definition.document_kind, document_kind_field_definition), method: :delete, class: 'btn btn-default'
+- else
+  = link_to 'Восстановить', restore_document_group_document_kind_document_kind_field_definition_path(document_kind.document_group, document_kind_field_definition.document_kind, document_kind_field_definition), method: :post, class: 'btn btn-default'

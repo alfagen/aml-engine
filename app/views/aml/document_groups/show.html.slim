@@ -1,0 +1,29 @@
+- dgd = AML::DocumentGroupDecorator.decorate document_group
+.pull-right= link_to 'Изменить', edit_document_group_path(document_group), class: 'btn btn-default'
+= render 'back'
+
+h1 Группа документов "#{dgd.title}"
+hr
+
+.row
+  .col-md-3
+    dl
+      dt Позиция
+      dd= dgd.position
+
+      dt Состояние
+      dd= dgd.alive?
+
+      dt Описание
+      dd= dgd.details
+
+    - if dgd.aml_statuses.any?
+      h4 Статусы в которые входит:
+      ul
+        - dgd.aml_statuses.each do |status|
+          li=< link_to status.title, status_path(status)
+    - else
+      h4 Не входит в статусы
+  .col-md-9
+    h2 Типы документов
+    = render 'aml/document_kinds/document_kinds', document_kinds: document_group.document_kinds.ordered, document_group: document_group

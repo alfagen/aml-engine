@@ -1,0 +1,22 @@
+- if current_user.can_create?(AML::Agreement)
+  .pull-right= link_to 'Добавить соглашение', new_agreement_path, class: 'btn btn-success'
+
+h2 Пользовательские соглашения
+hr
+- if agreements.any?
+  table.table.table-condensed.table-striped
+    thead
+      tr
+        th ID
+        th Название
+        th Подробности
+        th Действие
+    tbody
+      - agreements.each do |agreement|
+        tr
+          td= agreement.id
+          td= agreement.title
+          td= agreement.details.presence || '-'
+          td= link_to 'Изменить', edit_agreement_path(agreement), class: 'btn btn-default'
+- else
+  p.alert Пользовательские соглашения отсутствуют

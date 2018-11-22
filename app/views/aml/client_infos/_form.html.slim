@@ -1,0 +1,25 @@
+= simple_form_for client_info, wrapper_mappings: { boolean: :vertical_boolean } do |f|
+  = f.input :aml_client_id, as: :hidden
+  .row
+    .col-md-4
+      = f.input :first_name
+      = f.input :maiden_name
+      = f.input :last_name
+      = f.input :patronymic
+
+    .col-md-4
+      = f.input :birth_date, as: :date_picker
+      = f.input :birth_place
+      = f.input :gender
+      = f.input :utility_bill
+    .col-md-4
+      = f.input :passport_number
+      = f.input :second_document_number
+      = f.input :card_suffix, input_html: { max: 4 }
+      = f.input :citizenship
+
+  .row
+    .col-md-6
+      = f.input :address
+
+  = f.button :submit, 'Сохранить', class: 'btn btn-success'

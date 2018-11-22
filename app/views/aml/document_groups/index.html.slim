@@ -1,0 +1,23 @@
+.pull-right= link_to 'Новая группа документов', new_document_group_path(document_group: { title: nil }), class: 'btn btn-default' if current_user.can_create?(AML::DocumentGroup)
+h1 Группы документов
+hr
+br
+- if document_groups.any?
+  table.table.table-condensed
+    thead
+      tr
+        th Название
+        th Описание
+        th Типов документов
+        th.text-right Действия
+    tbody
+      - document_groups.each do |document_group|
+        tr
+          td
+            = link_to document_group.title, document_group_path(document_group)
+          td = document_group.details.presence || '-'
+          td = document_group.document_kinds.count
+          td.text-right
+            = link_to 'Подробнее', document_group_path(document_group), class: 'btn btn-default'
+- else
+  p.alert Группы документов отсутствуют.

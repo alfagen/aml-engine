@@ -1,0 +1,10 @@
+= simple_form_for client do |f|
+  .row
+    .col-md-6
+      = f.input :first_name
+      = f.input :surname
+      = f.input :patronymic
+    .col-md-6
+      = f.input :birth_date, as: :date_picker
+  hr
+  = f.button :submit, 'Создать', class: 'btn btn-success'

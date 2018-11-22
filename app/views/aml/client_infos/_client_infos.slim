@@ -1,0 +1,16 @@
+table.table.table-condensed.table-striped
+  thead
+    tr
+      - columns.each do |column|
+        th= column
+      th.text-right Действия
+  tbody
+    - client_infos.each do |client_info|
+      - cid = AML::ClientInfoDecorator.decorate(client_info)
+      tr
+        - columns.each do |column|
+          th= cid.send column
+        td style='min-width: 200px'
+          .btn-group
+            = link_to 'Подробнее', client_info_path(client_info), class: 'btn btn-default'
+            = link_to 'Изменить', edit_client_info_path(client_info), class: 'btn btn-default'

@@ -1,0 +1,17 @@
+= simple_form_for [document_group, document_kind] do |f|
+  = localized_render do |locale|
+    = f.input localized_attribute(:title, locale)
+    = f.input localized_attribute(:details, locale)
+    = f.input localized_attribute(:file_title, locale)
+
+  .row
+    .col-md-6
+      = f.input :position
+    .col-md-6
+      = f.input :goal
+
+
+  = f.input :file, as: :file
+
+  hr
+  = f.button :submit, 'Сохранить', class: 'btn btn-success'

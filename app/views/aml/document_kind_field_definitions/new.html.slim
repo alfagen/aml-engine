@@ -1,0 +1,5 @@
+= render 'back', document_kind: document_kind
+
+h3 Новое поле документа: #{document_kind.title}
+hr
+= render 'form', document_kind_field_definition: document_kind_field_definition

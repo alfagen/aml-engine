@@ -1,0 +1,15 @@
+- if order.card_holding_state.present?
+  hr
+  p Статус холдирования: #{content_tag :span, order.card_holding_state, class: 'label label-default'}
+  - if order.card_holding_state_updated_at.present?
+    p на #{humanized_time_in_current_time_zone order.card_holding_state_updated_at}
+
+  - if order.card_holding_state == 'success'
+    dl
+      dt Карта
+      dd= order_card order
+    - if order.card_image.present?
+      = link_to image_tag(order.card_image.url, size: '100'), order.card_image.url
+
+- else
+  .text-danger Холдированная карта отсутствует

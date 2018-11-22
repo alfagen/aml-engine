@@ -1,0 +1,4 @@
+= search_form_for @q, url: orders_path do |f|
+  = f.search_field :id_or_first_name_or_surname_or_patronymic_or_birth_date_cont
+  = hidden_field_tag :workflow_state, workflow_state
+  = f.submit 'Искать', class: 'btn btn-default'

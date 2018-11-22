@@ -1,0 +1,11 @@
+table.table.table-condensed
+  thead
+    tr
+      th Клиент:
+      th Заявка
+      th Тип документа:
+      th Документ:
+      th Cостояние:
+      th Действия:
+  tbody
+    = render partial: 'aml/order_documents/document', collection: documents

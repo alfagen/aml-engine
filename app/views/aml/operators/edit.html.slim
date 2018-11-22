@@ -1,0 +1,14 @@
+= link_to '&larr; назад в список операторов'.html_safe, operators_path
+
+h3 Редактировать оператора
+hr
+= simple_form_for operator do |f|
+  .row
+    .col-md-6
+      = f.input :name, as: :string
+  .row
+    .col-md-6
+      = f.input :email, as: :string
+    .col-md-6
+      = f.input :role, as: :select, collection: [['оператор', 'operator'], ['администратор', 'administrator']], include_blank: false if operator.role_updatable_by?(current_user)
+  = f.button :submit, 'Изменить', class: 'btn btn-success'

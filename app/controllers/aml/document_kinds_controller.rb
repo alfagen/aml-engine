@@ -3,8 +3,6 @@ require_relative 'application_controller'
 
 module AML
   class DocumentKindsController < ApplicationController
-    include Pagination
-
     authorize_actions_for AML::DocumentKind
 
     helper_method :document_group

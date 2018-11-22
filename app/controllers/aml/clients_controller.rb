@@ -3,8 +3,6 @@ require_relative 'application_controller'
 
 module AML
   class ClientsController < ApplicationController
-    include Pagination
-
     authorize_actions_for AML::Client
 
     def index

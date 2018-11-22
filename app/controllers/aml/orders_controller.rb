@@ -2,8 +2,6 @@ require_relative 'application_controller'
 
 module AML
   class OrdersController < ApplicationController # rubocop:disable Metrics/ClassLength
-    include Pagination
-
     authorize_actions_for AML::Order
 
     helper_method :workflow_state

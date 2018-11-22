@@ -3,8 +3,6 @@ require_relative 'application_controller'
 
 module AML
   class ClientInfosController < ApplicationController
-    include Pagination
-
     COLUMNS = %i[
       first_name maiden_name last_name
       patronymic birth_date birth_place gender

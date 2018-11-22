@@ -3,8 +3,6 @@ require_relative 'application_controller'
 
 module AML
   class OrderDocumentsController < ApplicationController
-    include Pagination
-
     authorize_actions_for AML::OrderDocument
 
     def index

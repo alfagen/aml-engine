@@ -51,7 +51,7 @@ module AML
     end
 
     def app_title
-      "AML #{AppVersion}"
+      "AML #{AML::VERSION}"
     end
 
     def humanized_time_in_current_time_zone(time)

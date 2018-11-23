@@ -3,6 +3,7 @@ require_relative 'application_controller'
 
 module AML
   class ClientsController < ApplicationController
+    helper OrdersHelper
     authorize_actions_for AML::Client
 
     def index

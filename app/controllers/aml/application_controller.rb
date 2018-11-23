@@ -8,7 +8,7 @@ module AML
 
     prepend_before_action :require_login
 
-    helper_method :document_kinds
+    helper_method :document_kinds, :current_time_zone
 
     ensure_authorization_performed except: %i[error reset_db drop_clients drop_orders]
 
@@ -65,6 +65,10 @@ module AML
     def rescue_invalid_authenticity_token
       flash.alert = 'Просрочен токен аутентификации, авторизуйтесь снова'
       render 'not_authenticated', layout: 'simple'
+    end
+
+    def current_time_zone
+      current_user.time_zone || Time.zone
     end
   end
 end

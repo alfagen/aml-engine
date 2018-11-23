@@ -8,8 +8,6 @@ module AML
 
     ATTRIBUTES_TO_CLONE = %w(first_name surname patronymic birth_date).freeze
 
-    mount_uploader :card_image, CardImageFileUploader
-
     scope :open, -> { where workflow_state: %w(pending processing) }
 
     belongs_to :client, class_name: 'AML::Client', foreign_key: :client_id, inverse_of: :orders, dependent: :destroy

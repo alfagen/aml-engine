@@ -1,5 +1,7 @@
 module AML
   class ApplicationController < ::ApplicationController
+    helper NotyFlash::ApplicationHelper
+
     include Pagination
     rescue_from ActionController::InvalidAuthenticityToken, with: :rescue_invalid_authenticity_token
     rescue_from Workflow::Error, with: :humanized_error

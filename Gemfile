@@ -20,9 +20,14 @@ gem 'globalize', github: 'globalize/globalize', ref: 'HEAD'
 gem 'globalize-accessors'
 
 gem 'sendgrid-actionmailer', github: 'dreimannzelt/sendgrid-actionmailer', branch: :dynamic_template_data
+gem 'noty_flash', github: 'BrandyMint/noty_flash'
 
 gem 'money'
 gem 'money-rails'
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-noty'
+end
 
 group :development, :test do
   gem 'database_rewinder'

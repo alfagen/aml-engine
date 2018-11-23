@@ -21,7 +21,7 @@
 //= require nprogress
 //= require nprogress-turbolinks
 //= require nprogress-ajax
-//= require flash
+//= require noty_flash
 //= require_tree .
 
 document.addEventListener("turbolinks:load", function() {

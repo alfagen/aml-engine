@@ -4,5 +4,5 @@ class AML::DocumentGroupSerializer
 
   has_many :document_kinds, record_type: :aml_document_kind
 
-  attributes :title, :position, :details
+  attributes :title, :position, :details, :card_required
 end

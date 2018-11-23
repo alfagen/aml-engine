@@ -9,6 +9,7 @@ br
         th Название
         th Описание
         th Типов документов
+        th Холдирование карты?
         th.text-right Действия
     tbody
       - document_groups.each do |document_group|
@@ -17,6 +18,7 @@ br
             = link_to document_group.title, document_group_path(document_group)
           td = document_group.details.presence || '-'
           td = document_group.document_kinds.count
+          td = document_group.card_required
           td.text-right
             = link_to 'Подробнее', document_group_path(document_group), class: 'btn btn-default'
 - else

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_21_081848) do
+ActiveRecord::Schema.define(version: 2018_11_23_133517) do
 
   create_table "aml_agreement_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "aml_agreement_id", null: false
@@ -130,6 +130,7 @@ ActiveRecord::Schema.define(version: 2018_11_21_081848) do
     t.timestamp "archived_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "card_required", default: false, null: false
   end
 
   create_table "aml_document_kind_field_definition_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -256,7 +257,6 @@ ActiveRecord::Schema.define(version: 2018_11_21_081848) do
     t.string "card_brand"
     t.string "card_bin"
     t.string "card_suffix"
-    t.string "card_image"
     t.bigint "cloned_order_id"
     t.string "card_holding_state", default: "none", null: false
     t.timestamp "card_holding_state_updated_at"
@@ -310,7 +310,6 @@ ActiveRecord::Schema.define(version: 2018_11_21_081848) do
     t.bigint "on_pending_notification_id"
     t.bigint "on_accept_notification_id"
     t.bigint "on_reject_notification_id"
-    t.boolean "card_required", default: false, null: false
     t.index ["key"], name: "index_aml_statuses_on_key", unique: true
     t.index ["on_accept_notification_id"], name: "index_aml_statuses_on_on_accept_notification_id"
     t.index ["on_pending_notification_id"], name: "index_aml_statuses_on_on_pending_notification_id"

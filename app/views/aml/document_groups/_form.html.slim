@@ -1,4 +1,4 @@
-= simple_form_for document_group do |f|
+= simple_form_for document_group, wrapper_mappings: { boolean: :vertical_boolean } do |f|
   = localized_render do |locale|
     = f.input localized_attribute(:title, locale), include_blank: false
     = f.input localized_attribute(:details, locale)

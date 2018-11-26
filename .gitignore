@@ -54,3 +54,4 @@ node_modules/
 spec/dummy/log/development.log
 spec/dummy/log/spec.log
 spec/dummy/public/*
+spec/dummy/tmp/*

@@ -18,7 +18,6 @@ module AML
     
     I18n.available_locales = %i[ru en cs]
     I18n.default_locale = :ru
-    I18n.load_path += Dir[AML::Engine.root.join('config', 'locales', '*.yml')]
-    I18n.load_path += Dir[AML::Engine.root.join('config', 'locales', 'shared', 'aml', '*.yml')]   
+    I18n.load_path += Dir[AML::Engine.root.join('config', 'locales', 'aml', '*.yml')]   
   end
 end

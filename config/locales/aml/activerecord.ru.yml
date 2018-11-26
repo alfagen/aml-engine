@@ -1,0 +1,89 @@
+ru:
+  activerecord:
+    models:
+      order: Заявка
+      client: Клиент
+      document_field: Поле документа
+      document_group: Группа документов
+      document_kind: Тип документа
+      document_kind_field_definition: Определение поля документа
+      order_document: Документ
+      user: Менеджер
+      operator: Менеджер
+      status: Статус
+      reject_reason: Причина отклонения
+    attributes:
+      aml/notification:
+        title: Наименование
+      aml/client_info:
+        address: Permanent or other residential address
+        card_suffix: Last 4 digits of a bank card
+        passport_number: Passport number or ID
+      aml/check_list:
+        title: Наименование
+        url: Ссылка
+        position: Позиция
+      aml/client:
+        first_name: Имя
+        surname: Фамилия
+        patronymic: Отчество
+        birth_date: Дата рождения
+        workflow_state: Состояние клиента
+      aml/document_field:
+        value: Значение поля
+      aml/document_group:
+        card_required: Требуется холдирование карты
+        title_ru: Название группы документов
+        details_ru: Описание группы документов
+        position: Позиция группы документов
+      aml/document_kind:
+        position: Позиция типа документа
+        file: Файл (PDF)
+        goal: Цель в метрике
+        title_ru: Название типа документа
+        details_ru: Описание типа документа
+        file_title_ru: Название файла
+      aml/document_kind_field_definition:
+        key: Ключ поля
+        position: Позиция поля
+        title_ru: Название поля документа
+      aml/order:
+        card_brand: Брэнд карты (visa/mastercard)
+        card_bin: Первые 4 цифры карты (BIN)
+        card_suffix: Последние 4 цифры карты
+        card_image: Изображение карты
+        first_name: Имя
+        surname: Фамилия
+        patronymic: Отчество
+        birth_date: Дата рождения
+        workflow_state: Состояние заявки
+        reject_reason_details: Подробности отклонения заявки
+      aml/operator:
+        password: Пароль
+        password_confirmation: Подтверждение пароля
+        email: Почта
+        workflow_state: Состояние оператора
+        role: Роль
+        name: Имя
+        locale: Локаль
+        time_zone_name: Часовой пояс
+      aml/reject_reason:
+        kind: Вид отклонения
+        title_ru: Причина отклонения
+      aml/status:
+        key: Ключ статуса
+        position: Позиция статуса
+        max_amount_limit: Максимальная сумма заявки
+        operations_count_limit: Кол-во допустимых заявок
+        referal_output_enabled: Реферальная программа с возможностью вывода средств (Без ограничений)
+        title_ru: Название статуса
+        details_ru: Описание статуса
+        on_pending_notification: Пользователь отправил заявку на обработку
+        on_reject_notification: Заявка отклонена
+        on_accept_notification: Заявка принята
+      aml/order_document:
+        reject_reason_details: Подробности отклонения документа
+
+  errors:
+    messages:
+      extension_whitelist_error: Неверный формат файла (должен быть pdf)

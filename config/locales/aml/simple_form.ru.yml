@@ -1,0 +1,19 @@
+ru:
+  simple_form:
+    labels:
+      aml_document_group_to_status:
+        aml_document_group_id: Список групп документов
+      order_document:
+        aml_reject_reason_id: Причина отклонения документа
+      order:
+        aml_reject_reason_id: Причина отклонения заявки
+      change_password_form:
+        password: Пароль
+        password_confirmation: Подтверждение пароля
+        current_password: Текущий пароль
+      user_session:
+        login: Почта
+        password: Пароль
+      user:
+        password: Пароль
+        password_confirmation: Подтверждение пароля

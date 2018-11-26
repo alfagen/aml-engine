@@ -19,4 +19,3 @@
 | new_password_reset_path (get), edit_password_reset_path (get), password_reset_path (put) | первое изменение пароля при регистрации|
 | edit_password_path (get), password_path (put)                                            | изменение пароля                       |
 | edit_user_path (get), user_path (put)                                                    | редактирование профиля пользователя    |
-| locale_path (put)                                                                        | изменение локали пользователя          |

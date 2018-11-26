@@ -6,10 +6,10 @@ nav.navbar.navbar-default.navbar-fixed-top
         span.icon-bar
         span.icon-bar
         span.icon-bar
-    = link_to app_title, aml.orders_path, class: 'navbar-brand'
+    = link_to app_title, orders_path, class: 'navbar-brand'
     .collapse.navbar-collapse
       ul.nav.navbar-nav
-        = active_link_to aml.orders_path, wrap_tag: :li do
+        = active_link_to orders_path, wrap_tag: :li do
           = title_with_counter 'Заявки клиентов', AML::Order.with_pending_state.count
 
         li.dropdown
@@ -18,23 +18,23 @@ nav.navbar.navbar-default.navbar-fixed-top
             = fa_icon 'lock-open'
             span.m-l-sm.caret
           ul.dropdown-menu
-            = active_link_to 'Клиенты', aml.clients_path, wrap_tag: :li if AML::Client.readable_by? current_user
-            = active_link_to 'Клиентская информация', aml.client_infos_path, wrap_tag: :li if AML::ClientInfo.readable_by? current_user
-            = active_link_to 'Документы клиентов', aml.order_documents_path, wrap_tag: :li if AML::OrderDocument.readable_by? current_user
+            = active_link_to 'Клиенты', clients_path, wrap_tag: :li if AML::Client.readable_by? current_user
+            = active_link_to 'Клиентская информация', client_infos_path, wrap_tag: :li if AML::ClientInfo.readable_by? current_user
+            = active_link_to 'Документы клиентов', order_documents_path, wrap_tag: :li if AML::OrderDocument.readable_by? current_user
             li.divider
-            = active_link_to 'Статусы', aml.statuses_path, wrap_tag: :li if AML::Status.readable_by? current_user
-            = active_link_to 'Чек-листы', aml.check_lists_path, wrap_tag: :li if AML::CheckList.readable_by? current_user
-            = active_link_to 'Группы документов', aml.document_groups_path, wrap_tag: :li if AML::DocumentGroup.readable_by? current_user
-            = active_link_to 'Причины отказов', aml.reject_reasons_path, wrap_tag: :li if AML::RejectReason.readable_by? current_user
-            = active_link_to 'Пользовательские соглашения', aml.agreements_path, wrap_tag: :li if AML::Agreement.readable_by? current_user
-            = active_link_to 'Настройка уведомлений', aml.notifications_path, wrap_tag: :li if AML::Notification.readable_by? current_user
+            = active_link_to 'Статусы', statuses_path, wrap_tag: :li if AML::Status.readable_by? current_user
+            = active_link_to 'Чек-листы', check_lists_path, wrap_tag: :li if AML::CheckList.readable_by? current_user
+            = active_link_to 'Группы документов', document_groups_path, wrap_tag: :li if AML::DocumentGroup.readable_by? current_user
+            = active_link_to 'Причины отказов', reject_reasons_path, wrap_tag: :li if AML::RejectReason.readable_by? current_user
+            = active_link_to 'Пользовательские соглашения', agreements_path, wrap_tag: :li if AML::Agreement.readable_by? current_user
+            = active_link_to 'Настройка уведомлений', notifications_path, wrap_tag: :li if AML::Notification.readable_by? current_user
             li.divider
-            = active_link_to 'Операторы', aml.operators_path, wrap_tag: :li if AML::Operator.readable_by? current_user
+            = active_link_to 'Операторы', operators_path, wrap_tag: :li if AML::Operator.readable_by? current_user
             - if current_user.administrator? || !Rails.env.production?
               li.divider
-              = active_link_to 'Полный сброс данных', aml.reset_db_path, wrap_tag: :li, method: :delete, data: { confirm: 'Сбросить полностью данные (документы, анкеты, кроме операторов) без восстановления?' }
-              = active_link_to 'Сброс клиентов', aml.drop_clients_path, wrap_tag: :li, method: :delete, data: { confirm: 'Сбросить клиентов?' }
-              = active_link_to 'Сброс заявок', aml.drop_orders_path, wrap_tag: :li, method: :delete, data: { confirm: 'Сбросить заявки?' }
+              = active_link_to 'Полный сброс данных', reset_db_path, wrap_tag: :li, method: :delete, data: { confirm: 'Сбросить полностью данные (документы, анкеты, кроме операторов) без восстановления?' }
+              = active_link_to 'Сброс клиентов', drop_clients_path, wrap_tag: :li, method: :delete, data: { confirm: 'Сбросить клиентов?' }
+              = active_link_to 'Сброс заявок', drop_orders_path, wrap_tag: :li, method: :delete, data: { confirm: 'Сбросить заявки?' }
       - if logged_in?
         ul.nav.navbar-nav.navbar-right
           li.dropdown

@@ -1,6 +1,7 @@
 module AML
   class ApplicationController < ::ApplicationController
     helper NotyFlash::ApplicationHelper
+    helper LocalizedRender::Engine.helpers
 
     include Pagination
     rescue_from ActionController::InvalidAuthenticityToken, with: :rescue_invalid_authenticity_token

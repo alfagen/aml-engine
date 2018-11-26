@@ -12,6 +12,6 @@ module AML
       allow_nil: true
     )
 
-    delegate :risk_category, :all_agreements_accepted?, to: :client
+    delegate :risk_category, :all_agreements_accepted?, :email, to: :client
   end
 end

@@ -11,6 +11,7 @@ module AML
       last_name maiden_name first_name patronymic birth_date birth_place gender
       citizenship address passport_number second_document_number
       card_suffix utility_bill
+      email
       aml_status risk_category
       pending_at accepted_at
       all_agreements_accepted?

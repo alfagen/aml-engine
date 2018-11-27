@@ -30,7 +30,7 @@ GIT
 
 GIT
   remote: https://github.com/ValentinAndreev/simple_form_bootstrap_inputs.git
-  revision: 369012fa33742ea69f21978d5270bd10ed60b3a6
+  revision: 70e1d66ab5cce32ba5653fe27934b4a10b1a1f10
   specs:
     simple_form_bootstrap_inputs (0.1.0)
       bootstrap-sass (~> 3.2)

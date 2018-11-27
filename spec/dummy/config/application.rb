@@ -33,6 +33,7 @@ require 'coffee-rails'
 require 'font-awesome-rails'
 require 'localized_render'
 require 'database_rewinder'
+require 'simple_form_bootstrap_inputs'
 
 module Dummy
   class Application < Rails::Application

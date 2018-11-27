@@ -58,7 +58,7 @@ module AML
       return 'время не известно' unless time
 
       content_tag :span, class: 'text-nowrap' do
-        l time.in_time_zone(current_time_zone.name), format: :human
+        time.in_time_zone(current_time_zone.name)
       end
     end
   end

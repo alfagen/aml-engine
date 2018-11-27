@@ -55,7 +55,6 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency 'simple_form'
     s.add_runtime_dependency 'sass-rails'
     s.add_runtime_dependency 'localized_render'
-    s.add_runtime_dependency 'simple_form_bootstrap_inputs'
 
     s.add_development_dependency "mysql2"
     s.add_development_dependency 'rubocop'

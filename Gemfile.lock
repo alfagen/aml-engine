@@ -29,6 +29,17 @@ GIT
       activesupport (>= 4.2)
 
 GIT
+  remote: https://github.com/ValentinAndreev/simple_form_bootstrap_inputs.git
+  revision: 962eb40edbdb479b4165d7c2e6cd36164067e9a7
+  specs:
+    simple_form_bootstrap_inputs (0.1.0)
+      bootstrap-sass (~> 3.2)
+      bootstrap3-datetimepicker-rails (~> 4.17.47)
+      jquery-rails
+      jquery-ui-rails
+      rails-i18n
+
+GIT
   remote: https://github.com/dreimannzelt/sendgrid-actionmailer.git
   revision: 07ae0a19cecee1b79e1ab2f2abe3056eb1c5738b
   branch: dynamic_template_data
@@ -98,6 +109,7 @@ PATH
       sass-rails
       sendgrid-actionmailer
       simple_form
+      simple_form_bootstrap_inputs
       slim
       slim-rails
       sorcery
@@ -359,6 +371,9 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.0.4)
       loofah (~> 2.2, >= 2.2.2)
+    rails-i18n (5.1.2)
+      i18n (>= 0.7, < 2)
+      railties (>= 5.0, < 6)
     railties (5.2.1)
       actionpack (= 5.2.1)
       activesupport (= 5.2.1)
@@ -499,6 +514,7 @@ DEPENDENCIES
   rubocop-rspec
   sendgrid-actionmailer!
   simple_form!
+  simple_form_bootstrap_inputs!
   test-prof (~> 0.7.2)
   workflow!
 

@@ -476,55 +476,30 @@ DEPENDENCIES
   active_link_to!
   activesupport
   aml!
-  authority
   axlsx!
-  axlsx_rails
-  bootstrap-kaminari-views
-  bootstrap-sass (~> 3.2)
-  bootstrap3-datetimepicker-rails (~> 4.17.47)
-  breadcrumbs_on_rails
   byebug
-  carrierwave
-  coffee-rails (~> 4.2)
   dapi-archivable
   database_rewinder
-  draper (~> 3.0.1)
-  enumerize
   factory_bot
   fast_jsonapi!
-  font-awesome-rails
   globalize!
-  globalize-accessors
   guard-bundler
   guard-ctags-bundler
   guard-rspec
   guard-rubocop
-  jquery-rails
-  jquery-ui-rails
-  kaminari
-  localized_render
-  momentjs-rails (>= 2.9.0)
-  money
-  money-rails
   mysql2
   noty_flash!
-  nprogress-rails
   pry
   pry-byebug
   pry-doc
   pry-rails
   rails-assets-noty!
-  ransack
   rspec-rails (~> 3.7)
   rubocop
   rubocop-rspec
-  sass-rails
   sendgrid-actionmailer!
   simple_form!
-  slim-rails
   test-prof (~> 0.7.2)
-  turbolinks
-  valid_email
   workflow!
 
 BUNDLED WITH

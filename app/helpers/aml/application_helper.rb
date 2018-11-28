@@ -57,9 +57,7 @@ module AML
     def humanized_time_in_current_time_zone(time)
       return 'время не известно' unless time
 
-      content_tag :span, class: 'text-nowrap' do
-        time.in_time_zone(current_time_zone.name)
-      end
+      content_tag(:span, time.in_time_zone(current_time_zone.name), class: 'text-nowrap')
     end
   end
 end

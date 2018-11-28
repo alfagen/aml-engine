@@ -83,6 +83,7 @@ PATH
       authority
       axlsx
       axlsx_rails
+      best_in_place
       bootstrap-kaminari-views
       bootstrap-sass (~> 3.2)
       bootstrap3-datetimepicker-rails (~> 4.17.47)
@@ -179,6 +180,9 @@ GEM
       actionpack (>= 3.1)
       axlsx (>= 2.0.1)
     bcrypt (3.1.12)
+    best_in_place (3.1.1)
+      actionpack (>= 3.2)
+      railties (>= 3.2)
     bootstrap-kaminari-views (0.0.5)
       kaminari (>= 0.13)
       rails (>= 3.1)
@@ -221,7 +225,7 @@ GEM
     execjs (2.7.0)
     factory_bot (4.11.1)
       activesupport (>= 3.0.0)
-    faraday (0.15.3)
+    faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.25)
     font-awesome-rails (4.7.0.4)

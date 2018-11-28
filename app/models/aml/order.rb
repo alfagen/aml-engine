@@ -100,6 +100,8 @@ module AML
     end
 
     def notify(notification_key)
+      AML::NotificationMailer.logger.warn "Try to notify order[#{id}] with #{notification_key}"
+
       notification = aml_status.send notification_key
       unless notification
         AML::NotificationMailer.logger.warn "No #{notification_key} notification for status #{aml_status}"

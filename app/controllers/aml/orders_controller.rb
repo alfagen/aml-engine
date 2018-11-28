@@ -117,7 +117,7 @@ module AML
         .fetch(:order, {})
         .permit(
           :first_name, :surname, :patronymic, :birth_date,
-          :client_id, :workflow_state,
+          :client_id, :workflow_state, :aml_status_id,
           :aml_reject_reason_id, :reject_reason_details,
           :card_bin, :card_suffix, :card_brand
         )

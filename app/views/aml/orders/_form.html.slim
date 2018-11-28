@@ -11,6 +11,6 @@
     .col-md-3= f.input :card_bin
     .col-md-3= f.input :card_suffix
   .row
-    .col-md-3= f.input :aml_status_id, collection: AML::Status.all.map{ |z| [z.key, z.id] }
+    .col-md-3= f.input :aml_status_id, collection: AML::Status.all.map{ |z| [z.key, z.id] }, include_blank: false
 
   = f.button :submit, 'Создать', class: 'btn btn-success'

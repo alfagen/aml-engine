@@ -34,6 +34,7 @@ require 'font-awesome-rails'
 require 'localized_render'
 require 'database_rewinder'
 require 'simple_form_bootstrap_inputs'
+require 'best_in_place'
 
 module Dummy
   class Application < Rails::Application

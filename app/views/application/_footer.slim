@@ -7,3 +7,5 @@ footer
         = active_link_to locale.to_s.upcase, main_app.locale_path(locale: locale), method: :put, wrap_tag: :li, active: I18n.locale == locale
       li Часовой пояс:
         #{current_time_zone.to_s}
+      li Приложение: #{AppVersion.to_s}
+      li Движок: #{AML::VERSION}

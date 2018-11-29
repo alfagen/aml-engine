@@ -1,5 +1,9 @@
 module AML
   module ApplicationHelper
+    def app_title
+      "AML #{AppVersion}-#{AML::VERSION}"
+    end
+
     def boolean_humanized(flag)
       flag ? content_tag(:span, 'ДА') : content_tag(:span, 'нет', class: 'text-muted')
     end
@@ -48,10 +52,6 @@ module AML
 
     def active_style_order(workflow_state)
       workflow_state == :pending ? :inclusive : :exact
-    end
-
-    def app_title
-      "AML #{AML::VERSION}"
     end
 
     def humanized_time_in_current_time_zone(time)

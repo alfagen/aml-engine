@@ -69,7 +69,7 @@ module AML
     end
 
     def current_time_zone
-      current_user.time_zone || Time.zone
+      current_user.try(:time_zone) || Time.zone
     end
   end
 end

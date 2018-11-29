@@ -38,3 +38,16 @@ namespace :doc do
     Workflow::Draw::workflow_diagram(ENV['MODEL'].constantize)
   end
 end
+
+task :inc_version do
+  old_version = AML.version
+  version = old_version.split('.')
+  version[-1] = (version[-1].to_i + 1).to_s
+  new_version = version.join('.')
+  begin
+    File.write(AML.version_path, new_version)
+    puts "Updated from #{old_version} to #{new_version}"
+  rescue
+    raise "Can't increment engine's version."
+  end
+end

@@ -6,7 +6,7 @@ require "aml/version"
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
     s.name        = "aml"
-    s.version     = AML::VERSION
+    s.version     = AML.version
     s.authors     = ["Valentin Andreev", "Danil Pismenny"]
     s.email       = ["danil@brandymint.ru"]
     s.homepage    = "http://page.com"

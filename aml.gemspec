@@ -72,6 +72,7 @@ Gem::Specification.new do |s|
     # Добавляет show-routes и show-models
     # и делает рельсовую конслоль через pry
     s.add_development_dependency 'pry-rails'
+    s.add_development_dependency 'semver2'
 
     # show-method
     # hist --grep foo

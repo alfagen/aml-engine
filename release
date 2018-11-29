@@ -1,0 +1,4 @@
+rake inc_version
+git add .engine_version
+git commit -F .engine_version
+git push origin HEAD

@@ -1,12 +1,12 @@
 $:.push File.expand_path("lib", __dir__)
 
 # Maintain your gem's version:
-require "aml/version"
+require "semver"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
     s.name        = "aml"
-    s.version     = AML::VERSION
+    s.version     = SemVer.find.to_s[1..-1]
     s.authors     = ["Valentin Andreev", "Danil Pismenny"]
     s.email       = ["danil@brandymint.ru"]
     s.homepage    = "http://page.com"
@@ -67,6 +67,7 @@ Gem::Specification.new do |s|
     s.add_development_dependency 'guard-rubocop'
     s.add_development_dependency 'pry'
     s.add_development_dependency 'pry-doc'
+    # s.add_development_dependency 'semver2'
     # Call 'byebug' anywhere in the code to stop execution and get a debugger console
     s.add_development_dependency 'byebug'
     # Добавляет show-routes и show-models

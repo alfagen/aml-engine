@@ -1,4 +1,4 @@
-echo 'Increment version'
+echo 'Increment version and dump'
 
 semver inc patch
 
@@ -12,6 +12,7 @@ git add Gemfile.lock
 
 echo "Bump ${GEM_VERSION}"
 
+git add lib/aml/version.rb
 git add .semver
 git commit -m `semver`
 git tag -a `semver` -m `semver`

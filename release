@@ -1,10 +1,17 @@
+echo 'Increment version'
+
 semver inc patch
 
+GEM_VERSION=`ruby -rsemver -e 'puts SemVer.find.format("%M.%m.%p%s")'`
+
+echo "# Managed by ./release\nmodule AML\n  VERSION='${GEM_VERSION}'\nend" > lib/aml/version.rb
 # Save new version in aml.gemspec
 bundle
 git add Gemfile.lock
 
-# semver meta `git rev-parse HEAD`
+
+echo "Bump ${GEM_VERSION}"
+
 git add .semver
 git commit -m `semver`
 git tag -a `semver` -m `semver`

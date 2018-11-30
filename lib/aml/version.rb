@@ -1,10 +1,4 @@
-# You must install semver before bundle
-#
-require 'semver'
-
+# Managed by ./release
 module AML
-  def self.version
-    SemVer.find
-  end
-  VERSION = version
+  VERSION='0.4.9'
 end

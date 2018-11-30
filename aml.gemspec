@@ -6,7 +6,7 @@ require "aml/version"
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
     s.name        = "aml"
-    s.version     = AML::VERSION
+    s.version     = AML::VERSION.format("%M.%m.%p%s")
     s.authors     = ["Valentin Andreev", "Danil Pismenny"]
     s.email       = ["danil@brandymint.ru"]
     s.homepage    = "http://page.com"
@@ -80,6 +80,7 @@ Gem::Specification.new do |s|
     s.add_development_dependency 'test-prof', '~> 0.7.2'
 
     s.add_development_dependency 'activesupport'
+    s.add_development_dependency 'semver'
     s.add_development_dependency 'factory_bot'
     s.add_development_dependency 'rspec-rails', '~> 3.7'
     s.add_development_dependency 'database_rewinder'

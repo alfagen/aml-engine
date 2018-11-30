@@ -2,6 +2,7 @@ semver inc patch
 
 # Save new version in aml.gemspec
 bundle
+git add Gemfile.lock
 
 # semver meta `git rev-parse HEAD`
 git add .semver

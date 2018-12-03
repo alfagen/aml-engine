@@ -4,10 +4,10 @@ RSpec.describe AML::DocumentGroupToStatusesController, type: :controller do
   routes { AML::Engine.routes }
   let(:aml_status) { create(:aml_status) }
   let(:aml_document_group) { create(:aml_document_group) }
-  let(:administrator) { create(:aml_operator, role: 'administrator') }
+  let(:user) { create :user, :administrator }
 
   describe 'actions' do
-    before { login_user(administrator) }
+    before { login_user(user) }
 
     context '#create' do
       it 'should create' do

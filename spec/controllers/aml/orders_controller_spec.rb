@@ -10,7 +10,7 @@ RSpec.describe AML::OrdersController, type: :controller do
   before { login_user user }
 
   describe 'оператор' do
-    let(:user) { create :aml_operator }
+    let(:user) { create :user }
 
     it '#show' do
       get :show, params: { id: aml_order.id }
@@ -24,7 +24,7 @@ RSpec.describe AML::OrdersController, type: :controller do
   end
 
   describe 'administartor' do
-    let(:user) { create(:aml_operator, role: 'administrator') }
+    let(:user) { create :user, :administrator }
 
     it '#create' do
       post :create, params: { order: attributes_for(:aml_order).merge(client_id: aml_order.client_id) }

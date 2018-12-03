@@ -9,7 +9,7 @@ module AML
 
     prepend_before_action :require_login
 
-    before_action :logout_blocked
+    before_action :check_blocked
 
     helper_method :document_kinds, :current_time_zone
 
@@ -51,8 +51,8 @@ module AML
 
     private
 
-    def logout_blocked
-      logout if current_user.blocked?
+    def check_blocked
+      raise Authority::SecurityViolation.exception(current_user, nil, nil) if current_user.blocked?
     end
 
     def document_kinds

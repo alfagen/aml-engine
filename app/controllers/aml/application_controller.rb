@@ -9,6 +9,8 @@ module AML
 
     prepend_before_action :require_login
 
+    before_action :check_blocked
+
     helper_method :document_kinds, :current_time_zone
 
     ensure_authorization_performed except: %i[error reset_db drop_clients drop_orders]
@@ -48,6 +50,10 @@ module AML
     end
 
     private
+
+    def check_blocked
+      raise Authority::SecurityViolation.exception(current_user, nil, nil) if current_user.blocked?
+    end
 
     def document_kinds
       @document_kinds ||= AML::DocumentKind.alive.ordered

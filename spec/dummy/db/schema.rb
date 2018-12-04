@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_23_133517) do
+ActiveRecord::Schema.define(version: 2018_12_04_105041) do
 
   create_table "aml_agreement_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "aml_agreement_id", null: false
@@ -208,8 +208,10 @@ ActiveRecord::Schema.define(version: 2018_11_23_133517) do
     t.string "name", null: false
     t.string "locale", default: "ru", null: false
     t.string "time_zone_name"
+    t.bigint "user_id"
     t.index ["email"], name: "index_aml_operators_on_email", unique: true
     t.index ["reset_password_token"], name: "index_aml_operators_on_reset_password_token"
+    t.index ["user_id"], name: "index_aml_operators_on_user_id"
   end
 
   create_table "aml_order_checks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -316,6 +318,22 @@ ActiveRecord::Schema.define(version: 2018_11_23_133517) do
     t.index ["on_reject_notification_id"], name: "index_aml_statuses_on_on_reject_notification_id"
   end
 
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "email", null: false
+    t.string "crypted_password"
+    t.string "salt"
+    t.string "reset_password_token"
+    t.datetime "reset_password_token_expires_at"
+    t.datetime "reset_password_email_sent_at"
+    t.integer "access_count_to_reset_password_page"
+    t.string "time_zone_name"
+    t.string "locale"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+  end
+
   add_foreign_key "aml_client_agreements", "aml_agreements"
   add_foreign_key "aml_client_agreements", "aml_clients"
   add_foreign_key "aml_client_infos", "aml_clients"
@@ -327,6 +345,7 @@ ActiveRecord::Schema.define(version: 2018_11_23_133517) do
   add_foreign_key "aml_document_group_to_statuses", "aml_document_groups"
   add_foreign_key "aml_document_group_to_statuses", "aml_statuses"
   add_foreign_key "aml_document_kind_field_definitions", "aml_document_kinds", column: "document_kind_id"
+  add_foreign_key "aml_operators", "users"
   add_foreign_key "aml_order_checks", "aml_check_lists"
   add_foreign_key "aml_order_checks", "aml_orders"
   add_foreign_key "aml_order_documents", "aml_document_kinds", column: "document_kind_id"

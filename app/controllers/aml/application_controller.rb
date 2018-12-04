@@ -52,7 +52,10 @@ module AML
     private
 
     def check_blocked
-      raise Authority::SecurityViolation.exception(current_user, nil, nil) if current_user.blocked?
+      if current_user.blocked?
+        flash.now.alert = 'Вы заблокированы'
+        raise Authority::SecurityViolation.exception(current_user, nil, nil)
+      end
     end
 
     def document_kinds

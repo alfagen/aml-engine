@@ -7,7 +7,7 @@ module AML
     # @param [Object] user - whatever represents the current user in your app
     # @return [Boolean]
     def self.default(_adjective, user)
-      user.aml_operator.administrator?
+      user.try(:aml_operator)&.administrator?
     end
   end
 end

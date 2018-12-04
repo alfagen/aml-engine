@@ -39,12 +39,12 @@ module AML
 
     def block
       operator.block!
-      redirect_to operators_path, notice: "Оператор, #{operator.email} был заблокирован"
+      redirect_to operators_path, notice: "Оператор, #{operator&.user.email} был заблокирован"
     end
 
     def unblock
       operator.unblock!
-      redirect_to operators_path, notice: "Оператор, #{operator.email} был разблокирован"
+      redirect_to operators_path, notice: "Оператор, #{operator&.user.email} был разблокирован"
     end
 
     private

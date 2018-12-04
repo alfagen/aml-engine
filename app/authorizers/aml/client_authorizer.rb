@@ -17,7 +17,7 @@ module AML
     end
 
     def resetable_by?(user)
-      updatable_by? user.aml_operator
+      updatable_by? user&.aml_operator
     end
   end
 end

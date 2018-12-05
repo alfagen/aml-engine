@@ -69,6 +69,7 @@ Gem::Specification.new do |s|
     s.add_development_dependency 'pry-doc'
     # Call 'byebug' anywhere in the code to stop execution and get a debugger console
     s.add_development_dependency 'byebug'
+    s.add_development_dependency 'pry-byebug'
     # Добавляет show-routes и show-models
     # и делает рельсовую конслоль через pry
     s.add_development_dependency 'pry-rails'
@@ -76,7 +77,6 @@ Gem::Specification.new do |s|
     # show-method
     # hist --grep foo
     # Adds step-by-step debugging and stack navigation capabilities to pry using byebug.
-    s.add_development_dependency 'pry-byebug'
     s.add_development_dependency 'test-prof', '~> 0.7.2'
 
     s.add_development_dependency 'activesupport'

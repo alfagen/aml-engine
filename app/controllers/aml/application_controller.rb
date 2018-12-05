@@ -56,9 +56,9 @@ module AML
     private
 
     def check_blocked
-      if current_user.aml_operator.blocked?
+      if current_operator.blocked?
         flash.now.alert = 'Вы заблокированы'
-        raise Authority::SecurityViolation.exception(current_user, nil, nil)
+        raise Authority::SecurityViolation.exception(current_operator, nil, nil)
       end
     end
 
@@ -81,8 +81,9 @@ module AML
       render 'not_authenticated', layout: 'simple'
     end
 
+    # TODO вытащить в APP
     def current_time_zone
-      current_user.try(:time_zone) || Time.zone
+      current_operator.try(:time_zone) || Time.zone
     end
   end
 end

@@ -2,12 +2,18 @@ require 'rails_helper'
 
 RSpec.describe AML::DocumentKindFieldDefinitionsController, type: :controller do
   routes { AML::Engine.routes }
-  let(:user)                               { create :user, :administrator }
+
   let(:aml_document_kind_field_definition) { create(:aml_document_kind_field_definition) }
   let(:aml_document_kind)                  { aml_document_kind_field_definition.document_kind }
   let(:aml_document_group) { aml_document_kind.document_group }
 
-  before { login_user user }
+  let(:aml_operator) { create :aml_operator }
+
+  before do
+    user = double aml_operator: aml_operator
+    allow(controller).to receive(:current_user).and_return user
+    allow(controller).to receive(:require_login).and_return true
+  end
 
   it '#create' do
     post :create, params: {

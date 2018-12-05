@@ -5,10 +5,5 @@ hr
 = simple_form_for operator do |f|
   .row
     .col-md-6
-      = f.input :name, as: :string
-  .row
-    .col-md-6
-      = f.input :email, as: :string
-    .col-md-6
       = f.input :role, as: :select, collection: [['оператор', 'operator'], ['администратор', 'administrator']], include_blank: false if operator.role_updatable_by?(current_user)
   = f.button :submit, 'Изменить', class: 'btn btn-success'

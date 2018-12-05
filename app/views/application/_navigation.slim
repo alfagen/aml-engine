@@ -29,8 +29,8 @@ nav.navbar.navbar-default.navbar-fixed-top
             = active_link_to 'Пользовательские соглашения', agreements_path, wrap_tag: :li if AML::Agreement.readable_by? current_user
             = active_link_to 'Настройка уведомлений', notifications_path, wrap_tag: :li if AML::Notification.readable_by? current_user
             li.divider
-            = active_link_to 'Операторы', operators_path, wrap_tag: :li if AML::Operator.readable_by? current_user
-            - if current_user.administrator? || !Rails.env.production?
+              = active_link_to 'Операторы', operators_path, wrap_tag: :li if AML::Operator.readable_by? current_user
+            - if current_operator.administrator? || !Rails.env.production?
               li.divider
               = active_link_to 'Полный сброс данных', reset_db_path, wrap_tag: :li, method: :delete, data: { confirm: 'Сбросить полностью данные (документы, анкеты, кроме операторов) без восстановления?' }
               = active_link_to 'Сброс клиентов', drop_clients_path, wrap_tag: :li, method: :delete, data: { confirm: 'Сбросить клиентов?' }
@@ -39,7 +39,7 @@ nav.navbar.navbar-default.navbar-fixed-top
         ul.nav.navbar-nav.navbar-right
           li.dropdown
             = link_to '#', class: 'dropdown-toggle', data: { toggle: :dropdown }, role: :button, 'aria-haspopup' => true, 'aria-expanded' => false do
-              = "#{current_user.email} (#{current_user.role})"
+              = "#{current_user.email} (#{current_operator.role})"
               span.m-l-sm.caret
             ul.dropdown-menu
               = active_link_to 'Сменить пароль', main_app.edit_password_path(current_user), wrap_tag: :li

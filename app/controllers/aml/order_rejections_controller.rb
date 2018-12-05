@@ -2,11 +2,8 @@ require_relative 'application_controller'
 
 module AML
   class OrderRejectionsController < ApplicationController
-    authorize_actions_for :order, all_actions: :reject
-
-    helper_method :order
-
     def new
+      authorize_action_for order
       render :new, locals: { order: order, reasons: available_reject_reasons }
     end
 

@@ -1,12 +1,4 @@
 GIT
-  remote: git://github.com/plataformatec/simple_form.git
-  revision: 26e47738a744676e315ed3c8f2c26efa65c83087
-  specs:
-    simple_form (4.1.0)
-      actionpack (>= 5.0)
-      activemodel (>= 5.0)
-
-GIT
   remote: https://github.com/BrandyMint/active_link_to.git
   revision: ac17e0a934cfcad9a64b02148c52dc3c3028127f
   specs:
@@ -21,16 +13,8 @@ GIT
     noty_flash (0.1.2)
 
 GIT
-  remote: https://github.com/HoJSim/fast_jsonapi.git
-  revision: d6b6b37486f8fd0dfbf83a95abf3dd933bfb2383
-  branch: dev
-  specs:
-    fast_jsonapi (1.1.1)
-      activesupport (>= 4.2)
-
-GIT
-  remote: https://github.com/ValentinAndreev/simple_form_bootstrap_inputs.git
-  revision: 70e1d66ab5cce32ba5653fe27934b4a10b1a1f10
+  remote: https://github.com/BrandyMint/simple_form_bootstrap_inputs.git
+  revision: c8b4185cd68fa8200db3c9b57cbf925f062518fc
   specs:
     simple_form_bootstrap_inputs (0.1.0)
       bootstrap-sass (~> 3.2)
@@ -39,6 +23,14 @@ GIT
       jquery-ui-rails
       rails-i18n
       simple_form
+
+GIT
+  remote: https://github.com/HoJSim/fast_jsonapi.git
+  revision: d6b6b37486f8fd0dfbf83a95abf3dd933bfb2383
+  branch: dev
+  specs:
+    fast_jsonapi (1.1.1)
+      activesupport (>= 4.2)
 
 GIT
   remote: https://github.com/dreimannzelt/sendgrid-actionmailer.git
@@ -64,6 +56,14 @@ GIT
       activemodel (>= 4.2, < 5.3)
       activerecord (>= 4.2, < 5.3)
       request_store (~> 1.0)
+
+GIT
+  remote: https://github.com/plataformatec/simple_form.git
+  revision: bd1fd283cab765ca46b6a49ffac7029c2b4fe530
+  specs:
+    simple_form (4.1.0)
+      actionpack (>= 5.0)
+      activemodel (>= 5.0)
 
 GIT
   remote: https://github.com/randym/axlsx.git

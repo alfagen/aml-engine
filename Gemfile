@@ -16,13 +16,14 @@ gem 'globalize', github: 'globalize/globalize', ref: 'HEAD'
 gem 'sendgrid-actionmailer', github: 'dreimannzelt/sendgrid-actionmailer', branch: :dynamic_template_data
 gem 'noty_flash', github: 'BrandyMint/noty_flash'
 
+gem 'axlsx', github: 'randym/axlsx'
+gem 'simple_form', github: 'plataformatec/simple_form'
+gem 'simple_form_bootstrap_inputs', github: 'BrandyMint/simple_form_bootstrap_inputs'
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-noty'
 end
 
-gem 'axlsx', github: 'randym/axlsx'
-gem 'simple_form', git: 'git://github.com/plataformatec/simple_form.git'
-gem 'simple_form_bootstrap_inputs', github: 'ValentinAndreev/simple_form_bootstrap_inputs'
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or
 # Git. Remember to move these dependencies to your gemspec before releasing

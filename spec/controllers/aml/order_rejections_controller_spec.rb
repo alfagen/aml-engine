@@ -17,7 +17,7 @@ RSpec.describe AML::OrderRejectionsController, type: :controller do
   end
 
   describe 'POST #create' do
-    it 'returns http success' do
+    it 'returns http redirected' do
       post :create, params: { order:{ aml_reject_reason_id: reject_reason.id, reject_reason_details: 'test' }, order_id: order.id }
       expect(response).to be_redirect
     end

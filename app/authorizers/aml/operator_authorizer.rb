@@ -1,23 +1,23 @@
 module AML
   class OperatorAuthorizer < ApplicationAuthorizer
-    def self.creatable_by?(user)
-      user&.aml_operator&.administrator?
+    def self.creatable_by?(operator)
+      operator.administrator?
     end
 
-    def updatable_by?(user)
-      resource.user == user || user&.aml_operator&.administrator?
+    def role_updatable_by?(operator)
+      resource != operator && operator.administrator?
     end
 
-    def blockable_by?(user)
-      resource.user != user && user&.aml_operator&.administrator?
+    def updatable_by?(operator)
+      resource == operator || operator.administrator?
     end
 
-    def unblockable_by?(user)
-      blockable_by? user&.aml_operator
+    def blockable_by?(operator = nil)
+      resource != operator && operator.administrator?
     end
 
-    def role_updatable_by?(user)
-      resource.user != user&.aml_operator && user&.aml_operator&.administrator?
+    def unblockable_by?(operator)
+      blockable_by? operator
     end
   end
 end

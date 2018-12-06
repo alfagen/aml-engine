@@ -6,8 +6,8 @@ module AML
     # @param [Symbol] adjective; example: `:creatable`
     # @param [Object] user - whatever represents the current user in your app
     # @return [Boolean]
-    def self.default(_adjective, user)
-      user.try(:aml_operator)&.administrator?
+    def self.default(_adjective, operator)
+      operator.administrator?
     end
   end
 end

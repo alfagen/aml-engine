@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe AML::DocumentKindsController, type: :controller do
   routes { AML::Engine.routes }
   describe '#base actions' do
-    let(:user) { create :user, :administrator }
+    let(:user) { create :aml_operator, :administrator }
     let(:aml_document_group) { create(:aml_document_group) }
     let(:aml_document_kind) { create(:aml_document_kind) }
 

@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 RSpec.describe AML::Operator, type: :model do
-  let!(:user) { create :user }
+  let!(:operator) { create :aml_operator }
   let(:password) { generate :aml_password }
 
   before do
-    user.change_password! password
+    operator.change_password! password
   end
 
-  it { expect(user.valid_password? password) }
+  it { expect(operator.valid_password? password) }
 end

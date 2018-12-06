@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe AML::OrderDocumentsController, type: :controller do
   routes { AML::Engine.routes }
   describe '#actions' do
-    let(:user) { create :user, :administrator }
+    let(:user) { create :aml_operator, :administrator }
     let!(:aml_status) { create(:aml_status, key: 'guest') }
     let(:aml_document_kind) { create(:aml_document_kind) }
 

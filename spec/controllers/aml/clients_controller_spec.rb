@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AML::ClientsController, type: :controller do
   routes { AML::Engine.routes }
-  let(:user) { create :user, :administrator }
+  let(:user) { create :aml_operator, :administrator }
   let!(:aml_status) { create :aml_status, key: 'guest' }
   let!(:aml_client) { create :aml_client, aml_status: aml_status }
 

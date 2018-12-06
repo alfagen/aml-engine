@@ -13,12 +13,12 @@ module AML
       true
     end
 
-    def acceptable_by?(user)
-      (user&.aml_operator&.administrator? || user&.aml_operator == resource.aml_order.operator) && resource.can_accept?
+    def acceptable_by?(operator)
+      (operator.administrator? || operator == resource.aml_order.operator) && resource.can_accept?
     end
 
-    def rejectable_by?(user)
-      (user&.aml_operator&.administrator? || user&.aml_operator == resource.aml_order.operator) && resource.can_reject?
+    def rejectable_by?(operator)
+      (operator.administrator? || operator == resource.aml_order.operator) && resource.can_reject?
     end
   end
 end

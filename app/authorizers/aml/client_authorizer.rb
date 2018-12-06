@@ -1,23 +1,23 @@
 module AML
   class ClientAuthorizer < ApplicationAuthorizer
-    def self.updatable_by?(user)
+    def self.updatable_by?(_operator)
       true
     end
 
-    def updatable_by?(user)
+    def updatable_by?(_operator)
       true
     end
 
-    def self.readable_by?(user)
+    def self.readable_by?(_operator)
       true
     end
 
-    def readable_by?(user)
+    def readable_by?(_operator)
       true
     end
 
-    def resetable_by?(user)
-      updatable_by? user&.aml_operator
+    def resetable_by?(operator)
+      updatable_by? operator
     end
   end
 end

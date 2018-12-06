@@ -4,7 +4,7 @@ RSpec.describe AML::DocumentGroupsController, type: :controller do
   routes { AML::Engine.routes }
   let(:aml_status) { create(:aml_status) }
   let(:aml_document_group) { create(:aml_document_group) }
-  let(:user) { create :user, :administrator }
+  let(:user) { create :aml_operator, :administrator }
 
   before { login_user(user) }
 

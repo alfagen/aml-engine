@@ -39,12 +39,12 @@ module AML
 
     def block
       operator.block!
-      redirect_to operators_path, notice: "Оператор, #{operator&.user.email} был заблокирован"
+      redirect_to operators_path, notice: "Оператор, #{operator.email} был заблокирован"
     end
 
     def unblock
       operator.unblock!
-      redirect_to operators_path, notice: "Оператор, #{operator&.user.email} был разблокирован"
+      redirect_to operators_path, notice: "Оператор, #{operator.email} был разблокирован"
     end
 
     private
@@ -54,7 +54,7 @@ module AML
     end
 
     def permitted_params
-      params.fetch(:operator, {}).permit(:role)
+      params.fetch(:operator, {}).permit(:email, :name, :role, :password, :password_confirmation)
     end
   end
 end

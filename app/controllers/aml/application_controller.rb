@@ -73,7 +73,7 @@ module AML
     end
 
     def not_authenticated
-      render 'not_authenticated', layout: 'simple'
+      render 'not_authenticated', status: :unauthorized, layout: 'simple'
     end
 
     def rescue_invalid_authenticity_token

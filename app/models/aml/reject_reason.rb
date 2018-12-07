@@ -15,6 +15,6 @@ module AML
 
     validates :kind, presence: true
 
-    enum kind: ['order_reason', 'order_document_reason']
+    enum kind: ['order_reason', 'order_document_reason', 'card_order_reason']
   end
 end

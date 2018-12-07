@@ -49,6 +49,7 @@ module AML
 
       RejectReason.create!(title: 'Ошибка в заявке', kind: 'order_reason')
       RejectReason.create!(title: 'Ошибка в документе', kind: 'order_document_reason')
+      RejectReason.create!(title: 'Ошибка в заявке на привязку', kind: 'card_order_reason')
     end
   end
 

@@ -1,0 +1,12 @@
+table.table.table-condensed
+  thead
+    tr
+      th Клиент
+      th Card brand:
+      th Card bin:
+      th Card suffix:
+      th Изображение:
+      th Cостояние:
+      th Действия:
+  tbody
+    = render partial: 'aml/payment_card_orders/payment_card_order', collection: payment_card_orders

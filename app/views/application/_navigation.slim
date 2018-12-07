@@ -20,6 +20,7 @@ nav.navbar.navbar-default.navbar-fixed-top
           ul.dropdown-menu
             = active_link_to 'Клиенты', clients_path, wrap_tag: :li if AML::Client.readable_by? current_user
             = active_link_to 'Клиентская информация', client_infos_path, wrap_tag: :li if AML::ClientInfo.readable_by? current_user
+            = active_link_to 'Заявки на привязку карт', payment_card_orders_path(workflow_state: :loaded), wrap_tag: :li if AML::PaymentCardOrder.readable_by? current_user
             = active_link_to 'Документы клиентов', order_documents_path, wrap_tag: :li if AML::OrderDocument.readable_by? current_user
             li.divider
             = active_link_to 'Статусы', statuses_path, wrap_tag: :li if AML::Status.readable_by? current_user

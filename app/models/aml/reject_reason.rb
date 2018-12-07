@@ -10,6 +10,7 @@ module AML
 
     has_many :orders, foreign_key: :aml_reject_reason_id
     has_many :order_documents, foreign_key: :aml_reject_reason_id
+    has_many :payment_card_orders, foreign_key: :aml_reject_reason_id
 
     validates :title, presence: true, uniqueness: true
 

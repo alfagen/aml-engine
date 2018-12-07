@@ -10,7 +10,6 @@ module AML
     validates :card_brand, presence: true
     validates :card_bin, presence: true
     validates :card_suffix, presence: true
-    validates :image, presence: true
 
     workflow do
       state :none do

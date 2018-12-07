@@ -9,7 +9,6 @@ module AML
     scope :ordered, -> { order :id }
 
     has_many :orders, foreign_key: :aml_reject_reason_id
-    has_many :card_bindings, foreign_key: :aml_reject_reason_id
     has_many :order_documents, foreign_key: :aml_reject_reason_id
 
     validates :title, presence: true, uniqueness: true

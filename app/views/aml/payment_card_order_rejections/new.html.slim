@@ -1,0 +1,14 @@
+h1 Отклоняем заявку на привязку карты ##{payment_card_order.id}
+hr
+
+- if reasons.empty?
+  .alert.alert-warning
+    | В базе нет ни одной причины для отмены.
+    = link_to 'Добавить причину', new_reject_reason_path(reject_reason: { kind: 'card_order_reason' })
+
+- else
+  = simple_form_for payment_card_order, url: payment_card_order_rejections_path(payment_card_order), method: :post do |f|
+    = f.input :aml_reject_reason_id, collection: reasons, include_blank: false
+    = f.input :reject_reason_details
+    hr
+    = f.button :submit, 'Пометить заявку как отклоненную', class: 'btn btn-warning', data: { confirm: 'Отклонить?' }

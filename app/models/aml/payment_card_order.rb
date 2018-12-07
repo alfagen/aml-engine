@@ -6,6 +6,7 @@ module AML
     mount_uploader :image, PaymentCardOrderFileUploader
 
     belongs_to :client, class_name: 'AML::Client', foreign_key: :aml_client_id, inverse_of: :payment_card_orders, dependent: :destroy
+    belongs_to :aml_reject_reason, class_name: 'AML::RejectReason', foreign_key: :aml_reject_reason_id, optional: true
 
     validates :card_brand, presence: true
     validates :card_bin, presence: true

@@ -61,5 +61,12 @@ AML::Engine.routes.draw do
       put :reject
     end
   end
+  resources :payment_card_orders do
+    resources :rejections, only: %i[new create], controller: :payment_card_order_rejections
+    member do
+      put :accept
+      put :reject
+    end
+  end
   resources :reject_reasons
 end

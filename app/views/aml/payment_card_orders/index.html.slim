@@ -1,0 +1,12 @@
+h2 Журнал заявок на привязку карт
+ul.nav.nav-tabs
+  = active_link_to 'Ожидающие', payment_card_orders_path(workflow_state: :none), active: :exact, wrap_tag: :li
+  = active_link_to 'Загруженные', payment_card_orders_path(workflow_state: :loaded), active: active_style_tab(workflow_state), wrap_tag: :li
+  = active_link_to 'Принятые', payment_card_orders_path(workflow_state: :accepted), active: :exact, wrap_tag: :li
+  = active_link_to 'Отклоненные', payment_card_orders_path(workflow_state: :rejected), active: :exact, wrap_tag: :li
+
+br
+- if payment_card_orders.any?
+  = render partial: 'payment_card_orders', locals: { payment_card_orders: payment_card_orders }
+- else
+  p.alert Заявки на привязку отсутствуют

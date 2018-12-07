@@ -1,0 +1,22 @@
+tr
+  td = "#{payment_card_order.client.first_name} #{payment_card_order.client.surname} #{payment_card_order.client.patronymic}"
+  td = payment_card_order.card_brand
+  td = payment_card_order.card_bin
+  td = payment_card_order.card_suffix
+  td
+    - if payment_card_order.image.present?
+      = link_to image_tag(payment_card_order.image.url, size: '100'), payment_card_order_path(payment_card_order)
+    - else
+      .text-muted Изображение отсутвует
+  td = payment_card_order.workflow_state
+  td style='min-width: 420px'
+
+    .btn-group.btn-xs
+      - if payment_card_order.acceptable_by?(current_user)
+        =< link_to 'Принять', accept_payment_card_order_path(payment_card_order), method: :put, class: 'btn btn-success'
+      - if payment_card_order.rejectable_by?(current_user)
+        =< link_to 'Отказать', new_payment_card_order_rejection_path(payment_card_order), class: 'btn btn-danger'
+    .btn-group.m-l-md
+      =< link_to 'Показать', payment_card_order_path(payment_card_order), class: 'btn btn-default'
+      - if payment_card_order.updatable_by?(current_user)
+        =< link_to 'Редактировать', edit_payment_card_order_path(payment_card_order), class: 'btn btn-default'

@@ -6,7 +6,7 @@ module AML
     authorize_actions_for AML::PaymentCardOrder
 
     def index
-      render :index, locals: { payment_card_orders: payment_card_orders, workflow_state: workflow_state }
+      render :index, locals: { payment_card_orders: paginate(payment_card_orders), workflow_state: workflow_state }
     end
 
     def new

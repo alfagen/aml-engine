@@ -35,5 +35,9 @@ module AML
       halt! 'Причина должна быть указана' unless reject_reason.is_a? AML::RejectReason
       update aml_reject_reason: reject_reason, reject_reason_details: details
     end
+
+    def client_name
+      ["##{client.id}", client.first_name, client.surname, client.patronymic].compact.join ' '
+    end
   end
 end

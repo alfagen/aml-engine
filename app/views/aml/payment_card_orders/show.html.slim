@@ -1,4 +1,4 @@
-- payment_card_decorated = AML::OrderDocumentDecorator.decorate payment_card_order
+- payment_card_decorated = AML::PaymentCardDecorator.decorate payment_card_order
 h4 Состояние: #{payment_card_order.workflow_state}
 - if payment_card_order.rejected?
   = payment_card_decorated.reject_reason

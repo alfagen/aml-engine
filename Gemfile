@@ -22,7 +22,7 @@ end
 
 gem 'axlsx', github: 'randym/axlsx'
 gem 'simple_form', git: 'git://github.com/plataformatec/simple_form.git'
-gem 'simple_form_bootstrap_inputs', github: 'ValentinAndreev/simple_form_bootstrap_inputs'
+gem 'simple_form_bootstrap_inputs', github: 'BrandyMint/simple_form_bootstrap_inputs'
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or
 # Git. Remember to move these dependencies to your gemspec before releasing

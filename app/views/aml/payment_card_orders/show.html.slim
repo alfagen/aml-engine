@@ -1,7 +1,7 @@
-- payment_card_decorated = AML::OrderDocumentDecorator.decorate payment_card_order
+- payment_card_order_decorated = AML::PaymentCardOrderDecorator.decorate payment_card_order
 h4 Состояние: #{payment_card_order.workflow_state}
 - if payment_card_order.rejected?
-  = payment_card_decorated.reject_reason
+  = payment_card_order_decorated.reject_reason
 = link_to 'К заявкам на привязку карт', payment_card_orders_path(workflow_state: payment_card_order.workflow_state), class: 'btn btn-default'
 =< link_to 'К клиенту', client_path(payment_card_order.client), class: 'btn btn-default'
 - if payment_card_order.acceptable_by?(current_user)

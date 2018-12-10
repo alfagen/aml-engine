@@ -10,3 +10,4 @@ table.table.table-condensed
       th Действия:
   tbody
     = render partial: 'aml/payment_card_orders/payment_card_order', collection: payment_card_orders
+= paginate payment_card_orders

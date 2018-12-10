@@ -1,5 +1,6 @@
+- payment_card_decorated = AML::OrderDocumentDecorator.decorate payment_card_order
 tr
-  td = "#{payment_card_order.client.first_name} #{payment_card_order.client.surname} #{payment_card_order.client.patronymic}"
+  td = link_to payment_card_decorated.client_name, client_path(payment_card_order.client)
   td = payment_card_order.card_brand
   td = payment_card_order.card_bin
   td = payment_card_order.card_suffix

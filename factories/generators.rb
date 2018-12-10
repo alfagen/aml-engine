@@ -1,3 +1,3 @@
 FactoryBot.define do
-  sequence(:value) { |n| "value#{n}" }
+  sequence(:aml_value) { |n| "value#{n}" }
 end

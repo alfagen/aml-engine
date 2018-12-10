@@ -28,7 +28,7 @@ RSpec.describe AML::OrderDocument, type: :model do
     let(:aml_document_kind) { create :aml_document_kind, :with_definitions }
     let(:definition) { aml_document_kind.definitions.take }
     let(:key) { definition.key }
-    let(:value) { generate :value }
+    let(:value) { generate :aml_value }
     let(:fields) { { key => value } }
 
     it 'если в виде документа есть дефиниции, то под них создаются поля' do

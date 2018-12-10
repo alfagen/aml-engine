@@ -1,16 +1,11 @@
-- payment_card_order_decorated = AML::PaymentCardOrderDecorator.decorate payment_card_order
-h4 Состояние: #{payment_card_order.workflow_state}
-- if payment_card_order.rejected?
-  = payment_card_order_decorated.reject_reason
+.row
+  .col-md-4
+    h2.m-t-0 Заявка: #{payment_card_order.id}
 = link_to 'К заявкам на привязку карт', payment_card_orders_path(workflow_state: payment_card_order.workflow_state), class: 'btn btn-default'
-=< link_to 'К клиенту', client_path(payment_card_order.client), class: 'btn btn-default'
 - if payment_card_order.acceptable_by?(current_user)
   =< link_to 'Принять', accept_payment_card_order_path(payment_card_order), method: :put, class: 'btn btn-success'
 - if payment_card_order.rejectable_by?(current_user)
   =< link_to 'Отказать', new_payment_card_order_rejection_path(payment_card_order), class: 'btn btn-danger'
-h4 Заявка:
-h5 Card brand: #{payment_card_order.card_brand}
-h5 Card bin: #{payment_card_order.card_bin}
-h5 Card suffix: #{payment_card_order.card_suffix}
-h4 Файл:
-= image_tag(payment_card_order.image.url, style: 'height:auto;width:100%;') if payment_card_order.image.present?
+- if payment_card_order.updatable_by?(current_user)
+  =< link_to 'Редактировать', edit_payment_card_order_path(payment_card_order), class: 'btn btn-default'
+= render 'payment_card_order_brief', payment_card_order: payment_card_order

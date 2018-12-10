@@ -1,13 +1,18 @@
-table.table.table-condensed
+= paginate payment_card_orders
+table.table.table-condensed.table-striped
   thead
     tr
-      th Клиент
+      th= sort_link q, :id, 'Заявка'
+      th= sort_link q, :pending_at, 'Отправлена'
+      th= sort_link q, :operated_at, 'Обработана'
+      th= sort_link q, :first_name, 'Клиент'
+      th Состояние
       th Card brand:
       th Card bin:
       th Card suffix:
       th Изображение:
-      th Cостояние:
-      th Действия:
+      th= sort_link q, :aml_operator_id,  'Администратор'
+      th Действия
   tbody
     = render partial: 'aml/payment_card_orders/payment_card_order', collection: payment_card_orders
 = paginate payment_card_orders

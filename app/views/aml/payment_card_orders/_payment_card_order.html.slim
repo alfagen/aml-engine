@@ -1,22 +1,18 @@
+- payment_card_order_decorated = AML::PaymentCardOrderDecorator.decorate payment_card_order
 tr
-  td = link_to payment_card_order.client_name, client_path(payment_card_order.client)
-  td = payment_card_order.card_brand
-  td = payment_card_order.card_bin
-  td = payment_card_order.card_suffix
+  td= payment_card_order.id
+  td= humanized_time_in_current_time_zone payment_card_order.pending_at
+  td= humanized_time_in_current_time_zone payment_card_order.operated_at
+  td= payment_card_order_decorated.client_name
+  td title=payment_card_order_decorated.aml_reject_reason.try(:title)
+    = payment_card_order_workflow_state payment_card_order_decorated.workflow_state
+  td= payment_card_order.card_brand
+  td= payment_card_order.card_bin
+  td= payment_card_order.card_suffix
+  td= image_tag(payment_card_order.image.url, style: 'height:auto;width:100%;') if payment_card_order.image.present?
+  td= payment_card_order_decorated.operator
   td
-    - if payment_card_order.image.present?
-      = link_to image_tag(payment_card_order.image.url, size: '100'), payment_card_order_path(payment_card_order)
-    - else
-      .text-muted Изображение отсутвует
-  td = payment_card_order.workflow_state
-  td style='min-width: 420px'
 
-    .btn-group.btn-xs
-      - if payment_card_order.acceptable_by?(current_user)
-        =< link_to 'Принять', accept_payment_card_order_path(payment_card_order), method: :put, class: 'btn btn-success'
-      - if payment_card_order.rejectable_by?(current_user)
-        =< link_to 'Отказать', new_payment_card_order_rejection_path(payment_card_order), class: 'btn btn-danger'
-    .btn-group.m-l-md
-      =< link_to 'Показать', payment_card_order_path(payment_card_order), class: 'btn btn-default'
-      - if payment_card_order.updatable_by?(current_user)
-        =< link_to 'Редактировать', edit_payment_card_order_path(payment_card_order), class: 'btn btn-default'
+    = render 'payment_card_order_actions', payment_card_order: payment_card_order
+  td
+    =< link_to 'Подробнее', payment_card_order_path(payment_card_order_decorated), class: 'btn btn-default'

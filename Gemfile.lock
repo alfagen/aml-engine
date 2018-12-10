@@ -21,18 +21,6 @@ GIT
     noty_flash (0.1.2)
 
 GIT
-  remote: https://github.com/BrandyMint/simple_form_bootstrap_inputs.git
-  revision: c8b4185cd68fa8200db3c9b57cbf925f062518fc
-  specs:
-    simple_form_bootstrap_inputs (0.1.0)
-      bootstrap-sass (~> 3.2)
-      bootstrap3-datetimepicker-rails (~> 4.17.47)
-      jquery-rails
-      jquery-ui-rails
-      rails-i18n
-      simple_form
-
-GIT
   remote: https://github.com/HoJSim/fast_jsonapi.git
   revision: d6b6b37486f8fd0dfbf83a95abf3dd933bfb2383
   branch: dev
@@ -448,6 +436,13 @@ GEM
       ruby_http_client (~> 3.3.0)
       sinatra (>= 1.4.7, < 3)
     shellany (0.0.1)
+    simple_form_bootstrap_inputs (0.1.0)
+      bootstrap-sass (~> 3.2)
+      bootstrap3-datetimepicker-rails (~> 4.17.47)
+      jquery-rails
+      jquery-ui-rails
+      rails-i18n
+      simple_form
     sinatra (2.0.4)
       mustermann (~> 1.0)
       rack (~> 2.0)
@@ -521,7 +516,6 @@ DEPENDENCIES
   semver
   sendgrid-actionmailer!
   simple_form!
-  simple_form_bootstrap_inputs!
   test-prof (~> 0.7.2)
   workflow!
 

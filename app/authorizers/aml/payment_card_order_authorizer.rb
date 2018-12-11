@@ -2,8 +2,8 @@ module AML
   class PaymentCardOrderAuthorizer < ApplicationAuthorizer
     EVENTS = %i[done start accept reject cancel].freeze
 
-    def self.readable_by?(_user)
-      true
+    def self.readable_by?(user)
+      user.administrator?
     end
 
     EVENTS.each do |event|

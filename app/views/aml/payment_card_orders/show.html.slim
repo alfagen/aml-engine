@@ -1,11 +1,7 @@
+= link_to '&larr; список заявок'.html_safe, payment_card_orders_path(workflow_state: payment_card_order.workflow_state)
+hr
 .row
   .col-md-4
     h2.m-t-0 Заявка: #{payment_card_order.id}
-= link_to 'К заявкам на привязку карт', payment_card_orders_path(workflow_state: payment_card_order.workflow_state), class: 'btn btn-default'
-- if payment_card_order.acceptable_by?(current_user)
-  =< link_to 'Принять', accept_payment_card_order_path(payment_card_order), method: :put, class: 'btn btn-success'
-- if payment_card_order.rejectable_by?(current_user)
-  =< link_to 'Отказать', new_payment_card_order_rejection_path(payment_card_order), class: 'btn btn-danger'
-- if payment_card_order.updatable_by?(current_user)
-  =< link_to 'Редактировать', edit_payment_card_order_path(payment_card_order), class: 'btn btn-default'
+= render 'payment_card_order_actions', payment_card_order: payment_card_order
 = render 'payment_card_order_brief', payment_card_order: payment_card_order

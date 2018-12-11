@@ -13,7 +13,6 @@ module AML
     end
 
     def reject_reason
-      puts '------------'
       return unless object.aml_reject_reason.present?
 
       buffer = []

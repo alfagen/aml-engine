@@ -4,8 +4,7 @@ tr
   td= humanized_time_in_current_time_zone payment_card_order.pending_at
   td= humanized_time_in_current_time_zone payment_card_order.operated_at
   td= payment_card_order_decorated.client_name
-  td title=payment_card_order_decorated.aml_reject_reason.try(:title)
-    = payment_card_order_workflow_state payment_card_order_decorated.workflow_state
+  td= payment_card_order_decorated.aml_reject_reason.try(:title)
   td= payment_card_order.card_brand
   td= payment_card_order.card_bin
   td= payment_card_order.card_suffix

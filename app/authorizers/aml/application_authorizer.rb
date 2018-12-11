@@ -1,5 +1,5 @@
 module AML
-  class ApplicationAuthorizer < Authority::Authorizer
+  class ApplicationAuthorizer < ::ApplicationAuthorizer
     # Any class method from Authority::Authorizer that isn't overridden
     # will call its authorizer's default method.
     #

@@ -8,9 +8,9 @@ class AddReferenceToPaymentCardOrderOnOperator < ActiveRecord::Migration[5.2]
     execute "update aml_payment_card_orders set pending_at = updated_at where workflow_state='done'"
     execute "update aml_payment_card_orders set pending_at = created_at where workflow_state='accepted'"
 
-    execute "update aml_orders set operated_at=updated_at where workflow_state='canceled'"
-    execute "update aml_orders set operated_at=updated_at where workflow_state='rejected'"
-    execute "update aml_orders set operated_at=updated_at where workflow_state='accepted'"
+    execute "update aml_payment_card_orders set operated_at=updated_at where workflow_state='canceled'"
+    execute "update aml_payment_card_orders set operated_at=updated_at where workflow_state='rejected'"
+    execute "update aml_payment_card_orders set operated_at=updated_at where workflow_state='accepted'"
 
     add_index :aml_payment_card_orders, [:workflow_state, :operated_at]
     add_index :aml_payment_card_orders, [:workflow_state, :pending_at]

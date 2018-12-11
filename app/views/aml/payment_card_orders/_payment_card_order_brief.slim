@@ -1,0 +1,31 @@
+- payment_card_order_decorated = AML::PaymentCardOrderDecorator.decorate payment_card_order
+hr
+dl
+  dt Заявка отправлена
+  dd= humanized_time_in_current_time_zone payment_card_order.pending_at
+
+  dt Клиент
+  dd= payment_card_order_decorated.client_name
+
+  dt Состояние
+  dd= payment_card_order_decorated.workflow_state
+
+  - if payment_card_order.rejected?
+    = payment_card_order_decorated.reject_reason
+
+  dt Card brand
+  dd= payment_card_order.card_brand
+
+  dt Card bin
+  dd= payment_card_order.card_bin
+
+  dt Card suffix
+  dd= payment_card_order.card_suffix
+
+  - if payment_card_order.current_state >= :processing
+    dt Администратор
+    dd= payment_card_order_decorated.operator
+
+  - if payment_card_order.image.present?
+    dt Изображение
+    dd= image_tag(payment_card_order.image.url, style: 'height:auto;width:100%;')

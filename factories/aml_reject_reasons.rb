@@ -11,5 +11,9 @@ FactoryBot.define do
     trait :order_document_reason do
       kind { 'order_document_reason' }
     end
+
+    trait :payment_card_order_reason do
+      kind { 'card_order_reason' }
+    end
   end
 end

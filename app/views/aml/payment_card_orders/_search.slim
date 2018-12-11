@@ -1,0 +1,4 @@
+= search_form_for @q, url: payment_card_orders_path do |f|
+  = f.search_field :id_or_card_brand_cont
+  = hidden_field_tag :workflow_state, workflow_state
+  = f.submit 'Искать', class: 'btn btn-default'

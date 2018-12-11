@@ -1,0 +1,13 @@
+ul.nav.nav-tabs
+  = active_link_to payment_card_orders_path(workflow_state: :none), active: :exact, wrap_tag: :li do
+    = title_with_counter 'Незаполненные', AML::PaymentCardOrder.with_none_state.count
+  = active_link_to payment_card_orders_path(workflow_state: :pending), active: active_style_order(workflow_state), wrap_tag: :li do
+    = title_with_counter 'Ожидают обработки', AML::PaymentCardOrder.with_pending_state.count
+  = active_link_to payment_card_orders_path(workflow_state: :processing), active: :exact, wrap_tag: :li do
+    = title_with_counter 'В обработке', AML::PaymentCardOrder.with_processing_state.count
+  = active_link_to payment_card_orders_path(workflow_state: :accepted), active: :exact, wrap_tag: :li do
+    = title_with_counter 'Принятые', AML::PaymentCardOrder.with_accepted_state.count
+  = active_link_to payment_card_orders_path(workflow_state: :rejected), active: :exact, wrap_tag: :li do
+    = title_with_counter 'Отклоненные', AML::PaymentCardOrder.with_rejected_state.count
+  = active_link_to payment_card_orders_path(workflow_state: :canceled), active: :exact, wrap_tag: :li do
+    = title_with_counter 'Отмененные', AML::PaymentCardOrder.with_canceled_state.count

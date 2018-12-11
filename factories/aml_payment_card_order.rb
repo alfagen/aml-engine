@@ -4,27 +4,42 @@ FactoryBot.define do
     card_bin { 'card_bin' }
     card_suffix { 'card_suffix' }
     association :client, factory: :aml_client
+    association :operator, factory: [:aml_operator, :administrator]
 
     trait :none do
       workflow_state { :none }
-      image { nil }
     end
 
-    trait :loaded do
-      workflow_state { :loaded }
-      image { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'test_files', 'test.png')) }
+    trait :pending do
+      after :create do |payment_card_order|
+        image { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'test_files', 'test.png')) }
+        payment_card_order.done!
+      end
+    end
+
+    trait :processing do
+      after :create do |payment_card_order|
+        image { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'test_files', 'test.png')) }
+        payment_card_order.done!
+        payment_card_order.start!(operator: operator)
+      end
     end
 
     trait :accepted do
-      workflow_state { :accepted }
-      image { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'test_files', 'test.png')) }
+      after :create do |payment_card_order|
+        image { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'test_files', 'test.png')) }
+        payment_card_order.done!
+        payment_card_order.start!(operator: operator)
+        payment_card_order.accept!
+      end
     end
 
     trait :rejected do
-      workflow_state { :loaded }
-      image { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'test_files', 'test.png')) }
       after :create do |payment_card_order|
-        payment_card_order.reject!
+        image { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'test_files', 'test.png')) }
+        payment_card_order.done!
+        payment_card_order.start!(operator: operator)
+        payment_card_order.reject!(reject_reason: create(:aml_reject_reason, :payment_card_order_reason), details: 'reject reason details')
       end
     end
   end

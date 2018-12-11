@@ -23,7 +23,7 @@ dl
   dd= payment_card_order.card_suffix
 
   - if payment_card_order.current_state >= :processing
-    dt Администратор
+    dt Оператор
     dd= payment_card_order_decorated.operator
 
   - if payment_card_order.image.present?

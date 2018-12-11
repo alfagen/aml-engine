@@ -2,7 +2,7 @@ require_relative 'application_controller'
 
 module AML
   class PaymentCardOrderRejectionsController < ApplicationController
-    authorize_actions_for AML::PaymentCardOrder
+    authorize_actions_for :payment_card_order, all_actions: :reject
 
     helper_method :payment_card_order
 

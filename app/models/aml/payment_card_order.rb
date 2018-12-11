@@ -40,6 +40,10 @@ module AML
       touch :operated_at
     end
 
+    def is_owner?(operator)
+      self.operator == operator
+    end
+
     def start(operator:)
       update operator: operator
     end

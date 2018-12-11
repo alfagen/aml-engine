@@ -19,6 +19,15 @@ AML::Engine.routes.draw do
       post :restore
     end
   end
+  concern :processable do
+    member do
+      put :done
+      put :start
+      put :accept
+      put :reject
+      put :cancel
+    end
+  end
   resources :check_lists
   resources :statuses
   resources :document_group_to_statuses, only: %i[create destroy]
@@ -45,13 +54,7 @@ AML::Engine.routes.draw do
       end
     end
     resources :rejections, only: [:new, :create], controller: :order_rejections
-    member do
-      put :done
-      put :start
-      put :accept
-      put :reject
-      put :cancel
-    end
+    concerns :processable
   end
   resources :document_fields, only: %i[edit update]
   resources :order_documents, only: %i[show index edit update] do
@@ -63,13 +66,7 @@ AML::Engine.routes.draw do
   end
   resources :payment_card_orders do
     resources :rejections, only: [:new, :create], controller: :payment_card_order_rejections
-    member do
-      put :done
-      put :start
-      put :accept
-      put :reject
-      put :cancel
-    end
+    concerns :processable
   end
   resources :reject_reasons
 end

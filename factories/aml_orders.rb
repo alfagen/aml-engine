@@ -7,7 +7,7 @@ FactoryBot.define do
     card_bin { '111111' }
     card_suffix { '1111' }
     birth_date { Time.zone.today - 30.years }
-    association :client, factory: [:aml_client, :with_risk]
+    association :client, factory: :aml_client
     association :operator, factory: :aml_operator
     aml_status
 

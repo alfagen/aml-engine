@@ -290,16 +290,16 @@ ActiveRecord::Schema.define(version: 2018_12_12_083311) do
   end
 
   create_table "aml_payment_cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "brand"
-    t.string "bin", limit: 6
-    t.string "suffix", limit: 4
+    t.string "brand", null: false
+    t.string "bin", limit: 6, null: false
+    t.string "suffix", limit: 4, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "aml_client_id"
-    t.bigint "aml_order_id"
+    t.bigint "aml_payment_card_order_id"
     t.index ["aml_client_id", "bin", "suffix", "brand"], name: "client_bin_suffix_brand", unique: true
     t.index ["aml_client_id"], name: "index_aml_payment_cards_on_aml_client_id"
-    t.index ["aml_order_id"], name: "index_aml_payment_cards_on_aml_order_id"
+    t.index ["aml_payment_card_order_id"], name: "index_aml_payment_cards_on_aml_payment_card_order_id"
   end
 
   create_table "aml_reject_reason_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

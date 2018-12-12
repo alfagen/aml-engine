@@ -4,6 +4,6 @@ FactoryBot.define do
     bin { '111111' }
     suffix { '1111' }
     association :aml_client, factory: :aml_client
-    association :aml_order, factory: :aml_order
+    association :aml_payment_card_order, factory: :aml_payment_card_order
   end
 end

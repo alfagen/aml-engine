@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_10_172734) do
+ActiveRecord::Schema.define(version: 2018_12_12_083311) do
 
   create_table "aml_agreement_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "aml_agreement_id", null: false
@@ -287,6 +287,19 @@ ActiveRecord::Schema.define(version: 2018_12_10_172734) do
     t.index ["aml_operator_id"], name: "index_aml_payment_card_orders_on_aml_operator_id"
     t.index ["workflow_state", "operated_at"], name: "index_aml_payment_card_orders_on_workflow_state_and_operated_at"
     t.index ["workflow_state", "pending_at"], name: "index_aml_payment_card_orders_on_workflow_state_and_pending_at"
+  end
+
+  create_table "aml_payment_cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "brand", null: false
+    t.string "bin", limit: 6, null: false
+    t.string "suffix", limit: 4, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "aml_client_id"
+    t.bigint "aml_payment_card_order_id"
+    t.index ["aml_client_id", "bin", "suffix", "brand"], name: "client_bin_suffix_brand", unique: true
+    t.index ["aml_client_id"], name: "index_aml_payment_cards_on_aml_client_id"
+    t.index ["aml_payment_card_order_id"], name: "index_aml_payment_cards_on_aml_payment_card_order_id"
   end
 
   create_table "aml_reject_reason_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

@@ -3,6 +3,9 @@ FactoryBot.define do
     first_name { 'First name' }
     surname { 'Surname' }
     patronymic { 'patronymic' }
+    card_brand { 'card_brand' }
+    card_bin { '111111' }
+    card_suffix { '1111' }
     birth_date { Time.zone.today - 30.years }
     association :client, factory: :aml_client
     association :operator, factory: :aml_operator

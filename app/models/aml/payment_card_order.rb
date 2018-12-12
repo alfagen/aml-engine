@@ -13,8 +13,8 @@ module AML
     has_one :aml_payment_card, class_name: 'AML::PaymentCard', inverse_of: :aml_accepted_order
 
     validates :card_brand, presence: true
-    validates :card_bin, presence: true
-    validates :card_suffix, presence: true
+    validates :card_bin, presence: true, length: { is: 6 }
+    validates :card_suffix, presence: true, length: { is: 4 }
 
     ransacker :id do
       Arel.sql("CONVERT(#{table_name}.id, CHAR(8))")

@@ -12,8 +12,8 @@ module AML
     belongs_to :aml_client, class_name: 'AML::Client', foreign_key: :aml_client_id, inverse_of: :aml_payment_cards, dependent: :destroy
 
     def masked_number
-         # NOTE dup нужен, т.к. insert изменяет исходный объект
-         "#{bin.dup.insert(4, ' ')}** **** #{last_digits} #{brand} "
+      # NOTE dup нужен, т.к. insert изменяет исходный объект
+      "#{bin.dup.insert(4, ' ')}** **** #{suffix} #{brand} "
     end
 
     alias_attribute :client_id, :aml_client_id

@@ -1,0 +1,9 @@
+= search_form_for @q, url: payment_cards_path do |f|
+  = f.search_field :id_or_brand_cont
+  = f.submit 'Искать', class: 'btn btn-default'
+
+- if payment_cards.any?
+  .m-t-md= render partial: 'payment_cards', locals: { payment_cards: payment_cards, q: q }
+
+- else
+  p.alert Карты отсутствуют

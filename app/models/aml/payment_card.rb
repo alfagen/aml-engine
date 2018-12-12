@@ -1,5 +1,7 @@
 module AML
   class PaymentCard < ApplicationRecord
+    include Authority::Abilities
+
     scope :ordered, -> { order :id }
 
     validates :brand, presence: true
@@ -13,5 +15,7 @@ module AML
          # NOTE dup нужен, т.к. insert изменяет исходный объект
          "#{bin.dup.insert(4, ' ')}** **** #{last_digits} #{brand} "
     end
+
+    alias_attribute :client_id, :aml_client_id
   end
 end

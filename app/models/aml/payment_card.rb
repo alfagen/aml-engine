@@ -15,7 +15,5 @@ module AML
       # NOTE dup нужен, т.к. insert изменяет исходный объект
       "#{bin.dup.insert(4, ' ')}** **** #{suffix} #{brand} "
     end
-
-    alias_attribute :client_id, :aml_client_id
   end
 end

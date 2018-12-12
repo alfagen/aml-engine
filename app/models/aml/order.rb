@@ -18,6 +18,7 @@ module AML
     belongs_to :cloned_order, class_name: 'AML::Order', optional: true
 
     has_one :aml_client_info, through: :client
+    has_one :aml_payment_card, class_name: 'AML::PaymentCard', inverse_of: :accepted_order
 
     has_many :order_documents, class_name: 'AML::OrderDocument', dependent: :destroy
     has_many :required_document_kinds, through: :aml_status, source: :document_kinds

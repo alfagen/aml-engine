@@ -18,7 +18,7 @@ module AML
     belongs_to :cloned_order, class_name: 'AML::Order', optional: true
 
     has_one :aml_client_info, through: :client
-    has_one :aml_payment_card, class_name: 'AML::PaymentCard', inverse_of: :accepted_order
+    has_one :aml_payment_card, class_name: 'AML::PaymentCard', inverse_of: :aml_accepted_order
 
     has_many :order_documents, class_name: 'AML::OrderDocument', dependent: :destroy
     has_many :required_document_kinds, through: :aml_status, source: :document_kinds
@@ -54,6 +54,7 @@ module AML
     def accept
       client.update attributes_to_clone.merge current_order: self, aml_accepted_order: self, aml_status: aml_status
       touch :operated_at
+      create_payment_card
     end
 
     def is_locked?
@@ -121,6 +122,10 @@ module AML
     end
 
     private
+
+    def create_payment_card
+      AML::PaymentCard.create!(brand: card_brand, bin: card_bin, suffix: card_suffix, aml_client_id: client.id, aml_order_id: id)
+    end
 
     def create_checks
       AML::CheckList.alive.ordered.each do |c|

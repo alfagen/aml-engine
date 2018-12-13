@@ -46,15 +46,25 @@ h2.m-t-lg Данные клиента (от оператора)
 hr
 = render 'aml/client_infos/form', client_info: client_info
 
+- if client.aml_payment_cards.any?
+  hr
+  h2 Привязанные карты (#{client.aml_payment_cards.count})
+  = render 'aml/payment_cards/payment_cards', payment_cards: client.aml_payment_cards, q: q
+- else
+ .alert.alert-warning Привязанные карты отсутствуют
+
 - if client.orders.any?
   hr
   h2 Заявки (#{client.orders.count})
   = render 'aml/orders/orders', orders: orders, q: q
+- else
+  .alert.alert-warning Заявки отсутствуют
 
-- if AML::PaymentCard.readable_by? current_user
-  - if client.aml_payment_cards.any?
+- if AML::PaymentCardOrder.readable_by? current_user
+  - if client.payment_card_orders.any?
     hr
-    h2 Привязанные карты (#{client.aml_payment_cards.count})
-    = render 'aml/payment_cards/payment_cards', payment_cards: client.aml_payment_cards, q: q
+    h2 Заявки на привязку карт (#{client.payment_card_orders.count})
+    - puts client.payment_card_orders
+    = render 'aml/payment_card_orders/payment_card_orders', payment_card_orders: client.payment_card_orders, q: q
   - else
-   .alert.alert-warning Привязанные карты отсутствуют
+   .alert.alert-warning Заявки на привязку карт отсутствуют

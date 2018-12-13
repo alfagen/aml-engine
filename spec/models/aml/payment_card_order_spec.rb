@@ -16,5 +16,15 @@ RSpec.describe AML::PaymentCardOrder, type: :model do
     end
 
     it { expect(order.reload).to be_pending }
+
+    context 'when accepts' do
+      let(:operator) { create :aml_operator }
+      before do
+        order.start! operator: operator
+        order.accept!
+      end
+
+      it { expect(order.aml_payment_card).to be_persisted }
+    end
   end
 end

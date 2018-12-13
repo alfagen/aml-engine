@@ -50,3 +50,9 @@ hr
   hr
   h2 Заявки (#{client.orders.count})
   = render 'aml/orders/orders', orders: orders, q: q
+
+- if AML::PaymentCard.readable_by? current_user
+  - if client.aml_payment_cards.any?
+    hr
+    h2 Привязанные карты (#{client.aml_payment_cards.count})
+    = render 'aml/payment_cards/payment_cards', payment_cards: client.aml_payment_cards, q: q

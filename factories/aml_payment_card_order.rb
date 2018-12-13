@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory(:aml_payment_card_order, class: AML::PaymentCardOrder) do
-    card_brand { 'card_brand' }
-    card_bin { 'card_bin' }
-    card_suffix { 'card_suffix' }
+    card_brand { 'VISA' }
+    card_bin { '123456' }
+    card_suffix { '1234' }
     association :client, factory: :aml_client
     association :operator, factory: [:aml_operator, :administrator]
 

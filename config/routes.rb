@@ -69,4 +69,5 @@ AML::Engine.routes.draw do
     concerns :processable
   end
   resources :reject_reasons
+  resources :payment_cards, only: :index
 end

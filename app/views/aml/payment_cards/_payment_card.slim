@@ -1,0 +1,7 @@
+tr
+  td= payment_card.id
+  td= payment_card.masked_number
+  td= payment_card.created_at
+  td= link_to payment_card.aml_accepted_order.id, payment_card_order_path(payment_card.aml_accepted_order)
+  td= link_to payment_card.aml_client, client_path(payment_card.aml_client)
+  td= payment_card.brand

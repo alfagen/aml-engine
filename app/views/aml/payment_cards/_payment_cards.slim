@@ -1,0 +1,13 @@
+= paginate payment_cards
+table.table.table-condensed
+  thead
+    tr
+      th= sort_link q, :id, 'Карта:'
+      th Номер:
+      th= sort_link q, :created_at, 'Привязана:'
+      th= sort_link q, :aml_accepted_order_id, 'Заявка на привязку:'
+      th= sort_link q, :first_name, 'Клиент:'
+      th= sort_link q, :brand, 'Card brand:'
+  tbody
+    = render partial: 'aml/payment_cards/payment_card', collection: payment_cards
+= paginate payment_cards

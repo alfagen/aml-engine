@@ -56,3 +56,5 @@ hr
     hr
     h2 Привязанные карты (#{client.aml_payment_cards.count})
     = render 'aml/payment_cards/payment_cards', payment_cards: client.aml_payment_cards, q: q
+  - else
+   .alert.alert-warning Привязанные карты отсутствуют

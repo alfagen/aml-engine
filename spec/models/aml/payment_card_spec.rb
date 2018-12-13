@@ -6,4 +6,5 @@ RSpec.describe AML::PaymentCard, type: :model do
   let(:aml_payment_card) { create :aml_payment_card, aml_client_id: aml_client.id, aml_payment_card_order_id: aml_payment_card_order.id}
 
   it { expect(aml_payment_card).to be_persisted }
+  it { expect(aml_payment_card.destroy!).to be_truthy }
 end

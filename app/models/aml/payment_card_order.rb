@@ -1,6 +1,7 @@
 module AML
   class PaymentCardOrder < ApplicationRecord
     include Authority::Abilities
+    include CommonMethods
     include Workflow
     include OrdersWorkflow
 

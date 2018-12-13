@@ -2,6 +2,7 @@ module AML
   class Order < ApplicationRecord
     extend Enumerize
     include Workflow
+    include CommonMethods
     include OrdersWorkflow
     include Archivable
     include Authority::Abilities

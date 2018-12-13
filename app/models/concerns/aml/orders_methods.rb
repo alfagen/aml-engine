@@ -1,5 +1,5 @@
 module AML
-  module CommonMethods
+  module OrdersMethods
     extend ActiveSupport::Concern
 
     def start(operator:)

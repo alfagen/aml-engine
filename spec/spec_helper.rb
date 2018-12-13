@@ -5,6 +5,7 @@ require 'archivable'
 require 'sorcery'
 require 'rspec/rails'
 require 'factory_bot'
+require 'pry'
 
 # Плохо работает с DatabaseRewinder :(
 # require 'test_prof/recipes/rspec/let_it_be'

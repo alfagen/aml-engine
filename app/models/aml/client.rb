@@ -19,7 +19,7 @@ module AML
     has_many :aml_payment_cards, class_name: 'AML::PaymentCard', foreign_key: :aml_client_id
     has_many :orders, class_name: 'AML::Order', dependent: :destroy
     has_many :client_agreements, class_name: 'AML::ClientAgreement', foreign_key: :aml_client_id, dependent: :destroy
-    has_many :payment_card_orders, class_name: 'AML::PaymentCardOrder', dependent: :destroy
+    has_many :payment_card_orders, class_name: 'AML::PaymentCardOrder', dependent: :destroy, foreign_key: :aml_client_id, dependent: :destroy
 
     after_create :create_current_order!
 

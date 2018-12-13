@@ -40,16 +40,6 @@ module AML
     after_create :set_current_order!
     after_create :cancel_previous_orders!
 
-    def reject(reject_reason:, details: nil)
-      halt! 'Причина должна быть указана' unless reject_reason.is_a? AML::RejectReason
-      update aml_reject_reason: reject_reason, reject_reason_details: details
-      touch :operated_at
-    end
-
-    def accepted_at
-      return operated_at if accepted?
-    end
-
     def accept
       client.update attributes_to_clone.merge current_order: self, aml_accepted_order: self, aml_status: aml_status
       touch :operated_at
@@ -59,30 +49,13 @@ module AML
       !none?
     end
 
-    def is_owner?(operator)
-      self.operator == operator
-    end
-
     def complete?
       order_documents.select(:complete?).count == order_documents.count
-    end
-
-    def start(operator:)
-      update operator: operator
-    end
-
-    def cancel
-      update operator: nil
-      touch :operated_at
     end
 
     def done
       halt! 'Личная анкета не до конца заполнена' unless fields_present?
       touch :pending_at
-    end
-
-    def client_name
-      ["##{client_id}", first_name, surname, patronymic].compact.join ' '
     end
 
     def allow_done?

@@ -1,6 +1,7 @@
 module AML
   module OrdersWorkflow
     extend ActiveSupport::Concern
+    include OrdersNotifications
 
     included do
       workflow_column :workflow_state
@@ -45,34 +46,33 @@ module AML
         # Отменена пользователем (или автоматом при создании новой)
         state :canceled
       end
+    end
 
-      def notification_locale
-        client.notification_locale || I18n.default_locale
-      end
+    def start(operator:)
+      update operator: operator
+    end
 
-      def notify(notification_key)
-        AML::NotificationMailer.logger.warn "Try to notify order[#{id}] with #{notification_key}"
+    def cancel
+      update operator: nil
+      touch :operated_at
+    end
 
-        notification = client.aml_status&.send notification_key
-        unless notification
-          AML::NotificationMailer.logger.warn "No #{notification_key} notification for status #{client.aml_status}"
-          return
-        end
+    def client_name
+      ["##{client.id}", client.first_name, client.surname, client.patronymic].compact.join ' '
+    end
 
-        notification_template = notification.
-          aml_notification_templates.
-          find_by(locale: notification_locale)
+    def reject(reject_reason:, details: nil)
+      halt! 'Причина должна быть указана' unless reject_reason.is_a? AML::RejectReason
+      update aml_reject_reason: reject_reason, reject_reason_details: details
+      touch :operated_at
+    end
 
-        unless notification_template.present? && notification_template.template_id.present?
-          AML::NotificationMailer.logger.warn "No template_id for #{notification} and #{notification_locale}"
-          return
-        end
+    def is_owner?(operator)
+      self.operator == operator
+    end
 
-        client.notify notification_template.template_id,
-          first_name: (first_name.presence || client.first_name),
-          reject_reason_title: aml_reject_reason.try(:title),
-          reject_reason_details: reject_reason_details.presence
-      end
+    def accepted_at
+      return operated_at if accepted?
     end
   end
 end

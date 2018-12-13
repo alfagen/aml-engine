@@ -2,7 +2,6 @@ module AML
   class Order < ApplicationRecord
     extend Enumerize
     include Workflow
-    include OrdersMethods
     include OrdersWorkflow
     include Archivable
     include Authority::Abilities
@@ -85,6 +84,14 @@ module AML
 
     def all_checks_accepted?
       order_checks.all? { |check| check.accepted? }
+    end
+
+    def is_owner?(operator)
+      self.operator == operator
+    end
+
+    def client_name
+      ["##{client.id}", client.first_name, client.surname, client.patronymic].compact.join ' '
     end
 
     protected

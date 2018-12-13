@@ -42,6 +42,10 @@ module AML
       h.link_to object.client, h.client_path(object.client)
     end
 
+    def accepted_at
+      return object.operated_at if object.accepted?
+    end
+
     # Define presentation-specific methods here. Helpers are accessed through
     # `helpers` (aka `h`). You can override attributes, for example:
     #

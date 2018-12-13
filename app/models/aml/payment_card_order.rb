@@ -1,7 +1,6 @@
 module AML
   class PaymentCardOrder < ApplicationRecord
     include Authority::Abilities
-    include OrdersMethods
     include Workflow
     include OrdersWorkflow
 
@@ -34,13 +33,20 @@ module AML
       create_payment_card
     end
 
-
     def create_payment_card
       AML::PaymentCard.create!(brand: card_brand, bin: card_bin, suffix: card_suffix, aml_client_id: client.id, aml_payment_card_order_id: id)
     end
 
     def done
       touch :pending_at
+    end
+
+    def is_owner?(operator)
+      self.operator == operator
+    end
+
+    def client_name
+      ["##{client.id}", client.first_name, client.surname, client.patronymic].compact.join ' '
     end
   end
 end

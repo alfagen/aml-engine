@@ -5,5 +5,5 @@ class AML::PaymentCardSerializer
 
   belongs_to :aml_client, record_type: :aml_client, serializer: 'AML::ClientSerializer'
 
-  attributes :id, :aml_client_id, :bin, :suffix, :brand
+  attributes :id, :aml_client_id, :card_bin, :card_suffix, :card_brand
 end

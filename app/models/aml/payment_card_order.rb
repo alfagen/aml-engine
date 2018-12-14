@@ -3,6 +3,7 @@ module AML
     include Authority::Abilities
     include Workflow
     include OrdersWorkflow
+    include CardValidation
 
     mount_uploader :image, OrderDocumentFileUploader
 
@@ -11,10 +12,6 @@ module AML
     belongs_to :operator, class_name: 'AML::Operator', foreign_key: :aml_operator_id, optional: true, inverse_of: :payment_card_orders
 
     has_one :aml_payment_card, class_name: 'AML::PaymentCard', inverse_of: :aml_accepted_order, foreign_key: :aml_payment_card_order_id
-
-    validates :card_brand, presence: true
-    validates :card_bin, presence: true, length: { is: 6 }
-    validates :card_suffix, presence: true, length: { is: 4 }
 
     ransacker :id do
       Arel.sql("CONVERT(#{table_name}.id, CHAR(8))")
@@ -39,9 +36,9 @@ module AML
     def accept
       touch :operated_at
       client.aml_payment_cards.create!(
-        brand: card_brand,
-        bin: card_bin,
-        suffix: card_suffix,
+        card_brand: card_brand,
+        card_bin: card_bin,
+        card_suffix: card_suffix,
         aml_client_id: client.id,
         aml_payment_card_order_id: id
       )

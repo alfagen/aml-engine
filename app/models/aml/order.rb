@@ -94,6 +94,10 @@ module AML
       ["##{client.id}", client.first_name, client.surname, client.patronymic].compact.join ' '
     end
 
+    def accepted_at
+      return object.operated_at if object.accepted?
+    end
+
     protected
 
     def attributes_to_clone

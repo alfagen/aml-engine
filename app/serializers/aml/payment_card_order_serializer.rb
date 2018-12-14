@@ -6,7 +6,7 @@ module AML
 
     belongs_to :aml_reject_reason, record_type: :aml_status, serializer: 'AML::RejectReasonSerializer'
 
-    attributes :workflow_state, :reject_reason_details, :created_at, :updated_at
+    attributes :aml_client_id, :workflow_state, :reject_reason_details, :created_at, :updated_at
 
     attributes :card_brand, :card_bin, :card_suffix
 

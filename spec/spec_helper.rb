@@ -60,6 +60,7 @@ RSpec.configure do |config|
 	config.before(:suite) do
     DatabaseRewinder.clean_all
     FactoryBot.find_definitions
+    ActionMailer::Base.deliveries.clear
   end
 
   config.after(:each) do

@@ -7,7 +7,7 @@ module AML
     end
 
     def notify(notification_key)
-      AML::NotificationMailer.logger.warn "Try to notify order[#{id}] with #{notification_key}"
+      AML::NotificationMailer.logger.warn "Try to notify #{order_name}[#{id}] with #{notification_key}"
 
       notification = client.aml_status&.send notification_key
       unless notification
@@ -28,6 +28,10 @@ module AML
         first_name: client.try(:first_name),
         reject_reason_title: aml_reject_reason.try(:title),
         reject_reason_details: reject_reason_details.presence
+    end
+
+    def order_name
+      self.class.name == 'AML::PaymentCardOrder' ? 'payment card order' : 'order'
     end
   end
 end

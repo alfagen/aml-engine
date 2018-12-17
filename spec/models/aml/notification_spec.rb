@@ -29,9 +29,15 @@ RSpec.describe AML::Notification, type: :model do
     end
 
     context do
-      it 'если есть template_id то done! отправляет уведомление' do
+      it 'если нет template_id то не отправляется уведомление' do
+        expect{ aml_order.done! }.to_not change { ActionMailer::Base.deliveries.count }
+      end
+    end
+
+    context do
+      it 'если есть template_id то отправляется уведомление' do
         pending_notification.aml_notification_templates.update template_id: 'template_id'
-        aml_order.done!
+        expect{ aml_order.done! }.to change { ActionMailer::Base.deliveries.count }.by(1)
       end
     end
   end

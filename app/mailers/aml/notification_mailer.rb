@@ -1,6 +1,8 @@
 module AML
   class NotificationMailer < ApplicationMailer
     def notify(email:, template_id:, data: {})
+      AML.mail_from ||= 'support@kassa.cc'
+
       AML.logger.info "Notify from #{AML.mail_from} to #{email} with template_id #{template_id} and data #{data}"
       mail(
         from:        AML.mail_from,

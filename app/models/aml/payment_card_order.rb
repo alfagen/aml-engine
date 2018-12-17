@@ -2,6 +2,7 @@ module AML
   class PaymentCardOrder < ApplicationRecord
     include Authority::Abilities
     include Workflow
+    include PaymentCardOrdersNotifications
     include OrdersWorkflow
     include CardValidation
 
@@ -10,6 +11,9 @@ module AML
     belongs_to :client, class_name: 'AML::Client', foreign_key: :aml_client_id, inverse_of: :payment_card_orders, dependent: :destroy
     belongs_to :aml_reject_reason, class_name: 'AML::RejectReason', foreign_key: :aml_reject_reason_id, optional: true
     belongs_to :operator, class_name: 'AML::Operator', foreign_key: :aml_operator_id, optional: true, inverse_of: :payment_card_orders
+    belongs_to :on_pending_notification, class_name: 'AML::Notification', optional: true
+    belongs_to :on_accept_notification, class_name: 'AML::Notification', optional: true
+    belongs_to :on_reject_notification, class_name: 'AML::Notification', optional: true
 
     has_one :aml_payment_card, class_name: 'AML::PaymentCard', inverse_of: :aml_accepted_order, foreign_key: :aml_payment_card_order_id
 

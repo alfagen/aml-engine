@@ -1,7 +1,6 @@
 module AML
   module OrdersWorkflow
     extend ActiveSupport::Concern
-    include OrdersNotifications
 
     included do
       workflow_column :workflow_state
@@ -15,7 +14,7 @@ module AML
         # Пользователь загрузил, ждет когда оператор начнет обрабатывать
         state :pending do
           on_entry do
-            notify notification_key_name('pending')
+            notify :on_pending_notification
           end
           event :start, transitions_to: :processing
           event :cancel, transitions_to: :canceled
@@ -32,14 +31,14 @@ module AML
           # TODO сомнительно что можно так делать
           event :reject, transitions_to: :rejected
           on_entry do
-            notify notification_key_name('accept')
+            notify :on_accept_notification
           end
         end
 
         # Отклонена оператором
         state :rejected do
           on_entry do
-            notify notification_key_name('reject')
+            notify :on_reject_notification
           end
         end
 
@@ -61,10 +60,6 @@ module AML
       halt! 'Причина должна быть указана' unless reject_reason.is_a? AML::RejectReason
       update aml_reject_reason: reject_reason, reject_reason_details: details
       touch :operated_at
-    end
-
-    def notification_key_name(state)
-      self.class.name == 'AML::PaymentCardOrder' ? "on_card_#{state}_notification".to_sym : "on_#{state}_notification".to_sym
     end
   end
 end

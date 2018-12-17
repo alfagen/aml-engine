@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_17_064047) do
+ActiveRecord::Schema.define(version: 2018_12_17_190457) do
 
   create_table "aml_agreement_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "aml_agreement_id", null: false
@@ -283,8 +283,14 @@ ActiveRecord::Schema.define(version: 2018_12_17_064047) do
     t.bigint "aml_operator_id"
     t.timestamp "pending_at"
     t.timestamp "operated_at"
+    t.bigint "on_pending_notification_id"
+    t.bigint "on_accept_notification_id"
+    t.bigint "on_reject_notification_id"
     t.index ["aml_client_id"], name: "index_aml_payment_card_orders_on_aml_client_id"
     t.index ["aml_operator_id"], name: "index_aml_payment_card_orders_on_aml_operator_id"
+    t.index ["on_accept_notification_id"], name: "index_aml_payment_card_orders_on_on_accept_notification_id"
+    t.index ["on_pending_notification_id"], name: "index_aml_payment_card_orders_on_on_pending_notification_id"
+    t.index ["on_reject_notification_id"], name: "index_aml_payment_card_orders_on_on_reject_notification_id"
     t.index ["workflow_state", "operated_at"], name: "index_aml_payment_card_orders_on_workflow_state_and_operated_at"
     t.index ["workflow_state", "pending_at"], name: "index_aml_payment_card_orders_on_workflow_state_and_pending_at"
   end
@@ -343,14 +349,8 @@ ActiveRecord::Schema.define(version: 2018_12_17_064047) do
     t.bigint "on_pending_notification_id"
     t.bigint "on_accept_notification_id"
     t.bigint "on_reject_notification_id"
-    t.bigint "on_card_pending_notification_id"
-    t.bigint "on_card_accept_notification_id"
-    t.bigint "on_card_reject_notification_id"
     t.index ["key"], name: "index_aml_statuses_on_key", unique: true
     t.index ["on_accept_notification_id"], name: "index_aml_statuses_on_on_accept_notification_id"
-    t.index ["on_card_accept_notification_id"], name: "index_aml_statuses_on_on_card_accept_notification_id"
-    t.index ["on_card_pending_notification_id"], name: "index_aml_statuses_on_on_card_pending_notification_id"
-    t.index ["on_card_reject_notification_id"], name: "index_aml_statuses_on_on_card_reject_notification_id"
     t.index ["on_pending_notification_id"], name: "index_aml_statuses_on_on_pending_notification_id"
     t.index ["on_reject_notification_id"], name: "index_aml_statuses_on_on_reject_notification_id"
   end
@@ -374,10 +374,10 @@ ActiveRecord::Schema.define(version: 2018_12_17_064047) do
   add_foreign_key "aml_orders", "aml_operators", column: "operator_id"
   add_foreign_key "aml_orders", "aml_orders", column: "cloned_order_id"
   add_foreign_key "aml_orders", "aml_statuses"
+  add_foreign_key "aml_payment_card_orders", "aml_notifications", column: "on_accept_notification_id"
+  add_foreign_key "aml_payment_card_orders", "aml_notifications", column: "on_pending_notification_id"
+  add_foreign_key "aml_payment_card_orders", "aml_notifications", column: "on_reject_notification_id"
   add_foreign_key "aml_statuses", "aml_notifications", column: "on_accept_notification_id"
-  add_foreign_key "aml_statuses", "aml_notifications", column: "on_card_accept_notification_id"
-  add_foreign_key "aml_statuses", "aml_notifications", column: "on_card_pending_notification_id"
-  add_foreign_key "aml_statuses", "aml_notifications", column: "on_card_reject_notification_id"
   add_foreign_key "aml_statuses", "aml_notifications", column: "on_pending_notification_id"
   add_foreign_key "aml_statuses", "aml_notifications", column: "on_reject_notification_id"
 end

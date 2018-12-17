@@ -18,6 +18,9 @@ module AML
     belongs_to :on_pending_notification, class_name: 'AML::Notification', optional: true
     belongs_to :on_accept_notification, class_name: 'AML::Notification', optional: true
     belongs_to :on_reject_notification, class_name: 'AML::Notification', optional: true
+    belongs_to :on_card_pending_notification, class_name: 'AML::Notification', optional: true
+    belongs_to :on_card_accept_notification, class_name: 'AML::Notification', optional: true
+    belongs_to :on_card_reject_notification, class_name: 'AML::Notification', optional: true
 
     register_currency :eur
     monetize :max_amount_limit_cents

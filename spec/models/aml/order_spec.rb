@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe AML::Order, type: :model do
   let!(:aml_document_kind) { create :aml_document_kind }
-  let(:aml_status) { create :aml_status, :default }
+  let!(:aml_status) { create :aml_status, :default }
   let!(:aml_client) {
     create :aml_client,
     aml_status: aml_status,

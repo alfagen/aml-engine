@@ -25,7 +25,7 @@ module AML
       end
 
       client.notify notification_template.template_id,
-        first_name: (first_name.presence || client.first_name),
+        first_name: client.try(:first_name),
         reject_reason_title: aml_reject_reason.try(:title),
         reject_reason_details: reject_reason_details.presence
     end

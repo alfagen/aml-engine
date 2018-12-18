@@ -15,7 +15,7 @@ table.table.table-condensed.table-striped.table-bordered
         th
           .text-center= locale
       th
-        |Key
+        = t 'activerecord.attributes.aml/notification.key'
       th
 
   - AML::Notification.order(:title).each do |notification|
@@ -26,7 +26,7 @@ table.table.table-condensed.table-striped.table-bordered
         td.text-nowrap
           code= best_in_place t, :template_id
       td
-        = best_in_place notification, :key, as: :select, collection: AML::Notification.key.values.map{ |z| [z, z] } << ['', 'Ключ не указан']
+        = best_in_place notification, :key, as: :select, collection: AML::Notification.key.values.map{ |z| [z, t('activerecord.attributes.aml/notification.' + z)] } << ['', t('activerecord.attributes.aml/notification.no_key')]
       td
         = link_to 'Удалить', notification_path(notification), method: :delete, data: { confirm: 'Удалить на совсем?' }, class: 'btn btn-danger btn-sm'
 

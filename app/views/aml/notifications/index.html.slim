@@ -14,8 +14,7 @@ table.table.table-condensed.table-striped.table-bordered
       - I18n.available_locales.each do |locale|
         th
           .text-center= locale
-      th
-        = t 'activerecord.attributes.aml/notification.key'
+      th Key
       th
 
   - AML::Notification.order(:title).each do |notification|

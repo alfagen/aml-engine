@@ -2,4 +2,5 @@
   .row
     .col-md-6
       = f.input :title
+      = f.input :key, as: :select, collection: AML::Notification.key.values
   = f.button :submit, 'Сохранить', class: 'btn btn-success'

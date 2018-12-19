@@ -7,6 +7,8 @@ module AML
     include OrderNotifications
     include CardValidation
 
+    CARD_BRANDS = %w(visa master mir).freeze
+
     mount_uploader :image, OrderDocumentFileUploader
 
     belongs_to :client, class_name: 'AML::Client', foreign_key: :aml_client_id, inverse_of: :payment_card_orders, dependent: :destroy
@@ -15,9 +17,9 @@ module AML
 
     has_one :aml_payment_card, class_name: 'AML::PaymentCard', inverse_of: :aml_accepted_order, foreign_key: :aml_payment_card_order_id
 
-    validates_with AML::CardBrandValidator, card_brand_attribute: :card_brand
-    validates_with AML::CardBinValidator, card_bin: { card_brand_attribute: :card_brand }
-    validates_with AML::CardSuffixValidator, card_suffix: { card_brand_attribute: :card_brand }
+    validates :card_brand, inclusion: { in: CARD_BRANDS, message: "Валидны: #{CARD_BRANDS.join(', ')}." }
+    validates :card_bin, card_bin: { card_brand_attribute: :card_brand }
+    validates :card_suffix, card_suffix: { card_brand_attribute: :card_brand }
 
     ransacker :id do
       Arel.sql("CONVERT(#{table_name}.id, CHAR(8))")

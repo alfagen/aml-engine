@@ -3,7 +3,7 @@ module AML
     CARD_SUFFIX = { visa: 4, master: 4, mir: 2 }
 
     def validate(object)
-      object.errors.add(options.keys.first, message(object)) unless object.send(options.keys.first).length == CARD_SUFFIX[card_brand(object)]
+      object.errors.add(options[:attributes].first, message(object)) unless object.send(options[:attributes].first).length == CARD_SUFFIX[card_brand(object)]
     end
 
     private
@@ -13,7 +13,7 @@ module AML
     end
 
     def card_brand(object)
-      object.send(options[options.keys.first][:card_brand_attribute]).downcase.to_sym
+      object.send(options[:card_brand_attribute]).downcase.to_sym
     end
   end
 end

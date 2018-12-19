@@ -2,6 +2,6 @@
   .row
     .col-md-6
       = f.input :title
-      = f.input :key, as: :select, collection: AML::Notification.key.values.map{ |z| [t(z, scope: 'activerecord.attributes.aml/notification'), z] },
-        include_blank: t('no_key', scope: 'activerecord.attributes.aml/notification')
+      = f.input :key, collection: AML::Notification.key.values.map(&:to_sym),
+        include_blank: t(:no_key)
   = f.button :submit, 'Сохранить', class: 'btn btn-success'

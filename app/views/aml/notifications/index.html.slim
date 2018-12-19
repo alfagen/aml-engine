@@ -21,7 +21,7 @@ table.table.table-condensed.table-striped.table-bordered
     tr
       th= best_in_place_if notification.updatable_by?(current_user), notification, :title
       td
-        = best_in_place notification, :key, as: :select, collection: AML::Notification.key.values.map{ |z| [z, t('activerecord.attributes.aml/notification.' + z)] } << ['', t('activerecord.attributes.aml/notification.no_key')]
+        = best_in_place notification, :key, as: :select, collection: AML::Notification.key.values.map{ |z| [z, t(z, scope: 'activerecord.attributes.aml/notification')] } << ['', t('no_key', scope: 'activerecord.attributes.aml/notification')]
       - I18n.available_locales.each do |locale|
         - t = notification.aml_notification_templates.find_or_initialize_by(locale: locale)
         td.text-nowrap

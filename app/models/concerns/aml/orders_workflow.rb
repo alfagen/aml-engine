@@ -1,7 +1,6 @@
 module AML
   module OrdersWorkflow
     extend ActiveSupport::Concern
-    include OrdersNotifications
 
     included do
       workflow_column :workflow_state

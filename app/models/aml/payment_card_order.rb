@@ -2,6 +2,7 @@ module AML
   class PaymentCardOrder < ApplicationRecord
     include Authority::Abilities
     include Workflow
+    include PaymentCardOrdersNotifications
     include OrdersWorkflow
     include CardValidation
 

@@ -10,7 +10,7 @@ module AML
 
     after_create :create_templates
 
-    enumerize :key, in: %w(payment_card_pending payment_card_accepted payment_card_rejected)
+    enumerize :key, in: %w(on_pending_notification on_accept_notification on_reject_notification)
 
     def to_s
       title

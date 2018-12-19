@@ -37,12 +37,14 @@ module AML
     def accept
       touch :operated_at
       client.aml_payment_cards.create!(
-        card_brand: card_brand,
-        card_bin: card_bin,
-        card_suffix: card_suffix,
+        card_brand:    card_brand,
+        card_bin:      card_bin,
+        card_suffix:   card_suffix,
         aml_client_id: client.id,
         aml_payment_card_order_id: id
       )
+    rescue ActiveRecord::RecordNotUnique => err
+      AML.logger.warn "#{err} when creating payment_card for payment_card_order_id=#{id}"
     end
 
     def is_owner?(operator)

@@ -25,6 +25,20 @@ RSpec.describe AML::PaymentCardOrder, type: :model do
       end
 
       it { expect(order.aml_payment_card).to be_persisted }
+      it { expect(AML::PaymentCard.count).to eq 1 }
+
+      context 'when accepts other orider with same card for same client' do
+        let(:operator) { create :aml_operator }
+        let(:order2) { create :aml_payment_card_order, aml_client_id: aml_client.id }
+        before do
+          order2.update_attribute :image, image
+          order2.start! operator: operator
+          order2.accept!
+        end
+
+        it { expect(order2.aml_payment_card).to be_nil }
+        it { expect(AML::PaymentCard.count).to eq 1 }
+      end
     end
   end
 end

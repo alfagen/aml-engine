@@ -18,6 +18,10 @@ module AML
     mattr_accessor :mail_from
     mattr_accessor :logger
 
+    mattr_accessor :card_brands
+    mattr_accessor :card_bin
+    mattr_accessor :card_suffix
+
     def logger
       @@logger || Rails.logger
     end

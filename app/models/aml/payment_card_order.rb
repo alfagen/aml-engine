@@ -5,9 +5,6 @@ module AML
 
     include OrderWorkflow
     include OrderNotifications
-    include CardValidation
-
-    CARD_BRANDS = %w(visa master mir).freeze
 
     mount_uploader :image, OrderDocumentFileUploader
 
@@ -17,7 +14,7 @@ module AML
 
     has_one :aml_payment_card, class_name: 'AML::PaymentCard', inverse_of: :aml_accepted_order, foreign_key: :aml_payment_card_order_id
 
-    validates :card_brand, inclusion: { in: CARD_BRANDS, message: "Валидны: #{CARD_BRANDS.join(', ')}." }
+    validates :card_brand, inclusion: { in: AML.card_brands, message: "Валидны: #{AML.card_brands.join(', ')}." }
     validates :card_bin, card_bin: { card_brand_attribute: :card_brand }
     validates :card_suffix, card_suffix: { card_brand_attribute: :card_brand }
 

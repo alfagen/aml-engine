@@ -1,5 +1,5 @@
 module AML
-  module OrdersWorkflow
+  module OrderWorkflow
     extend ActiveSupport::Concern
 
     included do

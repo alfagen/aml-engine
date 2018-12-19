@@ -2,8 +2,9 @@ module AML
   class PaymentCardOrder < ApplicationRecord
     include Authority::Abilities
     include Workflow
-    include PaymentCardOrdersNotifications
-    include OrdersWorkflow
+
+    include OrderWorkflow
+    include OrderNotifications
     include CardValidation
 
     mount_uploader :image, OrderDocumentFileUploader
@@ -58,6 +59,12 @@ module AML
 
     def client_name
       ["##{client.id}", client.first_name, client.surname, client.patronymic].compact.join ' '
+    end
+
+    private
+
+    def find_notification_for_key(notification_key)
+      AML::Notification.find_by(key: notification_key.to_s)
     end
   end
 end

@@ -2,10 +2,11 @@ module AML
   class Order < ApplicationRecord
     extend Enumerize
     include Workflow
-    include OrdersNotifications
-    include OrdersWorkflow
     include Archivable
     include Authority::Abilities
+
+    include OrderWorkflow
+    include OrderNotifications
     include OrderCardHoldingSupport
 
     ATTRIBUTES_TO_CLONE = %w(first_name surname patronymic birth_date).freeze
@@ -107,6 +108,10 @@ module AML
 
     private
 
+    def find_notification_for_key(notification_key)
+      client.aml_status&.send notification_key
+    end
+
     def create_checks
       AML::CheckList.alive.ordered.each do |c|
         order_checks.create! aml_check_list: c
@@ -153,5 +158,7 @@ module AML
     def set_default_aml_status
       self.aml_status ||= ::AML.default_status
     end
+
+
   end
 end

@@ -15,7 +15,9 @@ module AML
 
     has_one :aml_payment_card, class_name: 'AML::PaymentCard', inverse_of: :aml_accepted_order, foreign_key: :aml_payment_card_order_id
 
-    validates_with AML::CardValidation
+    validates_with AML::CardBrandValidator, card_brand_attribute: :card_brand
+    validates_with AML::CardBinValidator, card_bin: { card_brand_attribute: :card_brand }
+    validates_with AML::CardSuffixValidator, card_suffix: { card_brand_attribute: :card_brand }
 
     ransacker :id do
       Arel.sql("CONVERT(#{table_name}.id, CHAR(8))")

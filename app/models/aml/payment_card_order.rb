@@ -43,7 +43,8 @@ module AML
         aml_client_id: client.id,
         aml_payment_card_order_id: id
       )
-    rescue ActiveRecord::RecordNotUnique => err
+    rescue Mysql2::Error, ActiveRecord::RecordNotUnique => err
+      Bugsnag.notify err if defined? Bugsnag
       AML.logger.warn "#{err} when creating payment_card for payment_card_order_id=#{id}"
     end
 

@@ -2,6 +2,5 @@
   .row
     .col-md-6
       = f.input :title
-      = f.input :key, collection: AML::Notification.key.values.map(&:to_sym),
-        include_blank: t(:no_key)
+      = f.input :key, collection: AML::Notification.key.values.map(&:to_sym), include_blank: true
   = f.button :submit, 'Сохранить', class: 'btn btn-success'

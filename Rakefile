@@ -38,3 +38,10 @@ namespace :doc do
     Workflow::Draw::workflow_diagram(ENV['MODEL'].constantize)
   end
 end
+
+namespace :rubocop do
+  desc 'Run rubocop with aml-engine config'
+  task :rubocop_aml do
+    sh "rubocop -c .rubocop_aml.yml"
+  end
+end

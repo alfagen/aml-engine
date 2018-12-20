@@ -1,0 +1,25 @@
+inherit_from: .rubocop_aml_todo.yml
+AllCops:
+  TargetRubyVersion: 2.4
+  Exclude:
+    - 'bin/**/*'
+    - 'doc/**/*'
+    - 'db/migrate/*'
+    - 'spec/dummy/**/*'
+
+Style/AsciiComments:
+  Enabled: false
+
+Rails/OutputSafety:
+  Exclude:
+    - 'app/helpers/application_helper.rb'
+
+Rails/FilePath:
+  Exclude:
+    - 'spec/rails_helper.rb'
+
+Metrics/AbcSize:
+  Max: 20
+
+Style/CommentAnnotation:
+  Enabled: false

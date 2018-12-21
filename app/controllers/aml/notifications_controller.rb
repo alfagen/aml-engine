@@ -9,6 +9,10 @@ module AML
       render :new, locals: { notification: AML::Notification.new(permitted_params) }
     end
 
+    def edit
+      render :edit, locals: { notification: notification }
+    end
+
     def create
       AML::Notification.create!(permitted_params)
 
@@ -22,6 +26,7 @@ module AML
       notification.update permitted_params
 
       respond_to do |format|
+        format.html { redirect_to notifications_path }
         format.json { respond_with_bip notification }
       end
     end

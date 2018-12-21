@@ -26,7 +26,7 @@ begin
 
   RSpec::Core::RakeTask.new(:spec)
 
-  task :default => :spec
+  task :default => [:spec, 'rubocop:rubocop_aml']
 rescue LoadError
   # no rspec available
 end
@@ -42,6 +42,6 @@ end
 namespace :rubocop do
   desc 'Run rubocop with aml-engine config'
   task :rubocop_aml do
-    sh "rubocop -c .rubocop_aml.yml"
+    sh 'rubocop -c .rubocop_aml.yml'
   end
 end

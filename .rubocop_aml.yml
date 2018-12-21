@@ -6,6 +6,7 @@ AllCops:
     - 'doc/**/*'
     - 'db/migrate/*'
     - 'spec/dummy/**/*'
+    - 'spec/spec_helper.rb'
 
 Style/AsciiComments:
   Enabled: false

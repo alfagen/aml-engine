@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 RSpec.describe AML::NotificationMailer do
-  let!(:pending_notification) { create :aml_notification, title: 'pending' }
-  let!(:aml_status) { create :aml_status, :default, on_pending_notification_id: pending_notification.id }
+  let(:pending_notification) { create :aml_notification, title: 'pending' }
+  let(:aml_status) { create :aml_status, :default, on_pending_notification_id: pending_notification.id }
   let!(:aml_client) {
     create :aml_client,
     aml_status: aml_status,
@@ -10,8 +10,7 @@ RSpec.describe AML::NotificationMailer do
     risk_category: AML::Client.risk_category.values.first
   }
   let!(:aml_order) { create :aml_order, aml_status_id: aml_status.id, client_id: aml_client.id }
-  let!(:aml_order_document) { create :aml_order_document, order_id: aml_order.id }
-  let!(:operator) { create :aml_operator }
+  let(:aml_order_document) { create :aml_order_document, order_id: aml_order.id }
 
   describe 'загруженные документы' do
     before do

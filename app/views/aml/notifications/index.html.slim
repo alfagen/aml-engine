@@ -20,8 +20,7 @@ table.table.table-condensed.table-striped.table-bordered
   - AML::Notification.order(:title).each do |notification|
     tr
       th= best_in_place_if notification.updatable_by?(current_user), notification, :title
-      td
-        = best_in_place notification, :key, as: :select, collection: AML::Notification.key.values.map{ |z| [z, t(z, scope: 'enumerize.key')] } << ['', t(:key, scope: 'simple_form.include_blanks.notification')]
+      td= notification.key
       - I18n.available_locales.each do |locale|
         - t = notification.aml_notification_templates.find_or_initialize_by(locale: locale)
         td.text-nowrap

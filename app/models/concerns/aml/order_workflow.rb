@@ -55,11 +55,5 @@ module AML
       update operator: nil
       touch :operated_at
     end
-
-    def reject(reject_reason:, details: nil)
-      halt! 'Причина должна быть указана' unless reject_reason.is_a? AML::RejectReason
-      update aml_reject_reason: reject_reason, reject_reason_details: details
-      touch :operated_at
-    end
   end
 end

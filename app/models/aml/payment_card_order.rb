@@ -7,7 +7,7 @@ module AML
     include OrderNotifications
     include CardValidation
 
-    mount_uploader :image, OrderDocumentFileUploader
+    mount_uploader :image, PaymentCardFileUploader
 
     belongs_to :client, class_name: 'AML::Client', foreign_key: :aml_client_id, inverse_of: :payment_card_orders, dependent: :destroy
     belongs_to :aml_reject_reason, class_name: 'AML::RejectReason', foreign_key: :aml_reject_reason_id, optional: true
@@ -20,7 +20,7 @@ module AML
     end
 
     def load!(_arg)
-      done!
+      done! if none?
     end
 
     def allow_done?

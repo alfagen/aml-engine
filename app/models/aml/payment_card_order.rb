@@ -35,12 +35,13 @@ module AML
       return operated_at if accepted?
     end
 
-
     def reject(reject_reason:, details: nil)
       halt! 'Причина должна быть указана' unless reject_reason.is_a? AML::RejectReason
-      update aml_reject_reason: reject_reason, reject_reason_details: details
-      aml_payment_card.delete
-      touch :operated_at
+      PaymentCardOrder.transaction do
+        update aml_reject_reason: reject_reason, reject_reason_details: details
+        aml_payment_card.destroy!
+        touch :operated_at
+      end
     end
 
     def accept

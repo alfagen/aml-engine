@@ -34,7 +34,7 @@ RSpec.describe AML::Client, type: :model do
 
   describe 'отправка уведомления клиенту' do
     it 'c template_id уведомления' do
-      expect{subject.notify('template_id')}.to change{ActionMailer::Base.deliveries.count}
+      expect{subject.notify('any_id')}.to change{ActionMailer::Base.deliveries.count}
       expect(ActionMailer::Base.deliveries.last.to).to eq [subject.email]
     end
   end

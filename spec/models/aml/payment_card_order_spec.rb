@@ -12,7 +12,7 @@ RSpec.describe AML::PaymentCardOrder, type: :model do
     let(:image) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'test_files', 'test.png')) }
 
     before do
-      order.update_attribute :image, image
+      order.done! image: image
     end
 
     it { expect(order.reload).to be_pending }
@@ -31,7 +31,7 @@ RSpec.describe AML::PaymentCardOrder, type: :model do
         let(:operator) { create :aml_operator }
         let(:order2) { create :aml_payment_card_order, aml_client_id: aml_client.id }
         before do
-          order2.update_attribute :image, image
+          order2.done! image: image
           order2.start! operator: operator
           order2.accept!
         end

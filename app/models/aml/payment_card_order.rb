@@ -19,16 +19,18 @@ module AML
       Arel.sql("CONVERT(#{table_name}.id, CHAR(8))")
     end
 
-    def load!(_arg)
-      done!
+    # NOTE для совместимости с OrderDocumentFileUploader
+    def load!(_image)
     end
 
+    # NOTE для совместимости с OrderWorkflow
     def allow_done?
-      image.present?
+      true
     end
 
+    # NOTE для совместимости с OrderWorkflow
     def allow_accept?
-      allow_done?
+      true
     end
 
     def accepted_at
@@ -53,7 +55,8 @@ module AML
       self.operator == operator
     end
 
-    def done
+    def done(image: )
+      update_attribute :image, image
       touch :pending_at
     end
 

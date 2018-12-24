@@ -5,9 +5,6 @@
   - if payment_card_order.rejectable_by?(current_user)
     =< link_to 'Отклонить', new_payment_card_order_rejection_path(payment_card_order), class: 'btn btn-danger'
 
-  - if payment_card_order.donable_by?(current_user)
-    = link_to 'done (клиентская кнопка)', done_payment_card_order_path(payment_card_order), method: :put, class: 'btn btn-success'
-
   - if payment_card_order.cancelable_by?(current_user)
     =< link_to 'Прекратить обработку', cancel_payment_card_order_path(payment_card_order), method: :put, class: 'btn btn-warning'
 

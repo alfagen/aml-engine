@@ -21,7 +21,6 @@ module AML
 
     # NOTE для совместимости с OrderDocumentFileUploader
     def load!(_image)
-      done!(image: _image)
     end
 
     # NOTE для совместимости с OrderWorkflow

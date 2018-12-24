@@ -62,6 +62,10 @@ RSpec.configure do |config|
     FactoryBot.find_definitions
   end
 
+  config.before(:each) do
+    ActionMailer::Base.deliveries.clear
+  end
+
   config.after(:each) do
     DatabaseRewinder.clean
   end

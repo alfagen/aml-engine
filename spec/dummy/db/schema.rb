@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_18_072204) do
+ActiveRecord::Schema.define(version: 2018_12_22_135949) do
 
   create_table "aml_agreement_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "aml_agreement_id", null: false
@@ -292,7 +292,7 @@ ActiveRecord::Schema.define(version: 2018_12_18_072204) do
 
   create_table "aml_payment_cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "card_brand", null: false
-    t.string "card_bin", limit: 6, null: false
+    t.string "card_bin", limit: 8, null: false
     t.string "card_suffix", limit: 4, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

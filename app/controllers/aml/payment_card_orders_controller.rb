@@ -39,6 +39,13 @@ module AML
       render :show, locals: { payment_card_order: payment_card_order }
     end
 
+    def done
+      authorize_action_for payment_card_order
+      payment_card_order.done!(image: params[:payment_card_order][:image])
+      flash.notice = 'Заявка отмечена как загруженная'
+      redirect_to payment_card_order_path(payment_card_order)
+    end
+
     def start
       authorize_action_for payment_card_order
       payment_card_order.start! operator: current_user
@@ -81,7 +88,7 @@ module AML
     end
 
     def permitted_params
-      params.fetch(:payment_card_order, {}).permit(:card_brand, :card_bin, :card_suffix, :image, :aml_client_id, :workflow_state)
+      params.fetch(:payment_card_order, {}).permit(:card_brand, :card_bin, :card_suffix, :aml_client_id, :workflow_state)
     end
 
     def q

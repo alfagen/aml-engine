@@ -40,5 +40,16 @@ RSpec.describe AML::PaymentCardOrder, type: :model do
         it { expect(AML::PaymentCard.count).to eq 1 }
       end
     end
+
+    context 'when notify' do
+      let(:notification_key) { :on_pending_notification }
+      let!(:notification)    { create :aml_notification, key: notification_key }
+      let(:template_id)      { SecureRandom.hex(6) }
+
+      it do
+        allow_any_instance_of(AML::NotificationTemplate).to receive(:template_id).and_return template_id
+        expect(order.send :notify, notification_key).to be_truthy
+      end
+    end
   end
 end

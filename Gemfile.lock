@@ -66,7 +66,7 @@ GIT
 PATH
   remote: .
   specs:
-    aml (0.4.24)
+    aml (0.4.25)
       active_link_to
       authority
       axlsx
@@ -182,7 +182,7 @@ GEM
     breadcrumbs_on_rails (3.0.1)
     builder (3.2.3)
     byebug (10.0.2)
-    carrierwave (1.2.3)
+    carrierwave (1.3.0)
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
       mime-types (>= 1.16)

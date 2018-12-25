@@ -7,9 +7,8 @@ hr
 
 - if payment_card_order.updatable_by?(current_user)
   = simple_form_for payment_card_order, url: done_payment_card_order_path, method: :put do |f|
-    = f.input :aml_client_id, as: :hidden
     = f.file_field :image
     br
-    = f.button :submit, 'Изменить', class: 'btn btn-success'
+    = f.button :submit, 'Загрузить', class: 'btn btn-success'
 
 = render 'payment_card_order_brief', payment_card_order: payment_card_order

@@ -5,7 +5,7 @@ hr
     h2.m-t-0 Заявка: #{payment_card_order.id}
 = render 'payment_card_order_actions', payment_card_order: payment_card_order
 
-- if payment_card_order.updatable_by?(current_user)
+- if payment_card_order.updatable_by?(current_operator)
   = simple_form_for payment_card_order, url: done_payment_card_order_path, method: :put do |f|
     = f.file_field :image
     br

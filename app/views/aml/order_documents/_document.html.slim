@@ -11,11 +11,11 @@ tr
   td style='min-width: 420px'
 
     .btn-group.btn-xs
-      - if document.acceptable_by?(current_user)
+      - if document.acceptable_by?(current_operator)
         =< link_to 'Принять', accept_order_document_path(document), method: :put, class: 'btn btn-success'
-      - if document.rejectable_by?(current_user)
+      - if document.rejectable_by?(current_operator)
         =< link_to 'Отказать', new_order_document_rejection_path(document), class: 'btn btn-danger'
     .btn-group.m-l-md
       =< link_to 'Показать', order_document_path(document), class: 'btn btn-default'
-      - if document.updatable_by?(current_user)
+      - if document.updatable_by?(current_operator)
         =< link_to 'Редактировать', edit_order_document_path(document), class: 'btn btn-default'

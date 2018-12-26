@@ -4,8 +4,8 @@ tr
   td = operator.workflow_state
   td = operator.role
   td.text-right
-    span.m-r-md= link_to 'Редактировать', edit_operator_path(operator), class: 'btn btn-default' if operator.updatable_by?(current_user)
-    - if operator.blockable_by?(current_user)
+    span.m-r-md= link_to 'Редактировать', edit_operator_path(operator), class: 'btn btn-default' if operator.updatable_by?(current_operator)
+    - if operator.blockable_by?(current_operator)
       .btn-group
         - if operator.unblocked?
           =< link_to 'Заблокировать', block_operator_path(operator), method: :put, class: 'btn btn-danger'

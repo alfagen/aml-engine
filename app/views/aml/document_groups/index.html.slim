@@ -1,4 +1,4 @@
-.pull-right= link_to 'Новая группа документов', new_document_group_path(document_group: { title: nil }), class: 'btn btn-default' if current_user.can_create?(AML::DocumentGroup)
+.pull-right= link_to 'Новая группа документов', new_document_group_path(document_group: { title: nil }), class: 'btn btn-default' if current_operator.can_create?(AML::DocumentGroup)
 h1 Группы документов
 hr
 br

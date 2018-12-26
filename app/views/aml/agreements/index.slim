@@ -1,4 +1,4 @@
-- if current_user.can_create?(AML::Agreement)
+- if current_operator.can_create?(AML::Agreement)
   .pull-right= link_to 'Добавить соглашение', new_agreement_path, class: 'btn btn-success'
 
 h2 Пользовательские соглашения

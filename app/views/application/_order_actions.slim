@@ -1,17 +1,17 @@
 .btn-group
-  - if order.startable_by?(current_user)
+  - if order.startable_by?(current_operator)
     = link_to 'Начать обработку', start_order_path(order), method: :put, class: 'btn btn-success'
 
-  - if order.rejectable_by?(current_user)
+  - if order.rejectable_by?(current_operator)
     =< link_to 'Отклонить', new_order_rejection_path(order), class: 'btn btn-danger'
 
-  - if order.donable_by?(current_user)
+  - if order.donable_by?(current_operator)
     = link_to 'done (клиентская кнопка)', done_order_path(order), method: :put, class: 'btn btn-success'
 
-  - if order.cancelable_by?(current_user)
+  - if order.cancelable_by?(current_operator)
     =< link_to 'Прекратить обработку', cancel_order_path(order), method: :put, class: 'btn btn-warning'
 
-  - if order.acceptable_by?(current_user)
+  - if order.acceptable_by?(current_operator)
     =< link_to 'Принять', accept_order_path(order), method: :put, class: 'btn btn-success'
 
 .m-t-md

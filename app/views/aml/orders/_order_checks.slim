@@ -13,9 +13,9 @@ h2.m-t-0 Проверка по спискам (чек-листы )
             .m-t-sm= order_check_workflow_state order_check.workflow_state
           td
             .btn-group.btn-sm
-              - if order_check.acceptable_by?(current_user)
+              - if order_check.acceptable_by?(current_operator)
                 = link_to 'Принять', accept_order_check_path(order, order_check), method: :put, class: 'btn btn-success'
-              - if order_check.rejectable_by?(current_user)
+              - if order_check.rejectable_by?(current_operator)
                 = link_to 'Отклонить', reject_order_check_path(order, order_check), method: :put, class: 'btn btn-danger'
 
   - unless order.processing?

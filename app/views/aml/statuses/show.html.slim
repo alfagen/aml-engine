@@ -21,14 +21,14 @@ h2 Статус: #{status.title}
         td = document_group.position
         td = document_group.alive?
         td
-          - if status.updatable_by?(current_user)
+          - if status.updatable_by?(current_operator)
             = link_to 'Убрать', document_group_to_status_path(document_group, aml_document_group_to_status: { aml_status_id: status.id, aml_document_group_id: document_group.id }), method: :delete, class: 'btn btn-default'
             =< link_to 'Типы документов', document_group_document_kinds_path(document_group), class: 'btn btn-default'
 - else
   .alert.alert-info Группы документов отсутствуют.
 
 
-- if status.not_belong_groups.any? && status.updatable_by?(current_user)
+- if status.not_belong_groups.any? && status.updatable_by?(current_operator)
   hr.m-t-lg
   h4 Добавить группу документов
   = simple_form_for :aml_document_group_to_status, url: document_group_to_statuses_path, method: :post do |f|

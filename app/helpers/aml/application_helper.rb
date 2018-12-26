@@ -59,5 +59,9 @@ module AML
 
       content_tag(:span, time.in_time_zone(current_time_zone.name), class: 'text-nowrap')
     end
+
+    def current_operator
+      current_user
+    end
   end
 end

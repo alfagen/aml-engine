@@ -1,4 +1,4 @@
-- if current_user.can_create?(AML::CheckList)
+- if current_operator.can_create?(AML::CheckList)
   .pull-right= link_to 'Новый чек-лист', new_check_list_path, class: 'btn btn-success'
 
 h2 Чек-листы

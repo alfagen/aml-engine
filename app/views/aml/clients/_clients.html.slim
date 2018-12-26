@@ -36,4 +36,4 @@ table.table.table-condensed.table-striped
         td= cd.current_order
         td.text-right
           .btn-group
-            = link_to 'Подробнее', client_path(cd), class: 'btn btn-default' if client.readable_by?(current_user)
+            = link_to 'Подробнее', client_path(cd), class: 'btn btn-default' if client.readable_by?(current_operator)

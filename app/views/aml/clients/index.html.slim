@@ -1,4 +1,4 @@
-.pull-right= link_to 'Новый клиент', new_client_path, class: 'btn btn-success' if current_user.can_create?(AML::Client)
+.pull-right= link_to 'Новый клиент', new_client_path, class: 'btn btn-success' if current_operator.can_create?(AML::Client)
 h1 Список клиентoв
 hr
 h5 Поиск по полям клиента:

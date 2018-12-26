@@ -1,12 +1,12 @@
 .btn-group
-  - if payment_card_order.startable_by?(current_user)
+  - if payment_card_order.startable_by?(current_operator)
     = link_to 'Начать обработку', start_payment_card_order_path(payment_card_order), method: :put, class: 'btn btn-success'
 
-  - if payment_card_order.rejectable_by?(current_user)
+  - if payment_card_order.rejectable_by?(current_operator)
     =< link_to 'Отклонить', new_payment_card_order_rejection_path(payment_card_order), class: 'btn btn-danger'
 
-  - if payment_card_order.cancelable_by?(current_user)
+  - if payment_card_order.cancelable_by?(current_operator)
     =< link_to 'Прекратить обработку', cancel_payment_card_order_path(payment_card_order), method: :put, class: 'btn btn-warning'
 
-  - if payment_card_order.acceptable_by?(current_user)
+  - if payment_card_order.acceptable_by?(current_operator)
     =< link_to 'Принять', accept_payment_card_order_path(payment_card_order), method: :put, class: 'btn btn-success'

@@ -11,7 +11,7 @@ module AML
 
     before_action :check_blocked
 
-    helper_method :document_kinds, :current_time_zone
+    helper_method :document_kinds, :current_time_zone, :current_operator
 
     ensure_authorization_performed except: %i[error reset_db drop_clients drop_orders]
 
@@ -52,7 +52,7 @@ module AML
     private
 
     def check_blocked
-      if current_user.blocked?
+      if current_operator.blocked?
         flash.now.alert = 'Вы заблокированы'
         raise Authority::SecurityViolation.exception(current_user, nil, nil)
       end
@@ -79,6 +79,10 @@ module AML
 
     def current_time_zone
       current_user.try(:time_zone) || Time.zone
+    end
+
+    def current_operator
+      current_user&.aml_operator || raise("aml_operator is not defined for user #{current_user.id}")
     end
   end
 end

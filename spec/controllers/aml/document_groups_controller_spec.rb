@@ -4,9 +4,15 @@ RSpec.describe AML::DocumentGroupsController, type: :controller do
   routes { AML::Engine.routes }
   let(:aml_status) { create(:aml_status) }
   let(:aml_document_group) { create(:aml_document_group) }
-  let(:user) { create :aml_operator, :administrator }
+  let(:operator) { create :aml_operator, :administrator }
 
-  before { login_user(user) }
+  let(:user) { double aml_operator: operator }
+
+  before do
+    user.class.include Authority::Abilities
+    user.class.include Authority::UserAbilities
+    allow(controller).to receive(:current_user).and_return user
+  end
 
   it '#create' do
     post 'create', params: { document_group: { title: 'title', details: 'details', position: 1 } }

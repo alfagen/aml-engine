@@ -2,12 +2,18 @@ require 'rails_helper'
 
 RSpec.describe AML::PaymentCardsController, type: :controller do
   routes { AML::Engine.routes }
-  let(:user) { create :aml_operator, :administrator }
   let!(:aml_client) { create :aml_client, aml_status: create(:aml_status, key: AML.default_status_key) }
   let!(:aml_payment_card_order) { create :aml_payment_card_order, aml_client_id: aml_client.id }
   let(:aml_payment_card) { create :aml_payment_card, aml_client_id: aml_client.id, aml_payment_card_order_id: aml_payment_card_order.id}
 
-  before { login_user user }
+  let(:operator) { create :aml_operator, :administrator }
+  let(:user) { double aml_operator: operator }
+
+  before do
+    user.class.include Authority::Abilities
+    user.class.include Authority::UserAbilities
+    allow(controller).to receive(:current_user).and_return user
+  end
 
   it '#index' do
     get :index

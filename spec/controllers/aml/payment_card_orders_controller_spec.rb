@@ -4,12 +4,18 @@ RSpec.describe AML::PaymentCardOrdersController, type: :controller do
   routes { AML::Engine.routes }
   render_views
 
-  let(:administrator) { create(:aml_operator, :administrator) }  
   let!(:default_status) { create :aml_status, :default }
   let!(:aml_client) { create :aml_client }
   let(:aml_payment_card_order) { create :aml_payment_card_order, aml_client_id: aml_client.id}
 
-  before { login_user administrator }
+  let(:operator) { create :aml_operator, :administrator }
+  let(:user) { double aml_operator: operator }
+
+  before do
+    user.class.include Authority::Abilities
+    user.class.include Authority::UserAbilities
+    allow(controller).to receive(:current_user).and_return user
+  end
 
   describe 'actions' do
     it '#show' do

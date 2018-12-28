@@ -3,11 +3,18 @@ require 'rails_helper'
 RSpec.describe AML::DocumentKindsController, type: :controller do
   routes { AML::Engine.routes }
   describe '#base actions' do
-    let(:user) { create :aml_operator, :administrator }
     let(:aml_document_group) { create(:aml_document_group) }
     let(:aml_document_kind) { create(:aml_document_kind) }
 
-    before { login_user(user) }
+    let(:operator) { create :aml_operator, :administrator }
+
+    let(:user) { double aml_operator: operator }
+
+    before do
+      user.class.include Authority::Abilities
+      user.class.include Authority::UserAbilities
+      allow(controller).to receive(:current_user).and_return user
+    end
 
     context 'with registered operator' do
       it '#create' do

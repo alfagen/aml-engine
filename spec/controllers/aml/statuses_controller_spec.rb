@@ -3,10 +3,16 @@ require 'rails_helper'
 RSpec.describe AML::StatusesController, type: :controller do
   routes { AML::Engine.routes }
   describe '#base actions' do
-    let(:administrator) { create(:aml_operator, role: 'administrator') }
     let(:aml_status) { create(:aml_status) }
 
-    before { login_user(administrator) }
+    let(:operator) { create :aml_operator, :administrator }
+    let(:user) { double aml_operator: operator }
+
+    before do
+      user.class.include Authority::Abilities
+      user.class.include Authority::UserAbilities
+      allow(controller).to receive(:current_user).and_return user
+    end
 
     context 'with registered administrator' do
       it '#create' do

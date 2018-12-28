@@ -2,13 +2,20 @@ require 'rails_helper'
 
 RSpec.describe AML::OperatorsController, type: :controller do
   routes { AML::Engine.routes }
-  let(:administrator) { create(:aml_operator, role: 'administrator') }
   let(:operator) { create(:aml_operator, role: 'operator') }
   let(:test_operator) { create(:aml_operator, role: 'operator') }
 
-  context 'администратор может' do
-    before { login_user administrator }
+  let(:operator) { create :aml_operator, :administrator }
 
+  let(:user) { double aml_operator: operator }
+
+  before do
+    user.class.include Authority::Abilities
+    user.class.include Authority::UserAbilities
+    allow(controller).to receive(:current_user).and_return user
+  end
+
+  context 'администратор может' do
     it '#create создавать операторов' do
       post :create, params: { operator: test_operator.attributes }
       expect(response.status).to eq(200)

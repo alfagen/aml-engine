@@ -7,10 +7,15 @@ RSpec.describe AML::OrdersController, type: :controller do
   let!(:aml_status) { create :aml_status, :default }
   let!(:aml_order) { create :aml_order }
 
-  before { login_user user }
+  before do
+    user.class.include Authority::Abilities
+    user.class.include Authority::UserAbilities
+    allow(controller).to receive(:current_user).and_return user
+  end
 
   describe 'оператор' do
-    let(:user) { create :aml_operator }
+    let(:operator) { create :aml_operator }
+    let(:user) { double aml_operator: operator }
 
     it '#show' do
       get :show, params: { id: aml_order.id }
@@ -24,7 +29,8 @@ RSpec.describe AML::OrdersController, type: :controller do
   end
 
   describe 'administartor' do
-    let(:user) { create(:aml_operator, role: 'administrator') }
+    let(:operator) { create :aml_operator, :administrator }
+    let(:user) { double aml_operator: operator }
 
     it '#create' do
       post :create, params: { order: attributes_for(:aml_order).merge(client_id: aml_order.client_id) }

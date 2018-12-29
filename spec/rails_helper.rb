@@ -8,6 +8,7 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+Dir[AML::Engine.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -44,6 +45,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include Sorcery::TestHelpers::Rails::Controller, type: :controller
   config.include Sorcery::TestHelpers::Rails::Integration, type: :feature
+  config.include Helpers
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.

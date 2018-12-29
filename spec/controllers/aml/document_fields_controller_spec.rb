@@ -9,11 +9,7 @@ RSpec.describe AML::DocumentFieldsController, type: :controller do
 
   let(:user) { double aml_operator: operator }
 
-  before do
-    user.class.include Authority::Abilities
-    user.class.include Authority::UserAbilities
-    allow(controller).to receive(:current_user).and_return user
-  end
+  before { user_authority(user, controller) }
 
   context '#update' do
     it 'update' do

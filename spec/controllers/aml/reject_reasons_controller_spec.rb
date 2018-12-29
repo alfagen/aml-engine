@@ -8,11 +8,7 @@ RSpec.describe AML::RejectReasonsController, type: :controller do
   let(:operator) { create :aml_operator, :administrator }
   let(:user) { double aml_operator: operator }
 
-  before do
-    user.class.include Authority::Abilities
-    user.class.include Authority::UserAbilities
-    allow(controller).to receive(:current_user).and_return user
-  end
+  before { user_authority(user, controller) }
 
   it '#create' do
     post :create, params: { reject_reason: attributes_for(:aml_reject_reason) }

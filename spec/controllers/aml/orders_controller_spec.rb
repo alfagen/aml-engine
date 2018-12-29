@@ -7,11 +7,7 @@ RSpec.describe AML::OrdersController, type: :controller do
   let!(:aml_status) { create :aml_status, :default }
   let!(:aml_order) { create :aml_order }
 
-  before do
-    user.class.include Authority::Abilities
-    user.class.include Authority::UserAbilities
-    allow(controller).to receive(:current_user).and_return user
-  end
+  before { user_authority(user, controller) }
 
   describe 'оператор' do
     let(:operator) { create :aml_operator }

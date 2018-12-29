@@ -82,7 +82,7 @@ module AML
     end
 
     def current_operator
-      current_user&.aml_operator || raise("aml_operator is not defined for user #{current_user.id}")
+      current_user.aml_operator || raise("aml_operator is not defined for user #{current_user.id}")
     end
   end
 end

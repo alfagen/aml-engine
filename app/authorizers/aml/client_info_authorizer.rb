@@ -1,7 +1,7 @@
 module AML
   class ClientInfoAuthorizer < ApplicationAuthorizer
     def self.default(_adjective, user)
-      true
+      user.aml_operator
     end
   end
 end

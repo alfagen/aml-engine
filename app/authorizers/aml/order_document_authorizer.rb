@@ -4,7 +4,7 @@ module AML
     OWNER_REQUIRED_FOR_EVENTS = %i[accept reject].freeze
 
     def self.readable_by?(user)
-      user.aml_operator
+      user.aml_operator.present?
     end
 
     EVENTS.each do |event|

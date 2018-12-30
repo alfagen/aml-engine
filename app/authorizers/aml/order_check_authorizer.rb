@@ -2,15 +2,15 @@ module AML
   class OrderCheckAuthorizer < ApplicationAuthorizer
     EVENTS = %i[accept reject].freeze
     def self.readable_by?(user)
-      user.aml_operator
+      user.aml_operator.present?
     end
 
     def self.acceptable_by?(user)
-      user.aml_operator
+      user.aml_operator.present?
     end
 
     def self.rejectable_by?(user)
-      user.aml_operator
+      user.aml_operator.present?
     end
 
     def acceptable_by?(user)

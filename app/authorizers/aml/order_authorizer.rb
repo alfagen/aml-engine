@@ -4,13 +4,13 @@ module AML
     OWNER_REQUIRED_FOR_EVENTS = %i[accept reject cancel].freeze
 
     def self.readable_by?(user)
-      user.aml_operator
+      user.aml_operator.present?
     end
 
     EVENTS.each do |event|
       ability = Authority.abilities[event] || raise("No ability for event #{event}")
       define_singleton_method "#{ability}_by?" do |user|
-        user.aml_operator
+        user.aml_operator.present?
       end
     end
 

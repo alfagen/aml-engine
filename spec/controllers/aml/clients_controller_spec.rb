@@ -6,9 +6,9 @@ RSpec.describe AML::ClientsController, type: :controller do
   let(:aml_client) { create :aml_client, aml_status: aml_status }
 
   let(:operator) { create :aml_operator, :administrator }
-  let(:user) { double aml_operator: operator }
+  let(:user) { DummyUser.new }
 
-  before { user_authority(user, controller) }
+  before { user_operator(user, operator) }
 
   it '#create' do
     post 'create', params: { aml_client: attributes_for(:aml_client, aml_status_id: aml_status.id) }

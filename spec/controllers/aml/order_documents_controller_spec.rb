@@ -10,9 +10,9 @@ RSpec.describe AML::OrderDocumentsController, type: :controller do
     let(:aml_order_document) { create :aml_order_document, order: aml_order }
 
     let(:operator) { create :aml_operator, :administrator }
-    let(:user) { double aml_operator: operator }
+    let(:user) { DummyUser.new }
 
-    before { user_authority(user, controller) }
+    before { user_operator(user, operator) }
 
     it '#update' do
       put 'update', params: {

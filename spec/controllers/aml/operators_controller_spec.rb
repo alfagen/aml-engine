@@ -6,9 +6,9 @@ RSpec.describe AML::OperatorsController, type: :controller do
   let(:test_operator) { create(:aml_operator, role: 'operator') }
 
   let(:operator) { create :aml_operator, :administrator }
-  let(:user) { double aml_operator: operator }
+  let(:user) { DummyUser.new }
 
-  before { user_authority(user, controller) }
+  before { user_operator(user, operator) }
 
   context 'администратор может' do
     it '#create создавать операторов' do

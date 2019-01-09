@@ -7,9 +7,9 @@ RSpec.describe AML::DocumentKindsController, type: :controller do
     let(:aml_document_kind) { create(:aml_document_kind) }
 
     let(:operator) { create :aml_operator, :administrator }
-    let(:user) { double aml_operator: operator }
+    let(:user) { DummyUser.new }
 
-    before { user_authority(user, controller) }
+    before { user_operator(user, operator) }
 
     context 'with registered operator' do
       it '#create' do

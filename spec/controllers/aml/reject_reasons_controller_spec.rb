@@ -6,9 +6,9 @@ RSpec.describe AML::RejectReasonsController, type: :controller do
   let(:kind) { 'order_document_reason' }
 
   let(:operator) { create :aml_operator, :administrator }
-  let(:user) { double aml_operator: operator }
+  let(:user) { DummyUser.new }
 
-  before { user_authority(user, controller) }
+  before { user_operator(user, operator) }
 
   it '#create' do
     post :create, params: { reject_reason: attributes_for(:aml_reject_reason) }

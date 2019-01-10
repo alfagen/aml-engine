@@ -7,9 +7,9 @@ RSpec.describe AML::OrderRejectionsController, type: :controller do
   let(:reject_reason) { create :aml_reject_reason, :order_reason }
 
   let(:operator) { create :aml_operator, :administrator }
-  let(:user) { DummyUser.new }
+  let(:user) { DummyUser.new(aml_operator: operator) }
 
-  before { user_operator(user, operator) }
+  before { allow(controller).to receive(:current_user).and_return user }
 
   describe 'GET #new' do
     it 'returns http success' do

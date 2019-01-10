@@ -5,9 +5,9 @@ RSpec.describe AML::DocumentGroupToStatusesController, type: :controller do
   let(:aml_status) { create(:aml_status) }
   let(:aml_document_group) { create(:aml_document_group) }
   let(:operator) { create :aml_operator, :administrator }
-  let(:user) { DummyUser.new }
+  let(:user) { DummyUser.new(aml_operator: operator) }
 
-  before { user_operator(user, operator) }
+  before { allow(controller).to receive(:current_user).and_return user }
 
   describe 'actions' do
     context '#create' do

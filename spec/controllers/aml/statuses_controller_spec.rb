@@ -6,9 +6,9 @@ RSpec.describe AML::StatusesController, type: :controller do
     let(:aml_status) { create(:aml_status) }
 
     let(:operator) { create :aml_operator, :administrator }
-    let(:user) { DummyUser.new }
+    let(:user) { DummyUser.new(aml_operator: operator) }
 
-    before { user_operator(user, operator) }
+    before { allow(controller).to receive(:current_user).and_return user }
 
     context 'with registered administrator' do
       it '#create' do

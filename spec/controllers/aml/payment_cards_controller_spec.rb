@@ -7,9 +7,9 @@ RSpec.describe AML::PaymentCardsController, type: :controller do
   let(:aml_payment_card) { create :aml_payment_card, aml_client_id: aml_client.id, aml_payment_card_order_id: aml_payment_card_order.id}
 
   let(:operator) { create :aml_operator, :administrator }
-  let(:user) { DummyUser.new }
+  let(:user) { DummyUser.new(aml_operator: operator) }
 
-  before { user_operator(user, operator) }
+  before { allow(controller).to receive(:current_user).and_return user }
 
   it '#index' do
     get :index

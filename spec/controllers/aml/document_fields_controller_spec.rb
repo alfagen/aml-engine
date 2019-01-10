@@ -6,9 +6,9 @@ RSpec.describe AML::DocumentFieldsController, type: :controller do
   let!(:aml_document_field) { create(:aml_document_field) }
 
   let(:operator) { create :aml_operator, :administrator }
-  let(:user) { DummyUser.new }
+  let(:user) { DummyUser.new(aml_operator: operator) }
 
-  before { user_operator(user, operator) }
+  before { allow(controller).to receive(:current_user).and_return user }
 
   context '#update' do
     it 'update' do

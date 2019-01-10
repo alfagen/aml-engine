@@ -9,9 +9,9 @@ RSpec.describe AML::PaymentCardOrdersController, type: :controller do
   let(:aml_payment_card_order) { create :aml_payment_card_order, aml_client_id: aml_client.id}
 
   let(:operator) { create :aml_operator, :administrator }
-  let(:user) { DummyUser.new }
+  let(:user) { DummyUser.new(aml_operator: operator) }
 
-  before { user_operator(user, operator) }
+  before { allow(controller).to receive(:current_user).and_return user }
 
   describe 'actions' do
     it '#show' do

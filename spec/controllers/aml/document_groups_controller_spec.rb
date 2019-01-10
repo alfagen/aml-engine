@@ -6,9 +6,9 @@ RSpec.describe AML::DocumentGroupsController, type: :controller do
   let(:aml_document_group) { create(:aml_document_group) }
 
   let(:operator) { create :aml_operator, :administrator }
-  let(:user) { DummyUser.new }
+  let(:user) { DummyUser.new(aml_operator: operator) }
 
-  before { user_operator(user, operator) }
+  before { allow(controller).to receive(:current_user).and_return user }
 
   it '#create' do
     post 'create', params: { document_group: { title: 'title', details: 'details', position: 1 } }

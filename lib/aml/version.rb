@@ -1,4 +1,4 @@
 # Managed by ./release
 module AML
-  VERSION='0.4.29'
+  VERSION='0.5.1'
 end

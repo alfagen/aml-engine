@@ -3,14 +3,16 @@ require 'rails_helper'
 RSpec.describe AML::OrderDocumentsController, type: :controller do
   routes { AML::Engine.routes }
   describe '#actions' do
-    let(:user) { create :aml_operator, :administrator }
     let!(:aml_status) { create(:aml_status, key: 'guest') }
     let(:aml_document_kind) { create(:aml_document_kind) }
 
     let(:aml_order) { create :aml_order }
     let(:aml_order_document) { create :aml_order_document, order: aml_order }
 
-    before { login_user user }
+    let(:operator) { create :aml_operator, :administrator }
+    let(:user) { DummyUser.new(aml_operator: operator) }
+
+    before { allow(controller).to receive(:current_user).and_return user }
 
     it '#update' do
       put 'update', params: {

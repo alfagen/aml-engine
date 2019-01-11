@@ -10,7 +10,7 @@ gem 'active_link_to', github: 'BrandyMint/active_link_to'
 gem 'dapi-archivable', require: 'archivable'
 
 gem 'fast_jsonapi', github: 'HoJSim/fast_jsonapi', branch: 'dev'
-gem 'workflow', github: 'geekq/workflow'
+gem 'workflow', github: 'brandymint/workflow', branch: 'transition_availbility'
 gem 'globalize', github: 'globalize/globalize', ref: 'HEAD'
 
 gem 'sendgrid-actionmailer', github: 'dreimannzelt/sendgrid-actionmailer', branch: :dynamic_template_data

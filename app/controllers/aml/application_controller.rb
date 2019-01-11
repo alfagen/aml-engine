@@ -1,24 +1,21 @@
 module AML
   class ApplicationController < ::ApplicationController
-    helper NotyFlash::ApplicationHelper
-    helper LocalizedRender::Engine.helpers
+    # Подключены в core app
+    # helper NotyFlash::ApplicationHelper
+    # helper LocalizedRender::Engine.helpers
 
     include Pagination
-    rescue_from ActionController::InvalidAuthenticityToken, with: :rescue_invalid_authenticity_token
-    rescue_from Workflow::Error, with: :humanized_error
+    rescue_from Workflow::Error, with: :handle_humanized_error
 
     prepend_before_action :require_login
 
     before_action :check_blocked
 
-    helper_method :document_kinds, :current_time_zone, :current_operator
+    helper_method :document_kinds, :current_operator
 
     ensure_authorization_performed except: %i[error reset_db drop_clients drop_orders]
 
-    def error
-      raise 'test error'
-    end
-
+    # TODO Вынести в UtilsController
     def reset_db
       raise 'Доступно только на боевом' if Rails.env.production?
 
@@ -54,7 +51,8 @@ module AML
     def check_blocked
       unless current_user.aml_operator
         flash.now.alert = "У вас (#{current_user.email}) нет доступа к AML"
-        return not_authenticated
+        # NOTE из core app
+        raise NotAuthenticated
       end
 
       if current_operator.blocked?
@@ -65,25 +63,6 @@ module AML
 
     def document_kinds
       @document_kinds ||= AML::DocumentKind.alive.ordered
-    end
-
-    def humanized_error(exception)
-      Rails.logger.error exception
-      Bugsnag.notify exception
-      render 'humanized_error', status: 500, layout: 'simple', locals: { exception: exception }
-    end
-
-    def not_authenticated
-      render 'not_authenticated', status: :unauthorized, layout: 'simple'
-    end
-
-    def rescue_invalid_authenticity_token
-      flash.alert = 'Просрочен токен аутентификации, авторизуйтесь снова'
-      render 'not_authenticated', layout: 'simple'
-    end
-
-    def current_time_zone
-      current_user.try(:time_zone) || Time.zone
     end
 
     def current_operator

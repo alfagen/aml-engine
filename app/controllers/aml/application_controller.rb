@@ -53,8 +53,8 @@ module AML
 
     def check_blocked
       unless current_user.aml_operator
-        flash.now.alert = 'У вас нет доступа к AML'
-        not_authenticated
+        flash.now.alert = "У вас (#{current_user}) нет доступа к AML"
+        return not_authenticated
       end
 
       if current_operator.blocked?

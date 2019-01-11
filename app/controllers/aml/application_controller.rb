@@ -52,6 +52,11 @@ module AML
     private
 
     def check_blocked
+      unless current_user.aml_operator
+        flash.now.alert = 'У вас нет доступа к AML'
+        raise Authority::SecurityViolation.exception(current_user, nil, nil)
+      end
+
       if current_operator.blocked?
         flash.now.alert = 'Вы заблокированы'
         raise Authority::SecurityViolation.exception(current_user, nil, nil)

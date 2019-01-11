@@ -13,7 +13,6 @@
 
 ## Приложение должно поддерживать следующий интерфейс:
 
-
 ### Routes
 
 | Пути                                                                                     | Действия                               |
@@ -24,6 +23,12 @@
 | edit_password_path (get), password_path (put)                                            | изменение пароля                       |
 | edit_user_path (get), user_path (put)                                                    | редактирование профиля пользователя    |
 | locale_path (put)                                                                        | изменение локали пользователя          |
+
+
+### ApplicationController
+
+* current_user
+* current_time_zone
 
 ### Другое
 

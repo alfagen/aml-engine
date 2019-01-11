@@ -25,7 +25,6 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency 'enumerize'
     s.add_runtime_dependency 'workflow', '~> 1.3.0'
     s.add_runtime_dependency 'ransack'
-    s.add_runtime_dependency 'sorcery'
     s.add_runtime_dependency 'authority'
     s.add_runtime_dependency 'globalize'
     s.add_runtime_dependency 'globalize-accessors'
@@ -79,6 +78,7 @@ Gem::Specification.new do |s|
     s.add_development_dependency 'pry-byebug'
     s.add_development_dependency 'test-prof', '~> 0.7.2'
 
+    s.add_development_dependency 'sorcery'
     s.add_development_dependency 'activesupport'
     s.add_development_dependency 'semver'
     s.add_development_dependency 'factory_bot'

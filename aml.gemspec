@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency 'slim'
     s.add_runtime_dependency 'slim-rails'
     s.add_runtime_dependency 'axlsx'
-    s.add_runtime_dependency 'axlsx_rails'
+    s.add_runtime_dependency 'axlsx_rails', '~> 0.5.2'
     s.add_runtime_dependency 'kaminari'
     s.add_runtime_dependency "rails", "~> 5.2.1"
     s.add_runtime_dependency "dapi-archivable", "~> 0.1.2"

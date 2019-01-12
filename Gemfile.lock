@@ -71,7 +71,7 @@ PATH
       active_link_to
       authority
       axlsx
-      axlsx_rails
+      axlsx_rails (~> 0.5.2)
       best_in_place
       bootstrap-kaminari-views
       bootstrap-sass (~> 3.2)

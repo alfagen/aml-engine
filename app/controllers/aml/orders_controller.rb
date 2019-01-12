@@ -54,7 +54,7 @@ module AML
 
     def start
       authorize_action_for order
-      order.start! operator: current_user
+      order.start! operator: current_operator
       flash.notice = 'Заявка принята в обработку'
       redirect_to order_path(order)
     end

@@ -41,9 +41,19 @@ Rails.application.config.after_initialize do
   ].each { |model| model.include Authority::Abilities }
 
   class AML::Operator
-    has_one :user, class_name: 'User'
+    has_one :user, class_name: 'User', foreign_key: :aml_operator_id
 
-    delegate :email, :name, to: :user
+    def email
+      return "no user for AML::Operator #{id}" unless user.present?
+
+      user.email
+    end
+
+    def name
+      return "no user AML::Operator #{id}" unless user.present?
+
+      user.name
+    end
   end
 end
 ```

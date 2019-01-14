@@ -4,11 +4,6 @@ hr
 = simple_form_for operator do |f|
   .row
     .col-md-6
-      = f.input :name, as: :string
-      = f.input :email, as: :string
-      = f.input :role, as: :select, collection: [['оператор', 'operator'], ['администратор', 'administrator']], include_blank: false if logged_in? && operator.role_updatable_by?(current_user)
-    .col-md-6
-      = f.input :password
-      = f.input :password_confirmation
+      = f.input :role, as: :select, collection: [['оператор', 'operator'], ['администратор', 'administrator']], include_blank: false
   hr
   = f.button :submit, 'Добавить', class: 'btn btn-success'

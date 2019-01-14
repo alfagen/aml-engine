@@ -54,7 +54,7 @@ module AML
     end
 
     def permitted_params
-      params.fetch(:operator, {}).permit(:email, :name, :role, :password, :password_confirmation)
+      params.fetch(:operator, {}).permit(:role)
     end
   end
 end

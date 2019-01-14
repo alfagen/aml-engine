@@ -13,11 +13,11 @@ RSpec.describe AML::OperatorsController, type: :controller do
   context 'администратор может' do
     it '#create создавать операторов' do
       post :create, params: { operator: test_operator.attributes }
-      expect(response.status).to eq(200)
+      expect(response.status).to eq(302)
     end
 
     it '#update редактировать операторов' do
-      put :update, params: { id: test_operator.id, operator: { email: 'new@mail.com' } }
+      put :update, params: { id: test_operator.id, operator: { role: 'administrator' } }
       expect(response.status).to eq(200)
     end
   end

@@ -4,20 +4,16 @@ module AML
       user.aml_operator&.administrator?
     end
 
-    def role_updatable_by?(user)
-      resource != user.aml_operator && user.aml_operator&.administrator?
-    end
-
     def updatable_by?(user)
-      resource == user.aml_operator || user.aml_operator&.administrator?
+      user.aml_operator&.administrator?
     end
 
-    def blockable_by?(user = nil)
-      resource != user.aml_operator && user.aml_operator&.administrator?
+    def blockable_by?(user)
+      updatable_by? user
     end
 
     def unblockable_by?(user)
-      blockable_by? user.aml_operator
+      blockable_by? user
     end
   end
 end

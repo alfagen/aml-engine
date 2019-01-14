@@ -12,9 +12,6 @@ module AML
     has_many :orders, class_name: 'AML::Order', dependent: :destroy
     has_many :payment_card_orders, class_name: 'AML::PaymentCardOrder', dependent: :destroy
 
-    validates :email, presence: true, uniqueness: true, email: true
-    validates :name, presence: true, uniqueness: true
-
     enum role: [:operator, :administrator]
 
     enumerize :workflow_state, in: %w[blocked unblocked], scope: true

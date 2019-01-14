@@ -42,6 +42,12 @@ module AML
     after_create :set_current_order!
     after_create :cancel_previous_orders!
 
+    def enabled_workflow_events
+      events = current_state.events.keys
+      events.reject! {|event| !send("can_#{event}?")}
+      events << []
+    end
+
     def accepted_at
       return operated_at if accepted?
     end

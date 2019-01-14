@@ -19,6 +19,12 @@ module AML
       Arel.sql("CONVERT(#{table_name}.id, CHAR(8))")
     end
 
+    def enabled_workflow_events
+      events = current_state.events.keys
+      events.reject! {|event| !send("can_#{event}?")}
+      events << []
+    end
+
     # NOTE для совместимости с OrderDocumentFileUploader
     def load!(_image)
     end

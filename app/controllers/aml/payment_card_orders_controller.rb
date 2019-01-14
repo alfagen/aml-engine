@@ -48,7 +48,7 @@ module AML
 
     def start
       authorize_action_for payment_card_order
-      payment_card_order.start! operator: current_user
+      payment_card_order.start! operator: current_operator
       flash.notice = 'Заявка принята в обработку'
       redirect_to payment_card_order_path(payment_card_order)
     end

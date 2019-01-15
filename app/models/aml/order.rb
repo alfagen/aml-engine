@@ -38,6 +38,7 @@ module AML
     end
 
     before_create :copy_fields_from_current_order!
+    after_create :client_orders_counter!
     after_create :create_and_clone_documents!
     after_create :set_current_order!
     after_create :cancel_previous_orders!
@@ -101,6 +102,10 @@ module AML
     end
 
     protected
+
+    def client_orders_counter!
+      client.orders.update_all(orders_count: client.orders_count)
+    end
 
     def attributes_to_clone
       @attributes_to_clone ||= attributes.slice(*ATTRIBUTES_TO_CLONE)

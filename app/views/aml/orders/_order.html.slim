@@ -9,7 +9,7 @@ tr
     /- else
       /.text-muted отсутствуют
   td = order_decorated.client_name
-  td
+  td = order.orders_count
   td title=order_decorated.aml_reject_reason.try(:title)
     = order_workflow_state order_decorated.workflow_state
   td = order_decorated.aml_status

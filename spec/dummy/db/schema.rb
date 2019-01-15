@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_15_073044) do
+ActiveRecord::Schema.define(version: 2019_01_15_112237) do
 
   create_table "aml_agreement_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "aml_agreement_id", null: false
@@ -91,10 +91,11 @@ ActiveRecord::Schema.define(version: 2019_01_15_073044) do
     t.integer "total_operations_count", default: 0, null: false
     t.string "risk_category", limit: 1
     t.string "locale"
-    t.integer "client_orders_count", default: 0
+    t.integer "orders_count", default: 0
     t.index ["aml_accepted_order_id"], name: "index_aml_clients_on_aml_accepted_order_id"
     t.index ["aml_order_id"], name: "index_aml_clients_on_aml_order_id"
     t.index ["aml_status_id"], name: "index_aml_clients_on_aml_status_id"
+    t.index ["orders_count"], name: "index_aml_clients_on_orders_count"
   end
 
   create_table "aml_document_fields", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -262,11 +263,13 @@ ActiveRecord::Schema.define(version: 2019_01_15_073044) do
     t.bigint "cloned_order_id"
     t.string "card_holding_state", default: "none", null: false
     t.timestamp "card_holding_state_updated_at"
+    t.integer "orders_count", default: 0
     t.index ["aml_reject_reason_id"], name: "index_aml_orders_on_aml_reject_reason_id"
     t.index ["aml_status_id"], name: "index_aml_orders_on_aml_status_id"
     t.index ["client_id"], name: "index_aml_orders_on_client_id"
     t.index ["cloned_order_id"], name: "index_aml_orders_on_cloned_order_id"
     t.index ["operator_id"], name: "index_aml_orders_on_operator_id"
+    t.index ["orders_count"], name: "index_aml_orders_on_orders_count"
     t.index ["workflow_state", "operated_at"], name: "index_aml_orders_on_workflow_state_and_operated_at"
     t.index ["workflow_state", "pending_at"], name: "index_aml_orders_on_workflow_state_and_pending_at"
   end

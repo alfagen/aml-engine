@@ -13,7 +13,7 @@ module AML
 
     scope :open, -> { where workflow_state: %w(pending processing) }
 
-    belongs_to :client, class_name: 'AML::Client', foreign_key: :client_id, inverse_of: :orders, dependent: :destroy
+    belongs_to :client, class_name: 'AML::Client', foreign_key: :client_id, inverse_of: :orders, dependent: :destroy, counter_cache: true
     belongs_to :operator, class_name: 'AML::Operator', foreign_key: :operator_id, optional: true, inverse_of: :orders
     belongs_to :aml_status, class_name: 'AML::Status'
     belongs_to :aml_reject_reason, class_name: 'AML::RejectReason', optional: true
@@ -41,7 +41,6 @@ module AML
     after_create :create_and_clone_documents!
     after_create :set_current_order!
     after_create :cancel_previous_orders!
-    after_create :client_orders_counter
 
     def accepted_at
       return operated_at if accepted?
@@ -108,10 +107,6 @@ module AML
     end
 
     private
-
-    def client_orders_counter
-      client.orders.update_all(client_orders: client.orders.count)
-    end
 
     def find_notification_for_key(notification_key)
       client.aml_status&.send notification_key

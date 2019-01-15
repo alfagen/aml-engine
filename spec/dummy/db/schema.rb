@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 2019_01_15_073044) do
     t.integer "total_operations_count", default: 0, null: false
     t.string "risk_category", limit: 1
     t.string "locale"
+    t.integer "client_orders_count", default: 0
     t.index ["aml_accepted_order_id"], name: "index_aml_clients_on_aml_accepted_order_id"
     t.index ["aml_order_id"], name: "index_aml_clients_on_aml_order_id"
     t.index ["aml_status_id"], name: "index_aml_clients_on_aml_status_id"
@@ -261,7 +262,6 @@ ActiveRecord::Schema.define(version: 2019_01_15_073044) do
     t.bigint "cloned_order_id"
     t.string "card_holding_state", default: "none", null: false
     t.timestamp "card_holding_state_updated_at"
-    t.integer "client_orders", default: 0
     t.index ["aml_reject_reason_id"], name: "index_aml_orders_on_aml_reject_reason_id"
     t.index ["aml_status_id"], name: "index_aml_orders_on_aml_status_id"
     t.index ["client_id"], name: "index_aml_orders_on_client_id"

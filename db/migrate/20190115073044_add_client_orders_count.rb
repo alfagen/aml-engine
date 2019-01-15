@@ -1,9 +1,7 @@
 class AddClientOrdersCount < ActiveRecord::Migration[5.2]
   def change
-    add_column :aml_orders, :client_orders, :integer, default: 0
+    add_column :aml_clients, :orders_count, :integer, default: 0, index: true
 
-    AML::Order.find_each do |order|
-      order.update!(client_orders: order.client.orders.count)
-    end
+    AML::Client.find_each { |client| Client.reset_counters(client.id, :orders) }
   end
 end

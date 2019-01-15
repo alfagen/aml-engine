@@ -41,6 +41,7 @@ module AML
     after_create :create_and_clone_documents!
     after_create :set_current_order!
     after_create :cancel_previous_orders!
+    after_create :client_orders_counter
 
     def accepted_at
       return operated_at if accepted?
@@ -107,6 +108,10 @@ module AML
     end
 
     private
+
+    def client_orders_counter
+      client.orders.update_all(client_orders: client.orders.count)
+    end
 
     def find_notification_for_key(notification_key)
       client.aml_status&.send notification_key

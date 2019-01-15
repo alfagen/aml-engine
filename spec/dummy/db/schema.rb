@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_14_121523) do
+ActiveRecord::Schema.define(version: 2019_01_15_073044) do
 
   create_table "aml_agreement_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "aml_agreement_id", null: false
@@ -261,6 +261,7 @@ ActiveRecord::Schema.define(version: 2019_01_14_121523) do
     t.bigint "cloned_order_id"
     t.string "card_holding_state", default: "none", null: false
     t.timestamp "card_holding_state_updated_at"
+    t.integer "client_orders", default: 0
     t.index ["aml_reject_reason_id"], name: "index_aml_orders_on_aml_reject_reason_id"
     t.index ["aml_status_id"], name: "index_aml_orders_on_aml_status_id"
     t.index ["client_id"], name: "index_aml_orders_on_client_id"

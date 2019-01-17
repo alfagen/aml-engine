@@ -39,6 +39,9 @@
           th Категория риска
           td style="min-width: 250px"
             = render 'risk_category', client: client
+        tr
+          th Количество заявок
+          td= cd.orders_count
   .col-md-6
     = render 'agreements', client: client
 

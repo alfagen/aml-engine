@@ -13,7 +13,7 @@ module AML
 
     scope :open, -> { where workflow_state: %w(pending processing) }
 
-    belongs_to :client, class_name: 'AML::Client', foreign_key: :client_id, inverse_of: :orders, dependent: :destroy
+    belongs_to :client, class_name: 'AML::Client', foreign_key: :client_id, inverse_of: :orders, dependent: :destroy, counter_cache: :orders_count
     belongs_to :operator, class_name: 'AML::Operator', foreign_key: :operator_id, optional: true, inverse_of: :orders
     belongs_to :aml_status, class_name: 'AML::Status'
     belongs_to :aml_reject_reason, class_name: 'AML::RejectReason', optional: true

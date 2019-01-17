@@ -5,11 +5,15 @@ module AML
     private
 
     def notify(notification_key)
-      AML::NotificationMailer.logger.warn "Try to notify order[#{id}] with #{notification_key}"
+      AML.logger.warn "Try to notify order[#{id}] with #{notification_key}"
 
       notification = find_notification_for_key notification_key
       unless notification
-        AML::NotificationMailer.logger.warn "No #{notification_key} notification for status #{client.aml_status}"
+        Bugsnag.notify "No notification key" do |b|
+          b.severity = :warning
+          b.meta_data = { notification_key: notification_key, record: self }
+        end if defined? Bugsnag
+        AML.logger.warn "No #{notification_key} notification for #{self.class}##{id}"
         return
       end
 
@@ -18,10 +22,11 @@ module AML
         find_by(locale: notification_locale)
 
       unless notification_template.present? && notification_template.template_id.present?
-        AML::NotificationMailer.logger.warn "No template_id for #{notification} and #{notification_locale}"
+        AML.logger.warn "No template_id for #{notification} and #{notification_locale}"
         return
       end
 
+      AML.logger.info "Sending notification #{notification_key} with template_id #{notification_template.template_id} for client #{client.id} (#{client.email})"
       client.notify notification_template.template_id,
         first_name: client_first_name,
         reject_reason_title: aml_reject_reason.try(:title),

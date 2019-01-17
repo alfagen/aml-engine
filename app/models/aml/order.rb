@@ -113,7 +113,7 @@ module AML
     private
 
     def find_notification_for_key(notification_key)
-      client.aml_status&.send notification_key
+      aml_status.send notification_key
     end
 
     def create_checks

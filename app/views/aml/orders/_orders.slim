@@ -9,6 +9,7 @@ table.table.table-condensed.table-striped
       th Cостояние
       th= sort_link q, :aml_status_id, 'Статус'
       th= sort_link q, :aml_operator_id,  'Оператор'
+      th= sort_link q, :orders_count_sort, 'Всего заявок'
       th Действия
   tbody
     = render partial: 'aml/orders/order', collection: orders

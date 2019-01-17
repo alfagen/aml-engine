@@ -12,6 +12,10 @@ module AML
       h.link_to object.client_name, h.client_path(object.client_id)
     end
 
+    def client_orders_count
+      object.client.orders_count
+    end
+
     def reject_reason
       return unless object.aml_reject_reason.present?
 

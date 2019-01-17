@@ -13,6 +13,7 @@ tr
     = order_workflow_state order_decorated.workflow_state
   td = order_decorated.aml_status
   td = order_decorated.operator
+  td = order_decorated.client_orders_count
   td
 
     = render 'order_actions', order: order

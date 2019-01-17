@@ -105,7 +105,7 @@ module AML
 
     def orders
       # Показываем все заявки, в не зависимости от того кто из взял
-      AML::Order.where(workflow_state: workflow_state)
+      AML::Order.where(workflow_state: workflow_state).joins(:client)
     end
 
     def order

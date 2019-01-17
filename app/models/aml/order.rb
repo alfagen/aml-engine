@@ -37,6 +37,10 @@ module AML
       Arel.sql("CONVERT(#{table_name}.id, CHAR(8))")
     end
 
+    ransacker :orders_count_sort do
+      Arel.sql('orders_count')
+    end
+
     before_create :copy_fields_from_current_order!
     after_create :create_and_clone_documents!
     after_create :set_current_order!

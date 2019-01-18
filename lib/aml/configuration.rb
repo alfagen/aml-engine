@@ -18,6 +18,8 @@ module AML
     mattr_accessor :mail_from
     mattr_accessor :logger
 
+    mattr_accessor :new_order_sendgrid_template_id
+
     def logger
       @@logger || Rails.logger
     end

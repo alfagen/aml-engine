@@ -46,6 +46,8 @@ module AML
     after_create :set_current_order!
     after_create :cancel_previous_orders!
 
+    after_commit :notify_operators, on: :create
+
     def accepted_at
       return operated_at if accepted?
     end
@@ -151,6 +153,16 @@ module AML
 
     def set_current_order!
       client.update! current_order: self
+    end
+
+    def notify_operators
+      if AML.new_order_sendgrid_template_id.present?
+        AML::Operator.with_unblocked_state.find_each do |o|
+          o.notify AML.new_order_sendgrid_template_id, order_id: id, name: name
+        end
+      else
+        AML.logger.warn 'Не могу уведомить операторов о новой заявке, не установлен AML.new_order_sendgrid_template_id'
+      end
     end
 
     def cancel_previous_orders!

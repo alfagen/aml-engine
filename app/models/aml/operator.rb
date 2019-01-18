@@ -30,6 +30,16 @@ module AML
     # с authority
     remove_method :can_block?, :can_unblock?
 
+    def notify(template_id, data = {})
+      if email.present?
+        AML::NotificationMailer.
+          notify( email: email, template_id: template_id, data: data).
+          deliver!
+      else
+        AML::NotificationMailer.logger.error "У оператора #{id} нет email-а"
+      end
+    end
+
     def to_s
       "[#{id}] #{name}"
     end

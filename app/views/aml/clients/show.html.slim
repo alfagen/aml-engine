@@ -56,9 +56,9 @@ hr
 - else
  .alert.alert-warning Привязанные карты отсутствуют
 
-- if client.orders.any?
+- if orders.any?
   hr
-  h2 Заявки (#{client.orders.count})
+  h2 Заявки (#{orders.count})
   = render 'aml/orders/orders', orders: orders, q: q
 - else
   .alert.alert-warning Заявки отсутствуют

@@ -9,5 +9,21 @@ module AML
     def self.default(_adjective, user)
       user.aml_operator&.administrator?
     end
+
+    def readable_by?(user)
+      user.aml_operator.present?
+    end
+
+    def updatable_by?(user)
+      readable_by? user
+    end
+
+    def creatable_by?(user)
+      readable_by? user
+    end
+
+    def deletable_by?(user)
+      readable_by? user
+    end
   end
 end

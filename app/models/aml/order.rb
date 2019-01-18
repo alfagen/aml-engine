@@ -158,7 +158,7 @@ module AML
     def notify_operators
       if AML.new_order_sendgrid_template_id.present?
         AML::Operator.with_unblocked_state.find_each do |o|
-          o.notify AML.new_order_sendgrid_template_id, order_id: id, name: name
+          o.notify AML.new_order_sendgrid_template_id, order_id: id, client_name: client.name
         end
       else
         AML.logger.warn 'Не могу уведомить операторов о новой заявке, не установлен AML.new_order_sendgrid_template_id'

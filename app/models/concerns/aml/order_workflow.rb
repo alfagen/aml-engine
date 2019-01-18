@@ -15,6 +15,7 @@ module AML
         state :pending do
           on_entry do
             notify :on_pending_notification
+            notify_operators
           end
           event :start, transitions_to: :processing
           event :cancel, transitions_to: :canceled

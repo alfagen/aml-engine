@@ -31,13 +31,17 @@ module AML
     remove_method :can_block?, :can_unblock?
 
     def notify(template_id, data = {})
-      if email.present?
-        AML::NotificationMailer.
-          notify( email: email, template_id: template_id, data: data).
-          deliver!
-      else
-        AML::NotificationMailer.logger.error "У оператора #{id} нет email-а"
+      unless enable_notification
+        AML::NotificationMailer.logger.warn "У оператора #{id} увеломдения запрещены"
+        return
       end
+      unless email.present?
+        AML::NotificationMailer.logger.error "У оператора #{id} нет email-а"
+        return
+      end
+      AML::NotificationMailer.
+        notify( email: email, template_id: template_id, data: data).
+        deliver!
     end
 
     def to_s

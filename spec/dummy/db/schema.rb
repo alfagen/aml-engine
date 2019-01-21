@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_17_065619) do
+ActiveRecord::Schema.define(version: 2019_01_21_070622) do
 
   create_table "aml_agreement_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "aml_agreement_id", null: false
@@ -210,6 +210,7 @@ ActiveRecord::Schema.define(version: 2019_01_17_065619) do
     t.string "legacy_name"
     t.string "locale", default: "ru", null: false
     t.string "time_zone_name"
+    t.boolean "enable_notification", default: true, null: false
     t.index ["legacy_email"], name: "index_aml_operators_on_legacy_email", unique: true
     t.index ["reset_password_token"], name: "index_aml_operators_on_reset_password_token"
   end

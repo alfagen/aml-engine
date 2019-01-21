@@ -54,7 +54,7 @@ module AML
     end
 
     def permitted_params
-      params.fetch(:operator, {}).permit(:role)
+      params.fetch(:operator, {}).permit(:role, :enable_notification)
     end
   end
 end

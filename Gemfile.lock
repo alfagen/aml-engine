@@ -67,7 +67,7 @@ GIT
 PATH
   remote: .
   specs:
-    aml (0.5.4)
+    aml (0.5.5)
       active_link_to
       authority
       axlsx

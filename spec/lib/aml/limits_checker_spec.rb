@@ -18,10 +18,15 @@ RSpec.describe AML::LimitsChecker do
   context 'aml_client' do
     let(:aml_client) { create :aml_client }
 
-    it 'has no status' do
-      expect {
-        subject.check_common_operation! income_amount: income_amount
-      }.to raise_error(AML::LimitsChecker::NoStatus)
+    describe 'when has no status' do
+      before do
+        aml_client.update aml_status: nil
+      end
+      it 'has no status' do
+        expect {
+          subject.check_common_operation! income_amount: income_amount
+        }.to raise_error(AML::LimitsChecker::NoStatus)
+      end
     end
 
     describe 'has status' do

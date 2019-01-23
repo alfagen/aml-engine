@@ -21,6 +21,7 @@ module AML
 
     register_currency :eur
     monetize :max_amount_limit_cents
+    monetize :order_income_limit_amount_cents
 
     validates :title, presence: true, uniqueness: true
     validates :key, presence: true, uniqueness: true

@@ -22,7 +22,6 @@ module AML
     has_many :payment_card_orders, class_name: 'AML::PaymentCardOrder', dependent: :destroy, foreign_key: :aml_client_id
 
     after_create :create_current_order!
-    after_create :set_guest_status
 
     register_currency :eur
     monetize :total_income_amount_cents
@@ -79,12 +78,6 @@ module AML
 
     def to_s
       "##{id} #{name}"
-    end
-
-    private
-
-    def set_guest_status
-      update aml_status: AML.default_status
     end
   end
 end

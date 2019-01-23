@@ -1,7 +1,6 @@
 require 'archivable'
 
 require 'aml/engine'
-require 'aml/limits_checker'
 require 'aml/configuration'
 
 module AML

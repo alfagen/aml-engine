@@ -11,7 +11,7 @@ RSpec.describe AML::Client, type: :model do
   subject { create :aml_client }
 
   it { expect(subject).to be_persisted }
-  it { expect(subject.aml_status).to be_nil }
+  it { expect(subject.aml_status).to eq AML.default_status }
   it { expect(subject.current_order).to be_persisted }
 
   context 'статус можно сбросить' do
@@ -20,7 +20,7 @@ RSpec.describe AML::Client, type: :model do
       subject.reset_status!
     end
 
-    it { expect(subject.aml_status).to be_nil }
+    it { expect(subject.aml_status).to eq AML.default_status }
     it { expect(subject.current_order).to_not eq @saved_order }
   end
 

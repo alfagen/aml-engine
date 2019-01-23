@@ -3,6 +3,7 @@ table.table.table-condensed.table-striped
     tr
       th Статус
       th Лимит операции в валюте
+      th Лимит по одной операции
       th Лимит количества операций
       th Реферальная программа с возможностью вывода средств (Без ограничений).
       th Клиентов
@@ -15,6 +16,7 @@ table.table.table-condensed.table-striped
           = link_to status.title, status_path(status)
           .text-muted= status.key
         td= humanized_money_with_symbol status.max_amount_limit
+        td= humanized_money_with_symbol status.order_income_limit_amount
         td= status.operations_count_limit
         td= boolean_humanized status.referal_output_enabled
         td

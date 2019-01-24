@@ -9,6 +9,9 @@ module AML
         state :none do
           event :done, transitions_to: :pending, if: :allow_done?
           event :cancel, transitions_to: :canceled
+
+          # Для гостевых
+          event :accept, transitions_to: :accepted
         end
 
         # Пользователь загрузил, ждет когда оператор начнет обрабатывать
@@ -19,6 +22,9 @@ module AML
           end
           event :start, transitions_to: :processing
           event :cancel, transitions_to: :canceled
+
+          # Для гостевых
+          event :accept, transitions_to: :accepted
         end
 
          # Оператор начал обрабатывать

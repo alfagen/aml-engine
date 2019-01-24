@@ -81,6 +81,9 @@ module AML
     end
 
     def fields_present?
+      # Для гостевого ну нужено
+      # TODO вынести требовани по проверке этих полей в настройки статуса
+      return true if aml_status == AML.default_status
       first_name.present? && surname.present? && birth_date.present?
     end
 
@@ -89,7 +92,7 @@ module AML
     end
 
     def all_documents_loaded?
-      order_documents.any? && order_documents.all? { |o| o.loaded? }
+      order_documents.all? { |o| o.loaded? }
     end
 
     def allow_accept?

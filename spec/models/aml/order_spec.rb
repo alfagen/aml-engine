@@ -93,6 +93,7 @@ RSpec.describe AML::Order, type: :model do
 
     context 'заказ без ФИО' do
       before do
+        subject.update aml_status: create(:aml_status)
         subject.update first_name: nil
       end
       it 'не дает отправить' do

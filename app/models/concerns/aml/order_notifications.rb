@@ -19,7 +19,7 @@ module AML
 
       notification = find_notification_for_key notification_key
       unless notification
-        Bugsnag.notify "No notification key" do |b|
+        Bugsnag.notify "No notification find key" do |b|
           b.severity = :warning
           b.meta_data = { notification_key: notification_key, record: { class: self.class.name, id: id } }
         end if defined? Bugsnag

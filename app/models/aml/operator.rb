@@ -32,7 +32,7 @@ module AML
 
     def notify(template_id, data = {})
       unless enable_notification
-        AML::NotificationMailer.logger.warn "У оператора #{id} увеломдения запрещены"
+        AML::NotificationMailer.logger.debug "У оператора #{id} увеломдения запрещены, выходим из AML::Operator#notify"
         return
       end
       unless email.present?

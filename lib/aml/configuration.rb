@@ -20,6 +20,14 @@ module AML
 
     mattr_accessor :new_order_sendgrid_template_id
 
+    # Валютя в которую сбрасываются значения счетчиков
+    mattr_accessor :currency
+
+
+    def currency
+      @@currency ||= Money.default_currency
+    end
+
     def logger
       @@logger || Rails.logger
     end

@@ -67,7 +67,7 @@ module AML
 
     def reset_status!
       with_lock do
-        update aml_status: AML.default_status, aml_accepted_order: nil, total_operations_count: 0, total_income_amount: Money.new(0, Money.default_currency)
+        update aml_status: nil, aml_accepted_order: nil, total_operations_count: 0, total_income_amount: Money.new(0, AML.currency)
         create_current_order!
       end
     end

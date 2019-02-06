@@ -2,6 +2,8 @@ module AML
   module OrderNotifications
     extend ActiveSupport::Concern
 
+    NotificaitonKeyNotFound = Class.new StandardError
+
     private
 
     def notify_operators
@@ -17,20 +19,7 @@ module AML
     def notify(notification_key)
       AML.logger.warn "Try to notify order[#{id}] with #{notification_key}"
 
-      notification = find_notification_for_key notification_key
-      unless notification
-        Bugsnag.notify "No notification find key" do |b|
-          b.severity = :warning
-          b.meta_data = {
-            notification_key: notification_key,
-            record_type: self.class.name,
-            record_id: id,
-            notification_locale: notification_locale }
-        end if defined? Bugsnag
-        AML.logger.warn "No #{notification_key} notification for #{self.class}##{id}"
-        return
-      end
-
+      notification = find_notification_for_key(notification_key) || raise(NotificaitonKeyNotFound)
       notification_template = notification.
         aml_notification_templates.
         find_by(locale: notification_locale)
@@ -45,6 +34,18 @@ module AML
         first_name: client_first_name,
         reject_reason_title: aml_reject_reason.try(:title),
         reject_reason_details: reject_reason_details.presence
+
+    rescue NotificaitonKeyNotFound => err
+      return unless defined? Bugsnag
+      Bugsnag.notify err do |b|
+        b.severity = :warning
+        b.meta_data = {
+          notification_key: notification_key,
+          record_type: self.class.name,
+          record_id: id,
+          notification_locale: notification_locale }
+      end
+      AML.logger.warn "No #{notification_key} notification for #{self.class}##{id}"
     end
 
     def client_first_name

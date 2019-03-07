@@ -3,6 +3,7 @@ module AML
     # Подключены в core app
     # helper NotyFlash::ApplicationHelper
     # helper LocalizedRender::Engine.helpers
+    layout 'aml_application'
 
     include Pagination
     rescue_from Workflow::Error, with: :handle_humanized_error

@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["aml_accepted_order_id"], name: "index_aml_clients_on_aml_accepted_order_id"
     t.index ["aml_order_id"], name: "index_aml_clients_on_aml_order_id"
     t.index ["aml_status_id"], name: "index_aml_clients_on_aml_status_id"
+    t.index ["orders_count"], name: "index_aml_clients_on_orders_count"
   end
 
   create_table "aml_document_fields", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

@@ -48,7 +48,7 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency 'bootstrap-kaminari-views'
     s.add_runtime_dependency 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
     s.add_runtime_dependency 'turbolinks'
-    s.add_runtime_dependency 'coffee-rails', '~> 4.2'
+    s.add_runtime_dependency 'coffee-rails'
     s.add_runtime_dependency 'font-awesome-rails'
     s.add_runtime_dependency 'simple_form'
     s.add_runtime_dependency 'sass-rails'

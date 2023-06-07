@@ -23,8 +23,8 @@ module AML
     monetize :max_amount_limit_cents
     monetize :order_income_limit_amount_cents
 
-    validates :title, presence: true, uniqueness: true
-    validates :key, presence: true, uniqueness: true
+    validates :title, presence: true, uniqueness: { case_sensitive: false }
+    validates :key, presence: true, uniqueness: { case_sensitive: false }
 
     before_create do
       self.position = self.class.count + 1

@@ -5,8 +5,8 @@ module AML
 
     has_many :aml_notification_templates, class_name: 'AML::NotificationTemplate', foreign_key: :aml_notification_id, dependent: :destroy
 
-    validates :title, presence: true, uniqueness: true
-    validates :key, uniqueness: true, allow_blank: true
+    validates :title, presence: true, uniqueness: { case_sensitive: false }
+    validates :key, uniqueness: { case_sensitive: false }, allow_blank: true
 
     after_create :create_templates
 

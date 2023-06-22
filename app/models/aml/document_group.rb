@@ -13,7 +13,7 @@ module AML
 
     scope :ordered, -> { order :position }
 
-    validates :title, presence: true, uniqueness: true
+    validates :title, presence: true, uniqueness: { case_sensitive: false }
 
     before_create do
       if self.class.any?

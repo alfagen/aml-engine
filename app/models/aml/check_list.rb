@@ -7,7 +7,7 @@ module AML
 
     has_many :aml_order_checks, class_name: 'AML::OrderCheck', dependent: :destroy, foreign_key: :aml_check_list_id
 
-    validates :title, presence: true, uniqueness: true
+    validates :title, presence: true, uniqueness: { case_sensitive: false }
 
     after_create :add_to_open_orders
 

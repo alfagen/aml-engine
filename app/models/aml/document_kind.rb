@@ -16,7 +16,7 @@ module AML
     has_many :definitions, class_name: 'AML::DocumentKindFieldDefinition', dependent: :destroy
     has_many :order_documents, class_name: 'AML::OrderDocument', dependent: :destroy
 
-    validates :title, presence: true, uniqueness: true
+    validates :title, presence: true, uniqueness: { case_sensitive: false }
     validates :file_title, on: :update, presence: true, if: :file?
 
     # Поддержка для Serializer

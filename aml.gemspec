@@ -44,6 +44,7 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency 'jquery-ui-rails'
     s.add_runtime_dependency 'breadcrumbs_on_rails'
     s.add_runtime_dependency 'momentjs-rails', '>= 2.9.0'
+    s.add_runtime_dependency 'bootstrap-sass', '~> 3.2'
     s.add_runtime_dependency 'bootstrap-kaminari-views'
     s.add_runtime_dependency 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
     s.add_runtime_dependency 'turbolinks'

@@ -38,7 +38,7 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency 'axlsx'
     s.add_runtime_dependency 'axlsx_rails', '~> 0.5.2'
     s.add_runtime_dependency 'kaminari'
-    s.add_runtime_dependency 'rails', "~> 6.1.7.9"
+    s.add_runtime_dependency 'rails', "~> 6.0.6"
     s.add_runtime_dependency "dapi-archivable", "~> 0.1.2"
     s.add_runtime_dependency 'jquery-rails'
     s.add_runtime_dependency 'jquery-ui-rails'

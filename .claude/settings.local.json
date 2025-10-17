@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gem install:*)",
+      "Bash(bundle exec rake:*)",
+      "Bash(bundle exec rspec:*)",
+      "Bash(_bundler_version=2.7.2 bundle:*)",
+      "Bash(ruby:*)",
+      "Read(//home/danil/code/kassa-admin/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

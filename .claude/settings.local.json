@@ -6,7 +6,8 @@
       "Bash(bundle exec rspec:*)",
       "Bash(_bundler_version=2.7.2 bundle:*)",
       "Bash(ruby:*)",
-      "Read(//home/danil/code/kassa-admin/**)"
+      "Read(//home/danil/code/kassa-admin/**)",
+      "Bash(bundle install:*)"
     ],
     "deny": [],
     "ask": []

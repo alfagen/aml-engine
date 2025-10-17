@@ -1,16 +1,16 @@
 module AML
   class PaymentCardOrder < ApplicationRecord
     include Authority::Abilities
-    include Workflow
+    include WorkflowActiverecord
 
     include OrderWorkflow
     include OrderNotifications
     include CardValidation
 
     # Специальный метод для загрузки изображения с переходом состояния
-    def upload_image!(image:)
+    def upload_image!(image)
       # Загружаем изображение
-      done(image: image)
+      done(image)
       # Переводим в состояние pending через workflow API
       if can_done?
         done!  # вызываем workflow done! без параметров
@@ -65,8 +65,8 @@ module AML
       self.operator == operator
     end
 
-    def done(image: )
-      update_attribute :image, image
+    def done(image = nil)
+      update_attribute :image, image if image
     end
 
     def client_name

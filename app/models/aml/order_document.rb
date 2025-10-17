@@ -12,7 +12,7 @@ module AML
     end
 
     extend Enumerize
-    include Workflow
+    include WorkflowActiverecord
 
     mount_uploader :image, OrderDocumentFileUploader
 

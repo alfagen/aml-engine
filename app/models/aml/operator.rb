@@ -4,10 +4,12 @@ require 'enumerize'
 module AML
   class Operator < ApplicationRecord
     extend Enumerize
-    include Workflow
+    include WorkflowActiverecord
     include Authority::Abilities
 
     scope :ordered, -> { order 'id desc' }
+
+    scope :with_unblocked_state, -> { where workflow_state: :unblocked }
 
     has_many :orders, class_name: 'AML::Order', dependent: :destroy
     has_many :payment_card_orders, class_name: 'AML::PaymentCardOrder', dependent: :destroy

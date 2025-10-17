@@ -67,10 +67,8 @@ module AML
 
     def done(image: )
       update_attribute :image, image
-      touch :pending_at
     end
 
-    
     def client_name
       ["##{client.id}", client.first_name, client.surname, client.patronymic].compact.join ' '
     end

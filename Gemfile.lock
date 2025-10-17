@@ -362,6 +362,7 @@ GEM
       yard (~> 0.9.11)
     pry-rails (0.3.11)
       pry (>= 0.13.0)
+    psych (3.1.0)
     public_suffix (6.0.2)
     racc (1.8.1)
     rack (2.2.20)
@@ -554,6 +555,8 @@ DEPENDENCIES
   dapi-archivable
   database_rewinder
   factory_bot
+  fast_jsonapi
+  globalize
   guard-bundler
   guard-ctags-bundler
   guard-rspec
@@ -564,6 +567,7 @@ DEPENDENCIES
   pry-byebug
   pry-doc
   pry-rails
+  psych (~> 3.1.0)
   rails-assets-noty!
   rspec-rails (~> 3.7)
   rubocop
@@ -571,6 +575,7 @@ DEPENDENCIES
   semver
   sorcery
   test-prof (~> 0.7.2)
+  workflow-activerecord
 
 BUNDLED WITH
    2.7.2

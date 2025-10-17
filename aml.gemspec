@@ -83,4 +83,6 @@ Gem::Specification.new do |s|
     s.add_development_dependency 'factory_bot'
     s.add_development_dependency 'rspec-rails', '~> 3.7'
     s.add_development_dependency 'database_rewinder'
+    # Зафиксировать старую версию Psych для совместимости с YAML алиасами
+    s.add_development_dependency 'psych', '~> 3.1.0'
 end

@@ -9,7 +9,12 @@ module AML
     def notify_operators
       if AML.new_order_sendgrid_template_id.present?
         AML::Operator.with_unblocked_state.find_each do |o|
-          o.notify AML.new_order_sendgrid_template_id, order_type: self.class.name, order_id: id, client_name: client.name
+          o.notify(
+            AML.new_order_sendgrid_template_id,
+            order_type: self.class.name,
+            order_id: id,
+            client_name: client.name
+          )
         end
       else
         AML.logger.warn 'Не могу уведомить операторов о новой заявке, не установлен AML.new_order_sendgrid_template_id'
@@ -30,10 +35,12 @@ module AML
       end
 
       AML.logger.info "Sending notification #{notification_key} with template_id #{notification_template.template_id} for client #{client.id} (#{client.email})"
-      client.notify notification_template.template_id,
+      client.notify(
+        notification_template.template_id,
         first_name: client_first_name,
         reject_reason_title: aml_reject_reason.try(:title),
         reject_reason_details: reject_reason_details.presence
+      )
 
     rescue NotificaitonKeyNotFound => err
       return unless defined? Bugsnag

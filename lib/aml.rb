@@ -1,4 +1,5 @@
 require 'archivable'
+require 'workflow-activerecord'
 
 require 'aml/engine'
 require 'aml/configuration'

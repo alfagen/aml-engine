@@ -9,9 +9,9 @@ gemspec
 gem 'active_link_to', github: 'BrandyMint/active_link_to'
 gem 'dapi-archivable', require: 'archivable'
 
-#gem 'fast_jsonapi' #, github: 'HoJSim/fast_jsonapi', branch: 'dev'
-#gem 'workflow-activerecord'
-#gem 'globalize' #, github: 'globalize/globalize', ref: 'HEAD'
+gem 'fast_jsonapi' #, github: 'HoJSim/fast_jsonapi', branch: 'dev'
+gem 'workflow-activerecord'
+gem 'globalize' #, github: 'globalize/globalize', ref: 'HEAD'
 
 #gem 'sendgrid-actionmailer', github: 'dreimannzelt/sendgrid-actionmailer', branch: :dynamic_template_data
 gem 'noty_flash', github: 'BrandyMint/noty_flash'

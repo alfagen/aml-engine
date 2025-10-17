@@ -53,9 +53,11 @@ module AML
 
     def notify(template_id, data = {})
       if email.present?
-        AML::NotificationMailer.
-          notify( email: email, template_id: template_id, data: data).
-          deliver!
+        AML::NotificationMailer.notify(
+          email: email,
+          template_id: template_id,
+          data: data
+        ).deliver!
       else
         AML::NotificationMailer.logger.error "У клиента #{id} нет email-а"
       end

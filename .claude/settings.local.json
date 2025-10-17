@@ -7,7 +7,11 @@
       "Bash(_bundler_version=2.7.2 bundle:*)",
       "Bash(ruby:*)",
       "Read(//home/danil/code/kassa-admin/**)",
-      "Bash(bundle install:*)"
+      "Bash(bundle install:*)",
+      "Read(//home/danil/code/**)",
+      "Bash(gem list:*)",
+      "Bash(bundle update:*)",
+      "Bash(bundle exec ruby:*)"
     ],
     "deny": [],
     "ask": []

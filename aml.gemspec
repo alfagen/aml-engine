@@ -35,10 +35,11 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency 'active_link_to'
     s.add_runtime_dependency 'slim'
     s.add_runtime_dependency 'slim-rails'
-    s.add_runtime_dependency 'axlsx'
-    s.add_runtime_dependency 'axlsx_rails', '~> 0.5.2'
+    s.add_runtime_dependency 'caxlsx'
+    s.add_runtime_dependency 'caxlsx_rails'
+    s.add_runtime_dependency 'nokogiri', '~> 1.18.0'
     s.add_runtime_dependency 'kaminari'
-    s.add_runtime_dependency 'rails'
+    s.add_runtime_dependency 'rails', '~> 6.0.0'
     s.add_runtime_dependency "dapi-archivable", "~> 0.1.2"
     s.add_runtime_dependency 'jquery-rails'
     s.add_runtime_dependency 'jquery-ui-rails'
@@ -53,8 +54,9 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency 'simple_form'
     s.add_runtime_dependency 'sass-rails'
     s.add_runtime_dependency 'localized_render'
+    s.add_runtime_dependency 'concurrent-ruby'
     s.add_runtime_dependency 'simple_form_bootstrap_inputs'
-    s.add_runtime_dependency 'best_in_place'
+    s.add_runtime_dependency 'best_in_place', '~>3.1.1'
 
     s.add_development_dependency "mysql2"
     s.add_development_dependency 'rubocop'
@@ -75,7 +77,7 @@ Gem::Specification.new do |s|
     # hist --grep foo
     # Adds step-by-step debugging and stack navigation capabilities to pry using byebug.
     s.add_development_dependency 'pry-byebug'
-    s.add_development_dependency 'test-prof', '~> 0.7.2'
+    s.add_development_dependency 'test-prof', '~> 1.0.0'
 
     s.add_development_dependency 'sorcery'
     s.add_development_dependency 'activesupport'

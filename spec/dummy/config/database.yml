@@ -8,9 +8,9 @@ default: &default
   adapter: mysql2
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
-  username: <%= ENV['MYSQL_USERNAME'] %>
-  # The password associated with the postgres role (username).
-  password: <%= ENV['MYSQL_PASSWORD'] %>
+  username: <%= ENV.fetch('MYSQL_USERNAME') { 'danil' } %>
+  # The password associated with the mysql role (username).
+  password: <%= ENV.fetch('MYSQL_PASSWORD') { 'password' } %>
 
 development:
   <<: *default

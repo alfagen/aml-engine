@@ -41,11 +41,7 @@ module AML
         AML::NotificationMailer.logger.error "У оператора #{id} нет email-а"
         return
       end
-      AML::NotificationMailer.notify(
-          email: email,
-          template_id: template_id,
-          data: data
-        ).deliver!
+      AML::NotificationMailer.notify( email, template_id, data).deliver!
     end
 
     def to_s

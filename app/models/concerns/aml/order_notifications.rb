@@ -7,8 +7,10 @@ module AML
     private
 
     def notify_operators
+      AML.logger.info "notify_operators called for order #{id}, template_id: #{AML.new_order_sendgrid_template_id}"
       if AML.new_order_sendgrid_template_id.present?
         AML::Operator.with_unblocked_state.find_each do |o|
+          AML.logger.info "Notifying operator #{o.id} with template #{AML.new_order_sendgrid_template_id}"
           o.notify(
             AML.new_order_sendgrid_template_id,
             order_type: self.class.name,
@@ -35,12 +37,14 @@ module AML
       end
 
       AML.logger.info "Sending notification #{notification_key} with template_id #{notification_template.template_id} for client #{client.id} (#{client.email})"
+      AML.logger.info "About to call client.notify with template_id: #{notification_template.template_id}"
       client.notify(
         notification_template.template_id,
         first_name: client_first_name,
         reject_reason_title: aml_reject_reason.try(:title),
         reject_reason_details: reject_reason_details.presence
       )
+      AML.logger.info "Successfully called client.notify"
 
     rescue NotificaitonKeyNotFound => err
       return unless defined? Bugsnag

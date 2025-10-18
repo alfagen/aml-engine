@@ -1,3 +1,4 @@
+require 'logger'
 require 'archivable'
 require 'workflow-activerecord'
 

@@ -10,14 +10,16 @@ gem 'active_link_to', github: 'BrandyMint/active_link_to'
 gem 'dapi-archivable', require: 'archivable'
 
 gem 'fast_jsonapi' #, github: 'HoJSim/fast_jsonapi', branch: 'dev'
-gem 'workflow-activerecord'
-gem 'globalize' #, github: 'globalize/globalize', ref: 'HEAD'
+#gem 'globalize' #, github: 'globalize/globalize', ref: 'HEAD'
 
 #gem 'sendgrid-actionmailer', github: 'dreimannzelt/sendgrid-actionmailer', branch: :dynamic_template_data
 gem 'noty_flash', github: 'BrandyMint/noty_flash'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-noty'
+end
+group :development do
+  gem 'test-prof'
 end
 
 #gem 'axlsx' #, github: 'randym/axlsx'

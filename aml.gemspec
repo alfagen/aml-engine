@@ -77,7 +77,6 @@ Gem::Specification.new do |s|
     s.add_development_dependency 'pry-byebug'
     s.add_development_dependency 'test-prof', '~> 1.0.0'
 
-    s.add_development_dependency 'sorcery'
     s.add_development_dependency 'activesupport'
     s.add_development_dependency 'semver'
     s.add_development_dependency 'factory_bot'

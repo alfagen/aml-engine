@@ -79,7 +79,6 @@ jobs:
         bundle exec rspec spec --format progress --format RspecJunitFormatter --out test-results.xml
       env:
         RAILS_ENV: test
-        BUNDLE_GEMFILE: Gemfile
 
     - name: Upload test results
       uses: actions/upload-artifact@v4

@@ -9,7 +9,7 @@ module AML
 
     after_create :create_templates
 
-    enum key: { on_pending_notification: 'on_pending_notification', on_accept_notification: 'on_accept_notification', on_reject_notification: 'on_reject_notification' }
+    enum :key, { on_pending_notification: 'on_pending_notification', on_accept_notification: 'on_accept_notification', on_reject_notification: 'on_reject_notification' }
 
     def to_s
       title

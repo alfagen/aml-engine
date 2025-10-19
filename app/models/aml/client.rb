@@ -28,7 +28,7 @@ module AML
     # Нужно для для сериализера
     alias_attribute :current_order_id, :aml_order_id
 
-    enum risk_category: { A: 'A', B: 'B', C: 'C' }
+    enum :risk_category, { A: 'A', B: 'B', C: 'C' }
 
     # TODO: Не может быть без имени если находится в статусе оформляется или принят/отклонен
     #

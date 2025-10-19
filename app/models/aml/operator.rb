@@ -12,9 +12,9 @@ module AML
     has_many :orders, class_name: 'AML::Order', dependent: :destroy
     has_many :payment_card_orders, class_name: 'AML::PaymentCardOrder', dependent: :destroy
 
-    enum role: [:operator, :administrator]
+    enum :role, [:operator, :administrator]
 
-    enum workflow_state: { blocked: 'blocked', unblocked: 'unblocked' }
+    enum :workflow_state, { blocked: 'blocked', unblocked: 'unblocked' }
 
     workflow do
       state :unblocked do

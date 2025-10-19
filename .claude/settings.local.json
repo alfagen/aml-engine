@@ -29,7 +29,10 @@
       "Read(//home/danil/.rbenv/versions/3.2.8/lib/ruby/gems/3.2.0/bundler/gems/aml-engine-41d644ea3c61/**)",
       "Bash(BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile bundle exec rspec:*)",
       "Bash(BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile bundle exec rake:*)",
-      "Bash(BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile RAILS_ENV=test bundle exec rake:*)"
+      "Bash(BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile RAILS_ENV=test bundle exec rake:*)",
+      "Bash(RAILS_ENV=test bundle exec rake:*)",
+      "Bash(mysql:*)",
+      "Bash(bundle show:*)"
     ],
     "deny": [],
     "ask": []

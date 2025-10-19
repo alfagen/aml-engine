@@ -82,4 +82,3 @@ jobs:
         bundle exec rspec spec --format progress
       env:
         RAILS_ENV: test
-        BUNDLE_GEMFILE: Gemfile

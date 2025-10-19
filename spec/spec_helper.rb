@@ -7,6 +7,7 @@ require 'rspec/rails'
 require 'factory_bot'
 require 'pry'
 
+
 # Плохо работает с DatabaseRewinder :(
 # require 'test_prof/recipes/rspec/let_it_be'
 #
@@ -34,6 +35,7 @@ I18n.locale = :ru
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  config.include ActionDispatch::TestProcess::FixtureFile
 	config.backtrace_exclusion_patterns = [
 		/\/lib\d*\/ruby\//,
 		/bin\//,

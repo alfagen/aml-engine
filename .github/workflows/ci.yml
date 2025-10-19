@@ -54,13 +54,13 @@ jobs:
     - name: Install dependencies
       run: |
         gem install bundler
-        bundle config set --local without 'development'
+        bundle config set --local without 'production'
         bundle install --jobs 4 --retry 3
 
     - name: Set up test database
       run: |
         # Create test database
-        mysql -h 127.0.0.1 -P 3306 -u root -ppassword -e "CREATE DATABASE IF NOT EXISTS aml_dummy_test;"
+        MYSQL_PASSWORD=password mysql -h 127.0.0.1 -P 3306 -u root -e "CREATE DATABASE IF NOT EXISTS aml_dummy_test;"
 
         # Reset and create database
         bundle exec rake db:drop db:create || true

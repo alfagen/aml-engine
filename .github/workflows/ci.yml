@@ -14,7 +14,9 @@ jobs:
       mysql:
         image: mysql:8.0
         env:
+          MYSQL_USERNAME: root
           MYSQL_ROOT_PASSWORD: password
+          MYSQL_PASSWORD: password
           MYSQL_DATABASE: aml_dummy_test
         ports:
           - 3306:3306
@@ -30,27 +32,6 @@ jobs:
         bundler-cache: true
         cache-version: 1
 
-    - name: Set up MySQL
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y mysql-client
-        mysql --version
-
-    - name: Create database config
-      run: |
-        mkdir -p spec/dummy/config
-        cat > spec/dummy/config/database.yml << EOF
-        test:
-          adapter: mysql2
-          encoding: utf8mb4
-          pool: 5
-          database: aml_dummy_test
-          username: root
-          password: password
-          host: 127.0.0.1
-          port: 3306
-        EOF
-
     - name: Install dependencies
       run: |
         gem install bundler
@@ -58,10 +39,12 @@ jobs:
         bundle install --jobs 4 --retry 3
 
     - name: Set up test database
+        env:
+          MYSQL_USERNAME: root
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_PASSWORD: password
+          MYSQL_DATABASE: aml_dummy_test
       run: |
-        # Create test database
-        MYSQL_PASSWORD=password mysql -h 127.0.0.1 -P 3306 -u root -e "CREATE DATABASE IF NOT EXISTS aml_dummy_test;"
-
         # Reset and create database
         bundle exec rake db:drop db:create || true
         bundle exec rake db:migrate
@@ -69,16 +52,11 @@ jobs:
         # Run test environment migrations
         RAILS_ENV=test bundle exec rake db:migrate
 
-    - name: Create test files
-      run: |
-        mkdir -p spec/test_files
-        # Create a dummy test image
-        if [ ! -f "spec/test_files/test.png" ]; then
-          echo -e '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x08\x06\x00\x00\x00\x1f\x15\xc4\x89\x00\x00\x00\nIDATx\x9cc\xf8\x00\x00\x00\x01\x00\x01\x00\x00\x00\x00IEND\xaeB`\x82' > spec/test_files/test.png
-        fi
-
     - name: Run tests
       run: |
         bundle exec rspec spec --format progress
       env:
         RAILS_ENV: test
+        MYSQL_USERNAME: root
+        MYSQL_PASSWORD: password
+        MYSQL_DATABASE: aml_dummy_test

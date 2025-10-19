@@ -164,5 +164,22 @@ module AML
     def set_default_aml_status
       self.aml_status ||= ::AML.default_status
     end
+
+    # Returns available events list for current state
+    def enabled_workflow_events
+      current_state.events.map { |k, events| events.select { |e| e.condition_applicable?(self, []) } }.flatten.uniq.map(&:name)
+    end
+
+    public :enabled_workflow_events
+
+    # Ransack configuration for searchable attributes
+    def self.ransackable_attributes(auth_object = nil)
+      ["aml_reject_reason_id", "aml_status_id", "archived_at", "birth_date", "card_bin", "card_brand", "card_holding_state", "card_holding_state_updated_at", "card_suffix", "client_id", "cloned_order_id", "created_at", "first_name", "id", "id_value", "operated_at", "operator_id", "orders_count_sort", "patronymic", "pending_at", "reject_reason_details", "surname", "updated_at", "workflow_state"]
+    end
+
+    # Ransack configuration for searchable associations
+    def self.ransackable_associations(auth_object = nil)
+      ["aml_check_lists", "aml_client_info", "aml_reject_reason", "aml_status", "client", "cloned_order", "operator", "order_checks", "order_documents", "required_document_kinds"]
+    end
   end
 end

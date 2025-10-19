@@ -52,10 +52,10 @@ jobs:
         RAILS_ENV=test bundle exec rake db:migrate
 
     - name: Run tests
+      run: |
+        bundle exec rspec spec --format progress
       env:
         RAILS_ENV: test
         MYSQL_USERNAME: root
         MYSQL_PASSWORD: password
         MYSQL_DATABASE: aml_dummy_test
-      run: |
-        bundle exec rspec spec --format progress

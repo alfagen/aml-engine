@@ -44,7 +44,7 @@ PATH
       money-rails (~> 1.13)
       nokogiri (~> 1.18.0)
       noty_flash
-      rails (~> 6.0.0)
+      rails
       ransack
       sass-rails
       sendgrid-actionmailer

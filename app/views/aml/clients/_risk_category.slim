@@ -1,5 +1,5 @@
 .btn-group.btn-group-sm role='group'
   = client_risk_category_link client, nil
 
-  - ['A', 'B', 'C'].each do |risk_category|
+  - AML::Client.risk_categories.values.each do |risk_category|
     = client_risk_category_link client, risk_category

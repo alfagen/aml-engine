@@ -7,6 +7,9 @@ require 'rspec/rails'
 require 'factory_bot'
 require 'pry'
 
+# Load DatabaseRewinder patch to fix MySQL connection password issue
+require_relative '../lib/database_rewinder_patch'
+
 
 # Плохо работает с DatabaseRewinder :(
 # require 'test_prof/recipes/rspec/let_it_be'

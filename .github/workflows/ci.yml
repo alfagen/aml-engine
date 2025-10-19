@@ -39,10 +39,10 @@ jobs:
         bundle install --jobs 4 --retry 3
 
     - name: Set up test database
-        env:
-          MYSQL_USERNAME: root
-          MYSQL_PASSWORD: password
-          MYSQL_DATABASE: aml_dummy_test
+      env:
+        MYSQL_USERNAME: root
+        MYSQL_PASSWORD: password
+        MYSQL_DATABASE: aml_dummy_test
       run: |
         # Reset and create database
         bundle exec rake db:drop db:create || true

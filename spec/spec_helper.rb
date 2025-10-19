@@ -2,6 +2,7 @@ ENV['RAILS_ENV'] ||= 'test'
 
 require File.expand_path("../dummy/config/environment.rb", __FILE__)
 require 'archivable'
+require 'sorcery'
 require 'rspec/rails'
 require 'factory_bot'
 require 'pry'

@@ -20,7 +20,9 @@
       "Bash(bundle config:*)",
       "Bash(echo:*)",
       "Bash(MYSQL_PASSWORD=password bundle exec rails db:migrate:*)",
-      "Bash(gem search:*)"
+      "Bash(gem search:*)",
+      "Bash(rm:*)",
+      "Bash(rails:*)"
     ],
     "deny": [],
     "ask": []

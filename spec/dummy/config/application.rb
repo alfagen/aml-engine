@@ -20,7 +20,6 @@ Bundler.require(*Rails.groups)
 require 'archivable'
 require 'sorcery'
 require "aml"
-require 'enumerize'
 require 'authority'
 require 'carrierwave'
 require 'valid_email'

@@ -1,9 +1,7 @@
 require 'valid_email'
-require 'enumerize'
 
 module AML
   class Operator < ApplicationRecord
-    extend Enumerize
     include WorkflowActiverecord
     include Authority::Abilities
 
@@ -16,7 +14,7 @@ module AML
 
     enum role: [:operator, :administrator]
 
-    enumerize :workflow_state, in: %w[blocked unblocked], scope: true
+    enum workflow_state: { blocked: 'blocked', unblocked: 'unblocked' }
 
     workflow do
       state :unblocked do

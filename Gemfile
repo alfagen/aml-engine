@@ -18,6 +18,7 @@ gem 'noty_flash', github: 'BrandyMint/noty_flash'
 source 'https://rails-assets.org' do
   gem 'rails-assets-noty'
 end
+gem "concurrent-ruby", "~> 1.3"
 group :development do
   gem 'test-prof'
 end

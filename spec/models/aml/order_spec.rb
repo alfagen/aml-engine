@@ -6,7 +6,7 @@ RSpec.describe AML::Order, type: :model do
   let!(:aml_client) {
     create :aml_client,
     aml_status: aml_status,
-    risk_category: AML::Client.risk_category.values.first
+    risk_category: :A
   }
   let!(:operator) { create :aml_operator }
 
@@ -38,7 +38,7 @@ RSpec.describe AML::Order, type: :model do
 
   describe 'при создани изаявки она становится текущей' do
     let!(:client) { create :aml_client, first_name: nil,
-                    risk_category: AML::Client.risk_category.values.first
+                    risk_category: :A
     }
 
     context 'статус клиента обновляется если принятая заявка его увеличивает' do
@@ -121,7 +121,7 @@ RSpec.describe AML::Order, type: :model do
 
         context 'можно принять заявку если документы приняты' do
           before do
-            subject.client.update_column :risk_category, AML::Client.risk_category.values.first
+            subject.client.update_column :risk_category, 'A'
             subject.order_documents.take.accept!
             subject.accept!
           end

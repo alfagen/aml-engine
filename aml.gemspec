@@ -22,7 +22,6 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency 'noty_flash'
     s.add_runtime_dependency 'fast_jsonapi'
     s.add_runtime_dependency 'valid_email'
-    s.add_runtime_dependency 'enumerize'
     s.add_runtime_dependency 'workflow-activerecord'
     s.add_runtime_dependency 'ransack'
     s.add_runtime_dependency 'authority'

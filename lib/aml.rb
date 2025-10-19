@@ -48,9 +48,9 @@ module AML
       s2.aml_document_groups << g1
       s2.aml_document_groups << g2
 
-      RejectReason.create!(title: 'Ошибка в заявке', kind: 'order_reason')
-      RejectReason.create!(title: 'Ошибка в документе', kind: 'order_document_reason')
-      RejectReason.create!(title: 'Ошибка в заявке на привязку', kind: 'card_order_reason')
+      RejectReason.create!(title: 'Ошибка в заявке', kind: :order_reason)
+      RejectReason.create!(title: 'Ошибка в документе', kind: :order_document_reason)
+      RejectReason.create!(title: 'Ошибка в заявке на привязку', kind: :card_order_reason)
     end
   end
 

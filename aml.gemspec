@@ -28,8 +28,8 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency 'authority'
     s.add_runtime_dependency 'globalize'
     s.add_runtime_dependency 'globalize-accessors'
-    s.add_runtime_dependency 'money', '~> 6.13'
-    s.add_runtime_dependency 'money-rails', '~> 1.13'
+    s.add_runtime_dependency 'money'
+    s.add_runtime_dependency 'money-rails'
     s.add_runtime_dependency 'sendgrid-actionmailer'
     s.add_runtime_dependency 'draper'
     s.add_runtime_dependency 'active_link_to'
@@ -37,7 +37,7 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency 'slim-rails'
     s.add_runtime_dependency 'caxlsx'
     s.add_runtime_dependency 'caxlsx_rails'
-    s.add_runtime_dependency 'nokogiri', '~> 1.18.0'
+    s.add_runtime_dependency 'nokogiri'
     s.add_runtime_dependency 'kaminari'
     s.add_runtime_dependency 'rails'
     s.add_runtime_dependency "dapi-archivable", "~> 0.1.2"
@@ -56,8 +56,7 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency 'localized_render'
     s.add_runtime_dependency 'concurrent-ruby'
     s.add_runtime_dependency 'simple_form_bootstrap_inputs'
-    s.add_runtime_dependency 'best_in_place', '~>3.1.1'
-
+    s.add_runtime_dependency 'best_in_place'
     s.add_development_dependency "mysql2"
     s.add_development_dependency 'rubocop'
     s.add_development_dependency 'rubocop-rspec'

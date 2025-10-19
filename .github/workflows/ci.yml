@@ -41,7 +41,6 @@ jobs:
     - name: Set up test database
         env:
           MYSQL_USERNAME: root
-          MYSQL_ROOT_PASSWORD: password
           MYSQL_PASSWORD: password
           MYSQL_DATABASE: aml_dummy_test
       run: |

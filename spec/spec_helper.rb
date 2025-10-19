@@ -60,6 +60,8 @@ RSpec.configure do |config|
 	end
 
 	config.before(:suite) do
+    # Ensure database connection is established before cleaning
+    ActiveRecord::Base.connection
     DatabaseRewinder.clean_all
     FactoryBot.find_definitions
   end

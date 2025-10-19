@@ -1,7 +1,9 @@
 # AML engine
 
 [![Build Status](https://travis-ci.org/alfagen/aml-engine.svg?branch=master)](https://travis-ci.org/alfagen/aml-engine)
+[![Tests](https://github.com/alfagen/aml-engine/workflows/Tests/badge.svg)](https://github.com/alfagen/aml-engine/actions/workflows/tests.yml)
 
+AML Engine - это монтируемый Ruby on Rails движок для соответствия требованиям противодействия отмыванию денег (AML) на криптовалютной биржевой платформе Kassa.
 
 ## Статусы документа
 
@@ -10,6 +12,91 @@
 ## Статусы заявки
 
 ![Статусы заявки](https://github.com/alfagen/aml-engine/blob/master/doc/aml_orders_workflow.png?raw=true)
+
+## Установка и настройка
+
+### Требования
+- Ruby 2.7.8 (управляется через rbenv)
+- MySQL база данных
+- Rails 6.x
+- Доступ к основному проекту Kassa Admin для тестирования
+
+### Настройка базы данных для тестов
+
+**Перед запуском тестов необходимо настроить тестовую базу данных:**
+
+1. **Сброс и создание тестовой базы данных:**
+   ```bash
+   BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile bundle exec rake db:drop db:create
+   ```
+
+2. **Запуск миграций для разработки и тестовых сред:**
+   ```bash
+   # Среда разработки
+   BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile bundle exec rake db:migrate
+
+   # Тестовая среда
+   BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile RAILS_ENV=test bundle exec rake db:migrate
+   ```
+
+3. **Установка миграций AML в основном приложении:**
+   ```bash
+   cd /home/danil/code/kassa-admin
+   bundle exec rails aml:install:migrations
+   ```
+
+### Запуск тестов
+
+**Вариант 1: Из основного проекта Kassa Admin (рекомендуется для интеграционного тестирования)**
+```bash
+cd /home/danil/code/kassa-admin
+bundle exec rspec vendor/aml/spec
+
+# Запуск конкретных тестовых файлов
+bundle exec rspec vendor/aml/spec/models/aml/order_spec.rb
+
+# Запуск с разными форматами вывода
+bundle exec rspec vendor/aml/spec --format documentation
+bundle exec rspec vendor/aml/spec --format progress
+```
+
+**Вариант 2: Из директории AML Engine (для изолированного тестирования)**
+```bash
+# Установить правильный Gemfile и запустить тесты
+BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile bundle exec rspec spec --format documentation
+
+# Запуск конкретных тестовых файлов
+BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile bundle exec rspec spec/models/aml/order_spec.rb --format documentation
+
+# Запуск с форматом progress
+BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile bundle exec rspec spec --format progress
+```
+
+### Доступные Rake задачи
+```bash
+# Генерация диаграмм workflow для моделей
+bundle exec rake doc:workflow MODEL=Order
+
+# Запуск набора тестов по умолчанию
+bundle exec rake spec
+
+# Просмотр всех доступных задач
+bundle exec rake -T
+```
+
+### Устранение распространенных проблем
+
+**Проблемы с миграциями:**
+- **Проблема**: `ActiveRecord::PendingMigrationError` или "Migrations are pending"
+- **Решение**: Выполнить `BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile bundle exec rake db:migrate RAILS_ENV=test`
+
+**Проблемы с настройкой базы данных:**
+- **Проблема**: Ошибки ограничений внешнего ключа во время миграции
+- **Решение**: Полностью сбросить базу данных: `BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile bundle exec rake db:drop db:create db:migrate`
+
+**Проблемы с enum:**
+- **Проблема**: Ошибки `Undeclared attribute type for enum`
+- **Решение**: Убедиться, что все миграции выполнены, включая миграции полей enum, такие как `Add risk category to clients`
 
 ## Приложение должно поддерживать следующий интерфейс:
 

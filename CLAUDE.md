@@ -14,6 +14,8 @@ AML Engine is a Ruby on Rails mountable engine for anti-money laundering complia
 - Access to main Kassa Admin project for testing
 
 ### Testing Commands
+
+**Option 1: Running tests from the main Kassa Admin project (recommended for integration testing)**
 ```bash
 # Run tests from main project directory (required)
 cd /home/danil/code/kassa-admin
@@ -27,7 +29,46 @@ bundle exec rspec vendor/aml/spec --format documentation
 bundle exec rspec vendor/aml/spec --format progress
 ```
 
-**Important**: Tests must be run from the main Kassa Admin project directory, not from within the AML engine directory, as the engine depends on the parent application's configuration and dependencies.
+**Option 2: Running tests from the AML engine directory (for isolated testing)**
+```bash
+# Set the correct Gemfile and run tests
+BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile bundle exec rspec spec --format documentation
+
+# Run specific test files
+BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile bundle exec rspec spec/models/aml/order_spec.rb --format documentation
+
+# Run with progress formatter
+BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile bundle exec rspec spec --format progress
+```
+
+### Database Setup for Testing
+
+**Before running tests for the first time, you need to set up the test database:**
+
+1. **Reset and create the test database:**
+   ```bash
+   BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile bundle exec rake db:drop db:create
+   ```
+
+2. **Run migrations for both development and test environments:**
+   ```bash
+   # Development environment
+   BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile bundle exec rake db:migrate
+
+   # Test environment
+   BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile RAILS_ENV=test bundle exec rake db:migrate
+   ```
+
+3. **Install AML migrations in the main application (if needed):**
+   ```bash
+   cd /home/danil/code/kassa-admin
+   bundle exec rails aml:install:migrations
+   ```
+
+**Important**:
+- Tests must be run from the main Kassa Admin project directory when using the vendor path approach
+- When running from the AML engine directory, always use `BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile` to ensure proper dependency loading
+- The engine uses a dummy Rails application in `spec/dummy/` for isolated testing
 
 ### Available Rake Tasks
 ```bash
@@ -199,17 +240,45 @@ end
 - Uses DatabaseRewinder for fast test cleanup
 - Factory Bot for test data generation
 
-### Common Test Issues
-- Missing DummyUser class - ensure proper test helpers are loaded
-- Missing test files - ensure `spec/test_files/test.png` exists
-- Git dependency issues - may need to run bundle install from main project
+### Common Test Issues and Solutions
+
+**Migration Issues:**
+- **Problem**: `ActiveRecord::PendingMigrationError` or "Migrations are pending"
+- **Solution**: Run `BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile bundle exec rake db:migrate RAILS_ENV=test`
+
+**Database Setup Issues:**
+- **Problem**: Foreign key constraint failures during migration
+- **Solution**: Reset the database completely: `BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile bundle exec rake db:drop db:create db:migrate`
+
+**Missing Dependencies:**
+- **Problem**: Missing DummyUser class or undefined constants
+- **Solution**: Ensure proper test helpers are loaded and run from the correct directory with the right Gemfile
+
+**Enum Issues:**
+- **Problem**: `Undeclared attribute type for enum` errors
+- **Solution**: Ensure all migrations are run, including enum field migrations like `Add risk category to clients`
+
+**Configuration Issues:**
+- **Problem**: `NoMethodError: undefined method 'fixture_path='`
+- **Solution**: This is due to deprecated RSpec configuration; test setup needs updating for newer Rails versions
 
 ### Running Tests
-Always run tests from the main project directory:
+**For integration testing (recommended):**
 ```bash
 cd /home/danil/code/kassa-admin
 bundle exec rspec vendor/aml/spec
 ```
+
+**For isolated testing:**
+```bash
+BUNDLE_GEMFILE=/home/danil/code/kassa-admin/Gemfile bundle exec rspec spec
+```
+
+**Current Status**:
+- Database migrations are working correctly ✅
+- Test environment is properly configured ✅
+- Some tests have configuration issues related to newer Rails/RSpec versions ⚠️
+- The basic setup and database initialization process is working ✅
 
 ## Integration Points
 

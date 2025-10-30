@@ -1,6 +1,5 @@
 module AML
   class Notification < ApplicationRecord
-    extend Enumerize
     include Authority::Abilities
 
     has_many :aml_notification_templates, class_name: 'AML::NotificationTemplate', foreign_key: :aml_notification_id, dependent: :destroy
@@ -10,7 +9,7 @@ module AML
 
     after_create :create_templates
 
-    enumerize :key, in: %w(on_pending_notification on_accept_notification on_reject_notification)
+    enum :key, { on_pending_notification: 'on_pending_notification', on_accept_notification: 'on_accept_notification', on_reject_notification: 'on_reject_notification' }
 
     def to_s
       title

@@ -16,7 +16,6 @@
 //= require moment/ru
 //= require bootstrap
 //= require bootstrap-datetimepicker
-//= require activestorage
 //= require turbolinks
 //= require noty_flash
 //= require best_in_place

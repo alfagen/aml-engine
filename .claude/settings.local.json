@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gem install:*)",
+      "Bash(bundle exec rake:*)",
+      "Bash(bundle exec rspec:*)",
+      "Bash(_bundler_version=2.7.2 bundle:*)",
+      "Bash(ruby:*)",
+      "Bash(bundle install:*)",
+      "Bash(gem list:*)",
+      "Bash(bundle update:*)",
+      "Bash(bundle exec ruby:*)",
+      "Bash(rake:*)",
+      "Bash(rbenv:*)",
+      "Bash(bin/rails:*)",
+      "Bash(bundle exec rails:*)",
+      "Bash(_bundler_version=2.1.4 bundle:*)",
+      "Bash(bundle config:*)",
+      "Bash(echo:*)",
+      "Bash(MYSQL_PASSWORD=password bundle exec rails db:migrate:*)",
+      "Bash(gem search:*)",
+      "Bash(rm:*)",
+      "Bash(rails:*)",
+      "Bash(RAILS_ENV=test bundle exec rails db:migrate:status:*)",
+      "Bash(RAILS_ENV=test bundle exec rails:*)",
+      "Bash(bundle list:*)",
+      "Bash(RAILS_ENV=test bundle exec rake:*)",
+      "Bash(mysql:*)",
+      "Bash(bundle show:*)",
+      "Bash(find:*)",
+      "Bash(RAILS_ENV=test ruby:*)",
+      "Bash(MYSQL_PASSWORD=password bundle exec rspec:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

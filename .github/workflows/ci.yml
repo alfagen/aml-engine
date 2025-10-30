@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_USERNAME: root
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_PASSWORD: password
+          MYSQL_DATABASE: aml_dummy_test
+          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Ruby 3.2
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.2'
+        bundler-cache: true
+        cache-version: 1
+
+    - name: Install dependencies
+      run: |
+        gem install bundler
+        bundle config set --local without 'production'
+        bundle install --jobs 4 --retry 3
+
+    - name: Set up test database
+      env:
+        MYSQL_USERNAME: root
+        MYSQL_PASSWORD: password
+        MYSQL_DATABASE: aml_dummy_test
+        RAILS_ENV: test
+      run: |
+        bundle exec rake db:migrate
+
+    - name: Run tests
+      run: |
+        bundle exec rspec spec --format progress
+      env:
+        RAILS_ENV: test
+        MYSQL_USERNAME: root
+        MYSQL_PASSWORD: password
+        MYSQL_DATABASE: aml_dummy_test

@@ -7,6 +7,16 @@ module AML
     include OrderNotifications
     include CardValidation
 
+    # Специальный метод для загрузки изображения с переходом состояния
+    def upload_image!(image:)
+      # Загружаем изображение
+      done(image: image)
+      # Переводим в состояние pending через workflow API
+      if can_done?
+        done!  # вызываем workflow done! без параметров
+      end
+    end
+
     mount_uploader :image, OrderDocumentFileUploader
 
     belongs_to :client, class_name: 'AML::Client', foreign_key: :aml_client_id, inverse_of: :payment_card_orders, dependent: :destroy
@@ -60,6 +70,7 @@ module AML
       touch :pending_at
     end
 
+    
     def client_name
       ["##{client.id}", client.first_name, client.surname, client.patronymic].compact.join ' '
     end

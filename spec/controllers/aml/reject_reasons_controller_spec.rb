@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe AML::RejectReasonsController, type: :controller do
   routes { AML::Engine.routes }
   let(:aml_reason) { create(:aml_reject_reason, :order_reason) }
-  let(:kind) { 'order_document_reason' }
+  let(:kind) { :order_document_reason }
 
   let(:operator) { create :aml_operator, :administrator }
   let(:user) { DummyUser.new(aml_operator: operator) }

@@ -1,0 +1,8 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: 'Клиенты') do |sheet|
+  sheet.add_row columns
+
+  orders.each do |order|
+    sheet.add_row(columns.map { |column| order.send column })
+  end
+end

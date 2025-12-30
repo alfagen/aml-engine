@@ -1,20 +1,20 @@
 require 'valid_email'
-require 'enumerize'
 
 module AML
   class Operator < ApplicationRecord
-    extend Enumerize
-    include Workflow
+    include WorkflowActiverecord
     include Authority::Abilities
 
     scope :ordered, -> { order 'id desc' }
 
+    scope :with_unblocked_state, -> { where workflow_state: :unblocked }
+
     has_many :orders, class_name: 'AML::Order', dependent: :destroy
     has_many :payment_card_orders, class_name: 'AML::PaymentCardOrder', dependent: :destroy
 
-    enum role: [:operator, :administrator]
+    enum :role, [:operator, :administrator]
 
-    enumerize :workflow_state, in: %w[blocked unblocked], scope: true
+    enum :workflow_state, { blocked: 'blocked', unblocked: 'unblocked' }
 
     workflow do
       state :unblocked do
@@ -39,9 +39,7 @@ module AML
         AML::NotificationMailer.logger.error "У оператора #{id} нет email-а"
         return
       end
-      AML::NotificationMailer.
-        notify( email: email, template_id: template_id, data: data).
-        deliver!
+      AML::NotificationMailer.notify( email, template_id, data).deliver!
     end
 
     def to_s

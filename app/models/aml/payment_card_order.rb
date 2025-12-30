@@ -1,7 +1,7 @@
 module AML
   class PaymentCardOrder < ApplicationRecord
     include Authority::Abilities
-    include Workflow
+    include WorkflowActiverecord
 
     include OrderWorkflow
     include OrderNotifications
@@ -55,13 +55,30 @@ module AML
       self.operator == operator
     end
 
-    def done(image: )
+    def done(image)
       update_attribute :image, image
       touch :pending_at
     end
 
     def client_name
       ["##{client.id}", client.first_name, client.surname, client.patronymic].compact.join ' '
+    end
+
+    # Returns available events list for current state
+    def enabled_workflow_events
+      current_state.events.map { |k, events| events.select { |e| e.condition_applicable?(self, []) } }.flatten.uniq.map(&:name)
+    end
+
+    public :enabled_workflow_events
+
+    # Ransack configuration for searchable attributes
+    def self.ransackable_attributes(auth_object = nil)
+      ["aml_client_id", "aml_operator_id", "aml_reject_reason_id", "card_bin", "card_brand", "card_suffix", "created_at", "id", "image", "operated_at", "pending_at", "reject_reason_details", "updated_at", "workflow_state"]
+    end
+
+    # Ransack configuration for searchable associations
+    def self.ransackable_associations(auth_object = nil)
+      ["aml_payment_card", "aml_reject_reason", "client", "operator"]
     end
 
     private

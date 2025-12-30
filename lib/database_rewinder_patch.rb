@@ -1,0 +1,63 @@
+# frozen_string_literal: true
+
+# Patch for DatabaseRewinder to fix MySQL connection with password
+# This fixes the issue where DatabaseRewinder creates a new MySQL connection
+# without the password, causing "Access denied for user 'root'@'ip' (using password: NO)" error
+
+module DatabaseRewinder
+  module MultipleStatementsExecutor
+    refine ActiveRecord::ConnectionAdapters::AbstractAdapter do
+      def execute_multiple(sql)
+        #TODO Use ADAPTER_NAME when we've dropped AR 4.1 support
+        case self.class.name
+        when 'ActiveRecord::ConnectionAdapters::PostgreSQLAdapter'
+          disable_referential_integrity { log(sql) { raw_connection_or_connection.exec sql } }
+        when 'ActiveRecord::ConnectionAdapters::Mysql2Adapter'
+          if raw_connection_or_connection.query_options[:connect_flags] & Mysql2::Client::MULTI_STATEMENTS != 0
+            disable_referential_integrity do
+              _result = log(sql) { raw_connection_or_connection.query sql }
+              while raw_connection_or_connection.next_result
+                # just to make sure that all queries are finished
+                _result = raw_connection_or_connection.store_result
+              end
+            end
+          else
+            query_options = raw_connection_or_connection.query_options.dup
+            query_options[:connect_flags] |= Mysql2::Client::MULTI_STATEMENTS
+
+            # FIX: Add password from the connection configuration if it's missing
+            unless query_options[:password]
+              # Get the full configuration from the connection
+              config = self.instance_variable_get(:@config) || pool&.db_config&.configuration_hash || {}
+              query_options[:password] = config[:password]
+            end
+
+            # opens another connection to the DB
+            client = Mysql2::Client.new query_options
+            begin
+              # disable_referential_integrity
+              client.query("SET FOREIGN_KEY_CHECKS = 0")
+              _result = log(sql) { client.query sql }
+              while client.next_result
+                # just to make sure that all queries are finished
+                _result = client.store_result
+              end
+            ensure
+              client.close
+            end
+          end
+        when 'ActiveRecord::ConnectionAdapters::SQLite3Adapter'
+          disable_referential_integrity { log(sql) { raw_connection_or_connection.execute_batch sql } }
+        else
+          raise 'Multiple deletion is not supported with the current database adapter.'
+        end
+      end
+
+      private
+
+      def raw_connection_or_connection
+        defined?(@raw_connection) ? @raw_connection : @connection
+      end
+    end
+  end
+end

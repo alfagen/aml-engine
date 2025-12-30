@@ -42,7 +42,7 @@ RSpec.describe AML::PaymentCardOrder, type: :model do
     end
 
     context 'when notify' do
-      let(:notification_key) { :on_pending_notification }
+      let(:notification_key) { 'on_pending_notification' }
       let!(:notification)    { create :aml_notification, key: notification_key }
       let(:template_id)      { SecureRandom.hex(6) }
 

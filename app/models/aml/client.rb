@@ -5,7 +5,6 @@
 
 module AML
   class Client < ApplicationRecord
-    extend Enumerize
     include Authority::Abilities
 
     scope :ordered, -> { order 'id desc' }
@@ -29,7 +28,7 @@ module AML
     # Нужно для для сериализера
     alias_attribute :current_order_id, :aml_order_id
 
-    enumerize :risk_category, in: %w(A B C)
+    enum :risk_category, { A: 'A', B: 'B', C: 'C' }
 
     # TODO: Не может быть без имени если находится в статусе оформляется или принят/отклонен
     #
@@ -53,9 +52,7 @@ module AML
 
     def notify(template_id, data = {})
       if email.present?
-        AML::NotificationMailer.
-          notify( email: email, template_id: template_id, data: data).
-          deliver!
+        AML::NotificationMailer.notify(email, template_id, data).deliver!
       else
         AML::NotificationMailer.logger.error "У клиента #{id} нет email-а"
       end

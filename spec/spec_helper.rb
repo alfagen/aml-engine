@@ -7,6 +7,10 @@ require 'rspec/rails'
 require 'factory_bot'
 require 'pry'
 
+# Load DatabaseRewinder patch to fix MySQL connection password issue
+require_relative '../lib/database_rewinder_patch'
+
+
 # Плохо работает с DatabaseRewinder :(
 # require 'test_prof/recipes/rspec/let_it_be'
 #
@@ -34,6 +38,7 @@ I18n.locale = :ru
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  config.include ActionDispatch::TestProcess::FixtureFile
 	config.backtrace_exclusion_patterns = [
 		/\/lib\d*\/ruby\//,
 		/bin\//,
@@ -58,6 +63,8 @@ RSpec.configure do |config|
 	end
 
 	config.before(:suite) do
+    # Ensure database connection is established before cleaning
+    ActiveRecord::Base.connection
     DatabaseRewinder.clean_all
     FactoryBot.find_definitions
   end

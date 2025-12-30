@@ -2,18 +2,17 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_23_055912) do
-
-  create_table "aml_agreement_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "aml_agreement_id", null: false
+ActiveRecord::Schema[8.0].define(version: 2019_01_23_055912) do
+  create_table "aml_agreement_translations", charset: "utf8", force: :cascade do |t|
+    t.bigint "aml_agreement_id", null: false
     t.string "locale", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -23,14 +22,14 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["locale"], name: "index_aml_agreement_translations_on_locale"
   end
 
-  create_table "aml_agreements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aml_agreements", charset: "utf8", force: :cascade do |t|
     t.string "url"
     t.timestamp "archived_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "aml_check_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aml_check_lists", charset: "utf8", force: :cascade do |t|
     t.string "title", null: false
     t.string "url"
     t.integer "position", default: 0, null: false
@@ -40,7 +39,7 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["title"], name: "index_aml_check_lists_on_title", unique: true
   end
 
-  create_table "aml_client_agreements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aml_client_agreements", charset: "utf8", force: :cascade do |t|
     t.bigint "aml_client_id", null: false
     t.bigint "aml_agreement_id", null: false
     t.string "remote_ip", null: false
@@ -53,7 +52,7 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["aml_client_id"], name: "index_aml_client_agreements_on_aml_client_id"
   end
 
-  create_table "aml_client_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aml_client_infos", charset: "utf8", force: :cascade do |t|
     t.bigint "aml_client_id", null: false
     t.string "first_name"
     t.string "maiden_name"
@@ -73,7 +72,7 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["aml_client_id"], name: "index_aml_client_infos_on_aml_client_id_uniq", unique: true
   end
 
-  create_table "aml_clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aml_clients", charset: "utf8", force: :cascade do |t|
     t.string "first_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -98,7 +97,7 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["orders_count"], name: "index_aml_clients_on_orders_count"
   end
 
-  create_table "aml_document_fields", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aml_document_fields", charset: "utf8", force: :cascade do |t|
     t.string "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -108,7 +107,7 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["order_document_id", "document_kind_field_definition_id"], name: "client_document_fields_index", unique: true
   end
 
-  create_table "aml_document_group_to_statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aml_document_group_to_statuses", charset: "utf8", force: :cascade do |t|
     t.bigint "aml_document_group_id", null: false
     t.bigint "aml_status_id", null: false
     t.index ["aml_document_group_id", "aml_status_id"], name: "aml_dgts_uniq", unique: true
@@ -116,8 +115,8 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["aml_status_id"], name: "index_aml_document_group_to_statuses_on_aml_status_id"
   end
 
-  create_table "aml_document_group_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "aml_document_group_id", null: false
+  create_table "aml_document_group_translations", charset: "utf8", force: :cascade do |t|
+    t.bigint "aml_document_group_id", null: false
     t.string "locale", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -127,7 +126,7 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["locale"], name: "index_aml_document_group_translations_on_locale"
   end
 
-  create_table "aml_document_groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aml_document_groups", charset: "utf8", force: :cascade do |t|
     t.integer "position", null: false
     t.timestamp "archived_at"
     t.datetime "created_at", null: false
@@ -135,8 +134,8 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.boolean "card_required", default: false, null: false
   end
 
-  create_table "aml_document_kind_field_definition_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "aml_document_kind_field_definition_id", null: false
+  create_table "aml_document_kind_field_definition_translations", charset: "utf8", force: :cascade do |t|
+    t.bigint "aml_document_kind_field_definition_id", null: false
     t.string "locale", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -145,7 +144,7 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["locale"], name: "index_aml_document_kind_field_definition_translations_on_locale"
   end
 
-  create_table "aml_document_kind_field_definitions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aml_document_kind_field_definitions", charset: "utf8", force: :cascade do |t|
     t.string "key", null: false
     t.datetime "archived_at"
     t.datetime "created_at", null: false
@@ -155,8 +154,8 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["document_kind_id", "key"], name: "index_aml_document_kind_field_definitions_on_key", unique: true
   end
 
-  create_table "aml_document_kind_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "aml_document_kind_id", null: false
+  create_table "aml_document_kind_translations", charset: "utf8", force: :cascade do |t|
+    t.bigint "aml_document_kind_id", null: false
     t.string "locale", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -167,7 +166,7 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["locale"], name: "index_aml_document_kind_translations_on_locale"
   end
 
-  create_table "aml_document_kinds", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aml_document_kinds", charset: "utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.timestamp "archived_at"
@@ -178,7 +177,7 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["aml_document_group_id"], name: "index_aml_document_kinds_on_aml_document_group_id"
   end
 
-  create_table "aml_notification_templates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aml_notification_templates", charset: "utf8", force: :cascade do |t|
     t.string "locale", null: false
     t.string "template_id"
     t.datetime "created_at", null: false
@@ -188,7 +187,7 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["aml_notification_id"], name: "index_aml_notification_templates_on_aml_notification_id"
   end
 
-  create_table "aml_notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aml_notifications", charset: "utf8", force: :cascade do |t|
     t.string "title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -196,7 +195,7 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["title"], name: "index_aml_notifications_on_title", unique: true
   end
 
-  create_table "aml_operators", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aml_operators", charset: "utf8", force: :cascade do |t|
     t.string "legacy_email"
     t.string "crypted_password"
     t.string "salt"
@@ -216,7 +215,7 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["reset_password_token"], name: "index_aml_operators_on_reset_password_token"
   end
 
-  create_table "aml_order_checks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aml_order_checks", charset: "utf8", force: :cascade do |t|
     t.bigint "aml_order_id", null: false
     t.bigint "aml_check_list_id", null: false
     t.string "workflow_state", default: "none", null: false
@@ -227,7 +226,7 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["aml_order_id"], name: "index_aml_order_checks_on_aml_order_id"
   end
 
-  create_table "aml_order_documents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aml_order_documents", charset: "utf8", force: :cascade do |t|
     t.bigint "document_kind_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -242,7 +241,7 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["order_id"], name: "index_aml_order_documents_on_order_id"
   end
 
-  create_table "aml_orders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aml_orders", charset: "utf8", force: :cascade do |t|
     t.string "first_name"
     t.string "surname"
     t.string "patronymic"
@@ -273,7 +272,7 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["workflow_state", "pending_at"], name: "index_aml_orders_on_workflow_state_and_pending_at"
   end
 
-  create_table "aml_payment_card_orders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aml_payment_card_orders", charset: "utf8", force: :cascade do |t|
     t.string "card_brand"
     t.string "card_bin"
     t.string "card_suffix"
@@ -293,7 +292,7 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["workflow_state", "pending_at"], name: "index_aml_payment_card_orders_on_workflow_state_and_pending_at"
   end
 
-  create_table "aml_payment_cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aml_payment_cards", charset: "utf8", force: :cascade do |t|
     t.string "card_brand", null: false
     t.string "card_bin", limit: 8, null: false
     t.string "card_suffix", limit: 4, null: false
@@ -306,8 +305,8 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["aml_payment_card_order_id"], name: "index_aml_payment_cards_on_aml_payment_card_order_id"
   end
 
-  create_table "aml_reject_reason_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "aml_reject_reason_id", null: false
+  create_table "aml_reject_reason_translations", charset: "utf8", force: :cascade do |t|
+    t.bigint "aml_reject_reason_id", null: false
     t.string "locale", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -316,15 +315,15 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["locale"], name: "index_aml_reject_reason_translations_on_locale"
   end
 
-  create_table "aml_reject_reasons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aml_reject_reasons", charset: "utf8", force: :cascade do |t|
     t.timestamp "archived_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "kind", null: false
   end
 
-  create_table "aml_status_translations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "aml_status_id", null: false
+  create_table "aml_status_translations", charset: "utf8", force: :cascade do |t|
+    t.bigint "aml_status_id", null: false
     t.string "locale", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -334,7 +333,7 @@ ActiveRecord::Schema.define(version: 2019_01_23_055912) do
     t.index ["locale"], name: "index_aml_status_translations_on_locale"
   end
 
-  create_table "aml_statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "aml_statuses", charset: "utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "position", null: false

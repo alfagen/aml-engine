@@ -41,7 +41,7 @@ module AML
 
     def done
       authorize_action_for payment_card_order
-      payment_card_order.done!(image: params[:payment_card_order][:image])
+      payment_card_order.done!(params[:payment_card_order][:image])
       flash.notice = 'Заявка отмечена как загруженная'
       redirect_to payment_card_order_path(payment_card_order)
     end

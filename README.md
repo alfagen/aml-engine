@@ -1,7 +1,9 @@
 # AML engine
 
 [![Build Status](https://travis-ci.org/alfagen/aml-engine.svg?branch=master)](https://travis-ci.org/alfagen/aml-engine)
+[![Tests](https://github.com/alfagen/aml-engine/workflows/Tests/badge.svg)](https://github.com/alfagen/aml-engine/actions/workflows/tests.yml)
 
+AML Engine - это монтируемый Ruby on Rails движок для соответствия требованиям противодействия отмыванию денег (AML) на криптовалютной биржевой платформе Kassa.
 
 ## Статусы документа
 
@@ -10,6 +12,78 @@
 ## Статусы заявки
 
 ![Статусы заявки](https://github.com/alfagen/aml-engine/blob/master/doc/aml_orders_workflow.png?raw=true)
+
+## Установка и настройка
+
+### Требования
+- Ruby 2.7.8 (управляется через rbenv)
+- MySQL база данных
+- Rails 6.x
+
+### Настройка базы данных для тестов
+
+**Перед запуском тестов необходимо настроить тестовую базу данных:**
+
+1. **Сброс и создание тестовой базы данных:**
+   ```bash
+   bundle exec rake db:drop db:create
+   ```
+
+2. **Запуск миграций для разработки и тестовых сред:**
+   ```bash
+   # Среда разработки
+   bundle exec rake db:migrate
+
+   # Тестовая среда
+   RAILS_ENV=test bundle exec rake db:migrate
+   ```
+
+### Запуск тестов
+
+**Запуск тестов из директории AML Engine:**
+```bash
+# Запуск всех тестов
+bundle exec rspec spec --format documentation
+
+# Запуск конкретных тестовых файлов
+bundle exec rspec spec/models/aml/order_spec.rb --format documentation
+
+# Запуск с форматом progress
+bundle exec rspec spec --format progress
+
+# Запуск с выводом в формате документации
+bundle exec rspec spec --format documentation
+```
+
+### Доступные Rake задачи
+```bash
+# Генерация диаграмм workflow для моделей
+bundle exec rake doc:workflow MODEL=Order
+
+# Запуск набора тестов по умолчанию
+bundle exec rake spec
+
+# Просмотр всех доступных задач
+bundle exec rake -T
+```
+
+### Устранение распространенных проблем
+
+**Проблемы с миграциями:**
+- **Проблема**: `ActiveRecord::PendingMigrationError` или "Migrations are pending"
+- **Решение**: Выполнить `bundle exec rake db:migrate RAILS_ENV=test`
+
+**Проблемы с настройкой базы данных:**
+- **Проблема**: Ошибки ограничений внешнего ключа во время миграции
+- **Решение**: Полностью сбросить базу данных: `bundle exec rake db:drop db:create db:migrate`
+
+**Проблемы с enum:**
+- **Проблема**: Ошибки `Undeclared attribute type for enum`
+- **Решение**: Убедиться, что все миграции выполнены, включая миграции полей enum, такие как `Add risk category to clients`
+
+**Проблемы с зависимостями:**
+- **Проблема**: Отсутствуют тестовые файлы
+- **Решение**: Убедиться, что файл `spec/test_files/test.png` существует. При необходимости создайте его вручную.
 
 ## Приложение должно поддерживать следующий интерфейс:
 

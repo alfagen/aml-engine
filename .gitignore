@@ -55,3 +55,6 @@ spec/dummy/log/development.log
 spec/dummy/log/spec.log
 spec/dummy/public/*
 spec/dummy/tmp/*
+
+# Claude Code local settings
+.claude/settings.local.json
